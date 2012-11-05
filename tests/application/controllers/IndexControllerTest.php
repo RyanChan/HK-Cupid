@@ -63,6 +63,28 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $em->persist($u);
         $em->flush();
 
+        $profiles = array(
+            'email' => array(
+                'key' => 'email',
+                'value' => 'kimchan1314@gmail.com'
+            ),
+            'phone' => array(
+                'key' => 'phone',
+                'value' => '92148924'
+            )
+        );
+
+        foreach ($profiles as $profile){
+            $userProfile = new Champs\Entity\UserProfile();
+            $userProfile->user = $u;
+            $userProfile->profile_key = $profile['key'];
+            $userProfile->profile_value = $profile['value'];
+            $u->setProfile($userProfile);
+            $em->persist($userProfile);
+        }
+
+        $em->flush();
+
         $users = $em->createQuery('select u from Champs\Entity\User u')->execute();
         $this->assertEquals(1, count($users));
         $this->assertEquals('ming', $users[0]->username);
@@ -70,6 +92,17 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('123', $users[0]->password_salt);
         $this->assertInstanceOf('\\DateTime', $users[0]->ts_created);
         $this->assertEquals(null, $users[0]->ts_last_updated);
+
+//        $this->assertInstanceOf(, $users[0]->getProfile('email'));
+//        $this->assertInstanceOf('Champs\Entity\UserProfile', $users[0]->getProfile('phone'));
+        $this->assertEquals($profiles['email']['value'], $users[0]->getProfile('email'));
+        $this->assertEquals($profiles['phone']['value'], $users[0]->getProfile('phone'));
+
+        $users[0]->unsetProfile('phone');
+
+        $em->flush();
+
+        $this->assertEquals(null, $users[0]->getProfile('phone'));
     }
 }
 
