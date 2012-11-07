@@ -86,6 +86,11 @@ class User{
      */
     private $events;
     private $notifications;
+    /**
+     *
+     * @var ArrayCollection $newsfeeds
+     * @OneToMany(targetEntity="Newsfeed", mappedBy="user")
+     */
     private $newsfeeds;
     private $messages;
     /**

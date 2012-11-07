@@ -23,11 +23,13 @@ class UserProfile{
     /**
      *
      * @var string $profile_key
+     * @Column(type="string")
      */
     private $profile_key;
     /**
      *
      * @var text $profile_value
+     * @Column(type="text", nullable=true)
      */
     private $profile_value;
     /**

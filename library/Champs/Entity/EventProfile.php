@@ -29,7 +29,7 @@ class EventProfile{
     /**
      *
      * @var text $profile_value
-     * @Column(type="text")
+     * @Column(type="text", nullable=true)
      */
     private $profile_value;
     /**
