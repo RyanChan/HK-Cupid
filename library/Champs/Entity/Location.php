@@ -10,6 +10,8 @@ class Location{
     /**
      *
      * @var bigint $id
+     * @Column(type="bigint")
+     * @Id @GeneratedValue
      */
     private $id;
     /**
@@ -71,12 +73,14 @@ class Location{
         return $this->$key;
     }
     /**
+     *
      * @PrePersist
      */
     public function doPrePersist(){
         $this->ts_created = new \DateTime();
     }
     /**
+     *
      * @PreUpdate
      */
     public function doPreUpdate(){

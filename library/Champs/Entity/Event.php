@@ -52,6 +52,12 @@ class Event{
      */
     private $profiles;
     /**
+     *
+     * @var ArrayCollection $comments
+     * @OneToMany(targetEntity="EventComment", mappedBy="event")
+     */
+    private $comments;
+    /**
      * Initialize Method
      */
     public function __construct(){

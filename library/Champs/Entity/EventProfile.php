@@ -52,6 +52,6 @@ class EventProfile{
      * @PostUpdate
      */
     public function doPostUpdate(){
-        $this->event->doPreUpdate;
+        $this->event->doPreUpdate();
     }
 }

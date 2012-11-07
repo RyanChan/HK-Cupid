@@ -52,6 +52,6 @@ class NewsfeedProfile{
      * @PostUpdate
      */
     public function doPostUpdate(){
-        $this->newsfeed->doPreUpdate;
+        $this->newsfeed->doPreUpdate();
     }
 }

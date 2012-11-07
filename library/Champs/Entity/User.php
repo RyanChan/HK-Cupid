@@ -85,6 +85,11 @@ class User{
      * @OneToMany(targetEntity="Event", mappedBy="user")
      */
     private $events;
+    /**
+     *
+     * @var ArrayCollection $notifications
+     * @ManyToOne(targetEntity="Notification")
+     */
     private $notifications;
     /**
      *
@@ -92,7 +97,18 @@ class User{
      * @OneToMany(targetEntity="Newsfeed", mappedBy="user")
      */
     private $newsfeeds;
-    private $messages;
+    /**
+     *
+     * @var ArrayCollection $sentMessages
+     * @OneToMany(targetEntity="Message", mappedBy="sender")
+     */
+    private $sentMessages;
+    /**
+     *
+     * @var ArrayCollection $receivedMessages
+     * @OneToMany(targetEntity="Message", mappedBy="receiver")
+     */
+    private $receivedMessages;
     /**
      * Initialize method
      */

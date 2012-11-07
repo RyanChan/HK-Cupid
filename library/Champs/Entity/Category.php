@@ -40,7 +40,7 @@ class Category{
      * @var smallint $order
      * @Column(type="smallint")
      */
-    private $order;
+    private $ranking;
     /**
      *
      * @var datetime $ts_created
@@ -58,7 +58,7 @@ class Category{
      */
     public function __construct(){
         $this->categories = new ArrayCollection();
-        $this->order = 0;
+        $this->ranking = 0;
         $this->enabled = true;
     }
     /**
