@@ -84,6 +84,6 @@ class Notification{
      * @PrePersist
      */
     public function doPrePersist(){
-        $this->ts_created = new ArrayCollection();
+        $this->ts_created = new \DateTime();
     }
 }
