@@ -89,4 +89,18 @@ class Category{
     public function doPreUpdate(){
         $this->ts_last_updated = new \DateTime();
     }
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getCreated(){
+        return $this->ts_created->format('Y-m-d H:i:s');
+    }
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getLastUpdated(){
+        return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
+    }
 }

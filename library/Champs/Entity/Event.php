@@ -18,6 +18,7 @@ class Event{
     /**
      *
      * @var Champs\Entity\Category $category
+     * @ManyToOne(targetEntity="Category")
      */
     private $category;
     /**

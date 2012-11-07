@@ -86,4 +86,11 @@ class Notification{
     public function doPrePersist(){
         $this->ts_created = new \DateTime();
     }
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getCreated(){
+        return $this->ts_created->format('Y-m-d H:i:s');
+    }
 }
