@@ -58,10 +58,17 @@ class ProductPhoto{
      */
     private $ts_last_updated;
     /**
+     *
+     * @var ArrayCollection $comments
+     * @OneToMany(targetEntity="ProductPhotoComment", mappedBy="photo")
+     */
+    private $comments;
+    /**
      * Initialize Method
      */
     public function __construct(){
         $this->profiles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     /**
      *

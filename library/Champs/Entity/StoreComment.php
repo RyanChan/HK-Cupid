@@ -37,7 +37,7 @@ class StoreComment{
      * @var text $content
      * @Column(type="text")
      */
-    private $cotent;
+    private $content;
     /**
      *
      * @var boolean $isHidden

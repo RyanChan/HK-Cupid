@@ -3,7 +3,7 @@ namespace Champs\Entity;
 
 /**
  * @Entity
- * @Table(name="City")
+ * @Table(name="cities")
  * @HasLifecycleCallbacks
  */
 class City{

@@ -54,6 +54,12 @@ class Album{
     private $ts_last_updated;
     /**
      *
+     * @var ArrayCollection $comments
+     * @OneToMany(targetEntity="AlbumComment", mappedBy="album")
+     */
+    private $comments;
+    /**
+     *
      * @var ArrayCollection $profiles
      * @OneToMany(targetEntity="AlbumProfile", mappedBy="album")
      */
@@ -64,6 +70,7 @@ class Album{
     public function __construct(){
         $this->photos = new ArrayCollection();
         $this->profiles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     /**
      *

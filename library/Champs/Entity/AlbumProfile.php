@@ -3,7 +3,7 @@ namespace Champs\Entity;
 
 /**
  * @Entity
- * @Table("albums_profile")
+ * @Table(name="albums_profile")
  * @HasLifecycleCallbacks
  */
 class AlbumProfile{

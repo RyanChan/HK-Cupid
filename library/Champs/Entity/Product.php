@@ -64,6 +64,12 @@ class Product{
      */
     private $profiles;
     /**
+     *
+     * @var ArrayCollection $comments
+     * @OneToMany(targetEntity="ProductComment", mappedBy="product")
+     */
+    private $comments;
+    /**
      * Initialize Method
      */
     public function __construct(){
