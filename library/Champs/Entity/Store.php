@@ -1,6 +1,8 @@
 <?php
 namespace Champs\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @Entity
  * @Table(name="stores")
@@ -63,10 +65,18 @@ class Store{
      */
     private $comments;
     /**
+     *
+     * @var ArrayCollection $products
+     * @OneToMany(targetEntity="Product", mappedBy="store")
+     */
+    private $products;
+    /**
      * Initialize Method
      */
     public function __construct(){
         $this->isOpened = false;
+        $this->profiles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
     /**
      *

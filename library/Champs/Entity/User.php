@@ -110,6 +110,12 @@ class User{
      */
     private $receivedMessages;
     /**
+     *
+     * @var ArrayCollection $albums
+     * @OneToMany(targetEntity="Album", mappedBy="user")
+     */
+    private $albums;
+    /**
      * Initialize method
      */
     public function __construct(){
@@ -119,7 +125,9 @@ class User{
         $this->events = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->newsfeeds = new ArrayCollection();
-        $this->messages = new ArrayCollection();
+        $this->sentMessages = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
+        $this->albums = new ArrayCollection();
     }
     /**
      *
