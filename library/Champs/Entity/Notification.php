@@ -26,7 +26,7 @@ class Notification{
      * @var ArrayCollection $receivers
      * @ManyToOne(targetEntity="User")
      */
-    private $receivers;
+    private $receiver;
     /**
      *
      * @var text $message
@@ -35,10 +35,10 @@ class Notification{
     private $message;
     /**
      *
-     * @var ArrayCollection $readReceivers
-     * @ManyToOne(targetEntity="User")
+     * @var boolean $isRead
+     * @Column(type="boolean")
      */
-    private $readReceivers;
+    private $isRead;
     /**
      *
      * @var string $targetType
@@ -62,8 +62,7 @@ class Notification{
      */
     public function __construct(){
         $this->sender = new ArrayCollection();
-        $this->receivers = new ArrayCollection();
-        $this->readReceivers = new ArrayCollection();
+        $this->isRead = false;
     }
     /**
      *

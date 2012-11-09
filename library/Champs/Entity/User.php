@@ -88,7 +88,7 @@ class User{
     /**
      *
      * @var ArrayCollection $notifications
-     * @ManyToOne(targetEntity="Notification")
+     * @OneToMany(targetEntity="Notification", mappedBy="receiver")
      */
     private $notifications;
     /**
