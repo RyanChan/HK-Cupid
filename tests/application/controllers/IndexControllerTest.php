@@ -9,44 +9,30 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
      */
     protected $doctrineContainer;
 
-    public static function dropSchema($params){
-        if(file_exists($params['path'])){
-            unlink($params['path']);
-        }
-    }
-
-    public function getClassMetas($path, $namespace){
-        $metas = array();
-        if ($handle = opendir($path)){
-            while(false !== ($file = readdir($handle))){
-                if (strstr($file, '.php')){
-                    list($class) = explode('.', $file);
-                    $metas[] = $this->doctrineContainer->getEntityManager()->getClassMetadata($namespace.$class);
-                }
-            }
-        }
-        return $metas;
-    }
-
     public function setUp()
     {
         $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
         $this->bootstrap->bootstrap();
         $this->doctrineContainer = Zend_Registry::get('doctrine');
 
-        self::dropSchema($this->doctrineContainer->getConnection()->getParams());
+        $em = $this->doctrineContainer->getEntityManager();
 
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($this->doctrineContainer->getEntityManager());
-        $metas = $this->getClassMetas(APPLICATION_PATH.'/../library/Champs/Entity', 'Champs\Entity\\');
-        $tool->createSchema($metas);
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropDatabase();
+
+        $allMetadata = $em->getMetadataFactory()->getAllMetadata();
+        $tool->createSchema($allMetadata);
 
         parent::setUp();
     }
 
     public function tearDown(){
         parent::tearDown();
-
-        self::dropSchema($this->doctrineContainer->getConnection()->getParams());
+        
+        $this->doctrineContainer->getConnection()->close();
+        $em = $this->doctrineContainer->getEntityManager();
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropDatabase();
     }
 
     public function testUserEntity(){
