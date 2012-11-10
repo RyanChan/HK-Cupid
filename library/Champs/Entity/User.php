@@ -116,6 +116,12 @@ class User{
      */
     private $albums;
     /**
+     *
+     * @var ArrayCollection $payments
+     * @OneToMany(targetEntity="Payment", mappedBy="user")
+     */
+    private $payments;
+    /**
      * Initialize method
      */
     public function __construct(){
@@ -128,6 +134,7 @@ class User{
         $this->sentMessages = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
         $this->albums = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
     /**
      *
