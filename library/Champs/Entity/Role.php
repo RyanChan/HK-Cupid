@@ -17,12 +17,6 @@ class Role{
     private $id;
     /**
      *
-     * @var \ArrayCollection $users
-     * @ManyToOne(targetEntity="User", inversedBy="role")
-     */
-    private $users;
-    /**
-     *
      * @var string $rolename
      * @Column(type="string")
      */

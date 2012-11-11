@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Champs\Entity\UserProfile;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\UserRepository")
  * @Table(name="users")
  * @HasLifecycleCallbacks
  * @author RyanChan
@@ -40,17 +40,19 @@ class User{
     /**
      *
      * @var \Champs\Entity\Role $role
-     * @OneToMany(targetEntity="Role", mappedBy="users")
+     * @ManyToOne(targetEntity="Role")
      */
     private $role;
     /**
      *
      * @var \DateTime $ts_created
+     * @Column(type="datetime")
      */
     private $ts_created;
     /**
      *
      * @var \DateTime $ts_last_updated
+     * @Column(type="datetime", nullable=true)
      */
     private $ts_last_updated;
     /**
