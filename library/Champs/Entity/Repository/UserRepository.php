@@ -84,7 +84,7 @@ class UserRepository extends EntityRepository{
     }
 
     /**
-     * Set role to user
+     * Assign role to user
      *
      * @param type $id
      * @param Role $role
@@ -97,7 +97,31 @@ class UserRepository extends EntityRepository{
         $user->role = $role;
 
         $em->flush();
+    }
 
-        return $user;
+    /**
+     * Gets all administrator group users
+     *
+     * @return array
+     */
+    public function getAllAdminUsers(){
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'administrator' and u.role = r");
+
+        return $query->getResult();
+    }
+
+    /**
+     * Gets all member group users
+     *
+     * @return array
+     */
+    public function getAllMemberUsers(){
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'member' and u.role = r");
+
+        return $query->getResult();
     }
 }
