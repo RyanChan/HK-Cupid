@@ -2,3 +2,7 @@
 .DS_Store
 
 application/tmp/
+
+application/tmp/smarty_compile/8d78cfe6a4a9c5c448450bf54d78bc67dbb5b0ab.file.layout.tpl.php
+
+application/tmp/smarty_compile/f7c25241b7eec5ed2025ed5298843d2612bc2c4f.file.footer.tpl.php
