@@ -3,7 +3,7 @@
 
       <div class="one-third column">
         <div class="logo">
-        <a href="index.html">
+        <a href="{geturl controller="index" action="index"}">
           <img src="/images/logo.png" alt="Crevision - Creative Template" />
         </a>
         </div>
