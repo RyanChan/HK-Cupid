@@ -6,6 +6,7 @@
  */
 class IndexController extends Zend_Controller_Action{
     public function indexAction(){
-        $this->view->hello = 'Hello';
+        $em = Zend_Registry::get('doctrine')->getEntityManager();
+        $this->view->user = $em->getRepository('Champs\Entity\User')->isValidUsername('kimchan1314');
     }
 }

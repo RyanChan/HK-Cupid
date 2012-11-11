@@ -9,37 +9,7 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
      */
     protected $doctrineContainer;
 
-    public function setUp()
-    {
-        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
-        $this->bootstrap->bootstrap();
-        $this->doctrineContainer = Zend_Registry::get('doctrine');
-
-        $em = $this->doctrineContainer->getEntityManager();
-
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $tool->dropDatabase();
-
-        $allMetadata = $em->getMetadataFactory()->getAllMetadata();
-        $tool->createSchema($allMetadata);
-
-        parent::setUp();
-    }
-
-    public function tearDown(){
-        parent::tearDown();
-        
-        $this->doctrineContainer->getConnection()->close();
-        $em = $this->doctrineContainer->getEntityManager();
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $tool->dropDatabase();
-    }
-
-    public function testUserEntity(){
-        $this->assertInstanceOf('Champs\Entity\User', new \Champs\Entity\User());
-    }
-
-    public function testUserEntitySave(){
+    private function _createUser(){
         $u = new \Champs\Entity\User();
         $u->username = 'ming';
         $u->password = 'aoa';
@@ -71,6 +41,42 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
 
         $em->flush();
 
+//        return $user;
+    }
+
+    public function setUp()
+    {
+        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
+        $this->bootstrap->bootstrap();
+        $this->doctrineContainer = Zend_Registry::get('doctrine');
+
+        $em = $this->doctrineContainer->getEntityManager();
+
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropDatabase();
+
+        $allMetadata = $em->getMetadataFactory()->getAllMetadata();
+        $tool->createSchema($allMetadata);
+
+        parent::setUp();
+    }
+
+    public function tearDown(){
+        parent::tearDown();
+
+        $this->doctrineContainer->getConnection()->close();
+        $em = $this->doctrineContainer->getEntityManager();
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropDatabase();
+    }
+
+    public function testUserEntity(){
+        $this->assertInstanceOf('Champs\Entity\User', new \Champs\Entity\User());
+    }
+    /*
+    public function testUserEntitySave(){
+        $this->_createUser();
+
         $users = $em->createQuery('select u from Champs\Entity\User u')->execute();
         $this->assertEquals(1, count($users));
         $this->assertEquals('ming', $users[0]->username);
@@ -89,6 +95,47 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $em->flush();
 
         $this->assertEquals(null, $users[0]->getProfile('phone'));
+    }
+    */
+
+    public function testUserRepository(){
+
+        $this->_createUser();
+
+        $email = "kimchan1314@gmail.com";
+        $em = $this->doctrineContainer->getEntityManager();
+        $user = $em->getRepository('\Champs\Entity\User')->getUserByEmail($email);
+
+        $this->assertEquals($email, $user->getProfile('email'));
+    }
+
+    public function testSetRole(){
+        $guess = new \Champs\Entity\Role();
+        $guess->rolename = 'guess';
+
+        $member = new \Champs\Entity\Role();
+        $member->rolename = 'member';
+
+        $em = $this->doctrineContainer->getEntityManager();
+
+        $em->persist($guess);
+        $em->persist($member);
+
+        $em->flush();
+
+        $this->_createUser();
+
+        $user = $em->find('Champs\Entity\User', 1);
+        $user->role = $guess;
+//        $user->role->users->add($user);
+
+        $em->flush();
+        
+        $em->getRepository('Champs\Entity\User')->setUserToRole(1, $member);
+
+        $user = $em->find('Champs\Entity\User', 1);
+
+        $this->assertEquals($member->rolename, $user->role->rolename);
     }
 }
 

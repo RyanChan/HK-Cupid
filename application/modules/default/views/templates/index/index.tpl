@@ -1,3 +1,7 @@
 {include file="header.tpl"}
-    {$hello}
+    {if !$user}
+        YES
+    {else}
+        NO
+    {/if}
 {include file="footer.tpl"}
