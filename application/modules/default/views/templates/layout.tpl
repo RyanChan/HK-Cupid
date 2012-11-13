@@ -7,7 +7,7 @@
 
         <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Crevision | Creative Responsive Theme</title>
+        <title>{translate name="Champs"}</title>
         <meta name="description" content="">
         <meta name="author" content="">
 
@@ -69,9 +69,9 @@
     <body>
 
         <div id="wrap" class="boxed">
-            {include file="header.tpl"}
 
-            {include file="footer.tpl"}
+            {$this->layout()->content}
+
         </div><!-- End wrap -->
 
         <!-- Start Style Switcher -->
