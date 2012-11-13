@@ -3,13 +3,47 @@ namespace Champs\Entity\Repository;
 
 use Champs\Entity\User;
 use Champs\Entity\Role;
+
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * User repository
  * @author RyanChan
  */
 class UserRepository extends EntityRepository{
+
+    /**
+     * Not found
+     */
+    const NOT_FOUND = 1;
+
+    /**
+     * Wrong password
+     */
+    const WRONG_PW = 2;
+
+    /**
+     * Performs authentication of a user
+     *
+     * @param type $username
+     * @param type $password
+     */
+    public function authenticate($username, $password){
+        $user = $this->getUserByUsername($username);
+
+        if($user){
+            $password = md5($password.$user->password_salt);
+            if($user->password === $password){
+                return $user;
+            }
+
+            throw new \Exception(self::WRONG_PW);
+        }
+
+        throw new \Exception(self::NOT_FOUND);
+    }
 
     /**
      * Get a user object by email
@@ -27,6 +61,24 @@ class UserRepository extends EntityRepository{
         $result = $query->getSingleResult();
 
         return $result ? $result : null;
+    }
+
+    public function getUserByUsername($username){
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u WHERE u.username = ?1");
+
+        $query->setParameter(1, $username);
+
+        $result = null;
+
+        try{
+            $result = $query->getSingleResult();
+        }
+        catch (NonUniqueResultException $e){ }
+        catch (NoResultException $e) { }
+
+        return $result;
     }
 
     /**
