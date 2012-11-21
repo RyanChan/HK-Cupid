@@ -3,6 +3,7 @@
 function smarty_function_geturl($params, Smarty_Internal_Template $template) {
     $action = isset($params['action']) ? $params['action'] : null;
     $controller = isset($params['controller']) ? $params['controller'] : null;
+    $module = isset($params['module']) ? $params['module'] : null;
     $route = isset($params['route']) ? $params['route'] : null;
 
     $helper = Zend_Controller_Action_HelperBroker::getStaticHelper('url');
@@ -11,10 +12,10 @@ function smarty_function_geturl($params, Smarty_Internal_Template $template) {
         unset($params['route']);
         $url = $helper->url(params, $route);
     } else {
-        $request = Zend_Controller_Front::getInstance()->getRequest();
+        $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
-        $url = rtrim($request->getBaseUrl(), '/') . '/';
-        $url .= $helper->simple($action, $controller);
+        $url = $baseUrl;
+        $url .= $helper->simple($action, $controller, $module);
     }
 
     return $url;
