@@ -2,6 +2,24 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+
+    protected function _initSessionPath(){
+        $session = $this->getOption('session');
+
+        Zend_Session::setOptions($session);
+    }
+
+    /**
+     * Bootstrap application.ini config
+     */
+    protected function _initConfig(){
+        $config = new Zend_Config($this->getOptions());
+
+        Zend_Registry::set('config', $config);
+
+        return $config;
+    }
+
     /**
      * Bootstrap Smarty View
      * @return \Ext_View_Smarty
@@ -22,7 +40,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         return $view;
     }
-    
+
     /**
      * Sets default locale language
      */
