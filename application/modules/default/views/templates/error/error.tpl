@@ -1,36 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Zend Framework Default Application</title>
-</head>
-<body>
-  <h1>An error occurred</h1>
+{include file="header.tpl" title="404"}
+<div class="container clearfix">
 
-<h2>{$this->message}</h2>
+    <div class="sixteen columns bottom">
+        <h1 class="page-title">404 / <span class="gray2">找不到頁面</span><span class="line"></span></h1>
+    </div>    <!-- Page Title -->
 
-  {if $this->exception}
-<h3>
-  Exception information:
-</h3>
+    <div id="description">
+        <div class="sixteen columns">
+            <div class="description bottom">
+                <h1 class="big">404</h1>
+                <p class="bottom-2">
+                    你訪問的頁面並不存在
+                </p>
+                <a href="index.html" class="button medium black">返回</a>
+                <a href="{geturl module="default" controller="index" action="index"}" class="button medium black">主頁</a>
+            </div>
+        </div>
+    </div><!-- End description -->
 
-<p>
-  <b>Message:</b> {$this->exception->getMessage()}
-</p>
-
-<h3>
-  Stack trace:
-</h3>
-
-<pre>{$this->exception->getTraceAsString()}
-  </pre>
-
-<h3>
-  Request Parameters:
-</h3>
-
-<pre>{var_export($this->request->getParams(), true)}
-  </pre>
-  {/if}
-</body>
-</html>
+</div><!-- <<< End Container >>> -->
+{include file="footer.tpl"}
