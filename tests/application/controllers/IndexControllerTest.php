@@ -73,30 +73,6 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
     public function testUserEntity(){
         $this->assertInstanceOf('Champs\Entity\User', new \Champs\Entity\User());
     }
-    /*
-    public function testUserEntitySave(){
-        $this->_createUser();
-
-        $users = $em->createQuery('select u from Champs\Entity\User u')->execute();
-        $this->assertEquals(1, count($users));
-        $this->assertEquals('ming', $users[0]->username);
-        $this->assertEquals('aoa', $users[0]->password);
-        $this->assertEquals('123', $users[0]->password_salt);
-        $this->assertInstanceOf('\\DateTime', $users[0]->ts_created);
-        $this->assertEquals(null, $users[0]->ts_last_updated);
-
-//        $this->assertInstanceOf(, $users[0]->getProfile('email'));
-//        $this->assertInstanceOf('Champs\Entity\UserProfile', $users[0]->getProfile('phone'));
-        $this->assertEquals($profiles['email']['value'], $users[0]->getProfile('email'));
-        $this->assertEquals($profiles['phone']['value'], $users[0]->getProfile('phone'));
-
-        $users[0]->unsetProfile('phone');
-
-        $em->flush();
-
-        $this->assertEquals(null, $users[0]->getProfile('phone'));
-    }
-    */
 
     public function testUserRepository(){
 
@@ -130,12 +106,25 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
 //        $user->role->users->add($user);
 
         $em->flush();
-        
+
         $em->getRepository('Champs\Entity\User')->setUserToRole(1, $member);
 
         $user = $em->find('Champs\Entity\User', 1);
 
         $this->assertEquals($member->rolename, $user->role->rolename);
+    }
+
+    public function testConfigImagePath(){
+        echo Zend_Registry::get('config')->image->path;
+    }
+
+    public function testImageClass(){
+        $image = new Champs\Utility\Image('kimchan', 'blog', 1);
+        $image->uploadFile('/Users/RyanChan/Desktop/IMG_0354.JPG');
+
+
+
+        $this->assertEquals(false, $image->process());
     }
 }
 
