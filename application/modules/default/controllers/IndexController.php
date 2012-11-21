@@ -14,7 +14,6 @@ class IndexController extends MasterController {
     }
 
     public function indexAction() {
-        $this->view->defaultLocale = Zend_Registry::get('translate')->getList();
     }
 
 }
