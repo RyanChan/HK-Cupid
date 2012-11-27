@@ -32,6 +32,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer->setViewSuffix('tpl');
         $viewRenderer->setView($view);
 
+        // store the view object to Zend_Registry
+        Zend_Registry::set('smarty', $view);
+
         // ensure we have layout bootstrap
         $this->bootstrap('layout');
         // set the tpl suffix to layout also
