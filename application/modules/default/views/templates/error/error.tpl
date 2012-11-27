@@ -12,6 +12,12 @@
                 <p class="bottom-2">
                     你訪問的頁面並不存在
                 </p>
+                <p>{$this->message}</p>
+
+                {if $this->exception}
+                    <p>{$this->exception->getMessage()}</p>
+                    <p>{$this->exception->getTraceAsString()}</p>
+                {/if}
                 <a href="index.html" class="button medium black">返回</a>
                 <a href="{geturl module="default" controller="index" action="index"}" class="button medium black">主頁</a>
             </div>
