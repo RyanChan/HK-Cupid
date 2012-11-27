@@ -1,9 +1,9 @@
 <?php
+
 namespace Champs\Entity\Repository;
 
 use Champs\Entity\User;
 use Champs\Entity\Role;
-
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -12,11 +12,11 @@ use Doctrine\ORM\NonUniqueResultException;
  * User repository
  * @author RyanChan
  */
-class UserRepository extends EntityRepository{
-
+class UserRepository extends EntityRepository {
     /**
      * Not found
      */
+
     const NOT_FOUND = 1;
 
     /**
@@ -30,12 +30,12 @@ class UserRepository extends EntityRepository{
      * @param type $username
      * @param type $password
      */
-    public function authenticate($username, $password){
+    public function authenticate($username, $password) {
         $user = $this->getUserByUsername($username);
 
-        if($user){
-            $password = md5($password.$user->password_salt);
-            if($user->password === $password){
+        if ($user) {
+            $password = md5($password . $user->password_salt);
+            if ($user->password === $password) {
                 return $user;
             }
 
@@ -51,7 +51,7 @@ class UserRepository extends EntityRepository{
      * @param string $email
      * @return Champs\Entity\User
      */
-    public function getUserByEmail($email){
+    public function getUserByEmail($email) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
@@ -63,7 +63,7 @@ class UserRepository extends EntityRepository{
         return $result ? $result : null;
     }
 
-    public function getUserByUsername($username){
+    public function getUserByUsername($username) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT u FROM Champs\Entity\User u WHERE u.username = ?1");
@@ -72,11 +72,13 @@ class UserRepository extends EntityRepository{
 
         $result = null;
 
-        try{
+        try {
             $result = $query->getSingleResult();
+        } catch (NonUniqueResultException $e) {
+
+        } catch (NoResultException $e) {
+
         }
-        catch (NonUniqueResultException $e){ }
-        catch (NoResultException $e) { }
 
         return $result;
     }
@@ -87,7 +89,7 @@ class UserRepository extends EntityRepository{
      * @param string $username
      * @return boolean
      */
-    public function hasSameUsername($username){
+    public function hasSameUsername($username) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT count(u.id) FROM Champs\Entity\User u WHERE u.username = ?1");
@@ -105,7 +107,7 @@ class UserRepository extends EntityRepository{
      * @param string $email
      * @return boolean
      */
-    public function hasSameEmail($email){
+    public function hasSameEmail($email) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
@@ -123,7 +125,7 @@ class UserRepository extends EntityRepository{
      * @param string $identity
      * @return boolean
      */
-    public function hasSameIdentity($identity){
+    public function hasSameIdentity($identity) {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'identity' and up.profile_value = ?1");
@@ -141,7 +143,7 @@ class UserRepository extends EntityRepository{
      * @param type $id
      * @param Role $role
      */
-    public function setUserToRole($id, Role $role){
+    public function setUserToRole($id, Role $role) {
         $em = $this->getEntityManager();
 
         $user = $this->find($id);
@@ -156,7 +158,7 @@ class UserRepository extends EntityRepository{
      *
      * @return array
      */
-    public function getAllAdminUsers(){
+    public function getAllAdminUsers() {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'administrator' and u.role = r");
@@ -169,11 +171,33 @@ class UserRepository extends EntityRepository{
      *
      * @return array
      */
-    public function getAllMemberUsers(){
+    public function getAllMemberUsers() {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'member' and u.role = r");
 
         return $query->getResult();
     }
+
+    /**
+     * Store the user entity
+     *
+     * @param Champs\Entity\User $user
+     * @return Champs\Entity\User
+     * @throws \Exception
+     */
+    public function storeUserEntity(\Champs\Entity\User $user) {
+        try {
+            $em = $this->getEntityManager();
+
+            $em->persist($user);
+            $em->flush();
+
+            return $user;
+
+        } catch (Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
 }

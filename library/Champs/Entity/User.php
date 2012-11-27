@@ -181,6 +181,23 @@ class User{
 
         $this->profiles->add($profile);
     }
+
+    /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value){
+        $profile = new \Champs\Entity\UserProfile();
+        $profile->user = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        \Zend_Registry::get('doctrine')->getEntityManager()->persist($profile);
+
+        $this->setProfile($profile);
+    }
     /**
      *
      * @param string $key
@@ -221,5 +238,51 @@ class User{
      */
     public function getLastUpdated(){
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Set up the password with salt and encryption
+     *
+     * @param type $password
+     */
+    public function setPassword($password){
+        $salt = sha1(md5($password.time()));
+        $this->password_salt = $salt;
+        $this->password = md5($password.$salt);
+    }
+
+    /**
+     * Set up the username by using the email.
+     *
+     */
+    public function setUsername($email){
+        // get the email address from the profile array
+        if (empty($email))
+            throw new Exception ('Email address have not been set yet');
+
+        // explode the email address by delimiter "@"
+        $pattern = explode('@', $email);
+        // get the first index of the array
+        $username = $pattern[0];
+        // set the value to username property
+        $this->username = $username;
+    }
+
+    /**
+     * Send confirmation email
+     *
+     */
+    public function sendComfirmEmail(){
+        $mail = new \Champs_Mail();
+        $mail->setObject(array('user' => $this));
+        $mail->setSubject('Email address verification');
+
+        $name = sprintf('%s %s', $this->getProfile('first_name'), $this->getProfile('last_name'));
+        $email = $this->getProfile('email');
+
+        $mail->setTo($email, $name);
+
+        $mail->setBodyHTML('account/email-verification.tpl');
+        $mail->send();
     }
 }
