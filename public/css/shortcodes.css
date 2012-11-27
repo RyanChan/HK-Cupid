@@ -13,10 +13,10 @@
 /* Accordion
 =========================================================*/
 .ui-accordion .ui-accordion-header {
-	display: block; 
-	cursor: pointer; 
-	position: relative; 
-	zoom: 1; 
+	display: block;
+	cursor: pointer;
+	position: relative;
+	zoom: 1;
 }
 
 #accordion h3 {
@@ -48,12 +48,12 @@
 	position: absolute;
 	left: .5em;
 	top: 50%;
-	margin-top: -8px; 
+	margin-top: -8px;
 }
 
 .ui-accordion .ui-accordion-content {
 	overflow: hidden;
-	zoom: 1; 
+	zoom: 1;
 }
 
 
@@ -67,8 +67,8 @@
 	margin-bottom:12px;
 }
 
-.meter { 
-	height: 23px; 
+.meter {
+	height: 23px;
 	position: relative;
 }
 
@@ -82,9 +82,9 @@
 .meter > span:after, .animate > span > span {
 	content: "";
 	position: absolute;
-	top: 0; 
-	left: 0; 
-	bottom: 0; 
+	top: 0;
+	left: 0;
+	bottom: 0;
 	right: 0;
 	overflow: hidden;
 }
@@ -187,11 +187,11 @@ blockquote {
 .colorTip{
 	/* This class is assigned to the color tip span by jQuery */
 	display:none;
-	position:absolute;	
+	position:absolute;
 	left:50%;
 	top:-30px;
 	padding:6px;
-	
+
 	background-color:white;
 	font-family:Arial,Helvetica,sans-serif;
 	font-size:11px;
@@ -201,7 +201,7 @@ blockquote {
 	text-align:center;
 	text-shadow:0 0 1px white;
 	white-space:nowrap;
-	
+
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
 	border-radius:2px;
@@ -329,14 +329,14 @@ blockquote {
 
 #toggle-view span.link {
 	position:absolute;
-	right:10px; 
+	right:10px;
 	top:6px;
 }
 
 #toggle-view .panel {
 	padding:10px;
 	display:none;
-}	
+}
 
 /* Dropcaps
 =========================================================*/
@@ -460,7 +460,7 @@ table th, table td {
 .pricing-tables-1 .tables-column {
 	width:234px;
 	text-align:center;
-	float: left; 
+	float: left;
 	display: inline;
 	margin:10px 0;
 	border-right:1px solid #fff;
@@ -470,7 +470,7 @@ table th, table td {
 .pricing-tables-2 .tables-column {
 	width:187px;
 	text-align:center;
-	float: left; 
+	float: left;
 	display: inline;
 	margin:10px 0;
 	border-right:1px solid #fff;
@@ -502,7 +502,7 @@ table th, table td {
 .tables-column.featured .footer h3 span {
 	padding-bottom:15px;
 }
-	
+
 
 .tables-column .header h3 span {
 	display:block;
@@ -588,14 +588,15 @@ table th, table td {
 
 /* Form Elements
 =========================================================*/
-.form-elements input[type="text"], .form-elements select, .form-elements textarea, .form-elements2 input[type="text"], .form-elements2 select, .form-elements2 textarea {
+.form-elements input[type="text"], .form-elements input[type="password"], .form-elements select, .form-elements textarea,
+.form-elements2 input[type="text"], .form-elements2 input[type="password"], .form-elements2 select, .form-elements2 textarea {
 	padding:6px;
 	border:1px solid #e4e4e3;
     color:#8c8d8b;
 	border-radius:2px;
 }
 
-.form-elements input[type="text"] {
+.form-elements input[type="text"], .form-elements input[type="password"] {
 	min-width:145px;
 }
 
@@ -633,7 +634,7 @@ table th, table td {
 	width:100%;
 }
 
-.form-elements2 input[type="text"] {
+.form-elements2 input[type="text"], .form-elements2 input[type="password"] {
 	width:95%;
 }
 
