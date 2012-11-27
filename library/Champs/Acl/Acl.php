@@ -1,12 +1,9 @@
 <?php
-
-namespace Champs\Acl;
-
 /**
  * Acl plugin
  * @author RyanChan
  */
-class Acl {
+class Champs_Acl_Acl {
 
     /**
      *
@@ -31,28 +28,28 @@ class Acl {
      *
      * @param Zend_Auth $auth
      */
-    public function __construct(\Zend_Auth $auth) {
+    public function __construct(Zend_Auth $auth) {
 
         $this->auth = $auth;
-        $this->acl = new \Zend_Acl();
+        $this->acl = new Zend_Acl();
 
-        $this->_em = \Zend_Registry::get('doctrine')->getEntityManager();
+        $this->_em = Zend_Registry::get('doctrine')->getEntityManager();
 
         // add the different user roles
         $roles = $this->_em->getRepository('Champs\Entity\Role')->findAll();
-        $this->acl->addRole(new \Zend_Acl_Role($this->_defaultRole));
+        $this->acl->addRole(new Zend_Acl_Role($this->_defaultRole));
         if (null !== $roles) {
             foreach ($roles as $role) {
-                $this->acl->addRole(new \Zend_Acl_Role($role->rolename));
+                $this->acl->addRole(new Zend_Acl_Role($role->rolename));
             }
         }
 
         // add the resources we want to have control over
         $resources = $this->_em->getRepository('Champs\Entity\Resource')->findAll();
-        $this->acl->addResource(new \Zend_Acl_Resource('index'));
+        $this->acl->addResource(new Zend_Acl_Resource('index'));
         if (null !== $resources) {
             foreach ($resources as $resource) {
-                $this->acl->addResource(new \Zend_Acl_Resource($resource->resourcename));
+                $this->acl->addResource(new Zend_Acl_Resource($resource->resourcename));
             }
         }
 
@@ -67,9 +64,9 @@ class Acl {
      * has sufficient privileges. If not, dispatch the default
      * action instead
      *
-     * @param \Zend_Controller_Request_Abstract $request
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public function checkACL(\Zend_Controller_Request_Abstract $request) {
+    public function checkACL(Zend_Controller_Request_Abstract $request) {
         // check if a user is logged in and has a valid role,
         // otherwise, assign them the default role(guest)
         if ($this->auth->hasIdentity()) {

@@ -1,7 +1,4 @@
 <?php
-
-namespace Champs\Utility;
-
 /**
  * Image function class
  *
@@ -9,7 +6,7 @@ namespace Champs\Utility;
  *
  * @author RyanChan
  */
-class Image {
+class Champs_Utility_Image {
 
     /**
      *
@@ -46,7 +43,7 @@ class Image {
      */
     public function __construct($username, $module = '', $image_id = 0) {
         // image folder location
-        $this->_imagePath = \Zend_Registry::get('config')->image->path;
+        $this->_imagePath = Zend_Registry::get('config')->image->path;
         // username
         $this->_username = strtolower($username);
         // module
@@ -101,10 +98,10 @@ class Image {
             if ($deleted) {
                 return $deleted;
             } else {
-                throw new \Exception("User's image folder can not be deleted!");
+                throw new Exception("User's image folder can not be deleted!");
             }
         } else {
-            throw new \Exception("User's image folder have not found!");
+            throw new Exception("User's image folder have not found!");
         }
     }
 
@@ -152,9 +149,9 @@ class Image {
      */
     public function uploadFile($path) {
         if (!file_exists($path) || !is_file($path))
-            throw new \Exception('Unable to find uploaded file');
+            throw new Exception('Unable to find uploaded file');
         if (!is_readable($path))
-            throw new \Exception('Unable to read uploaded file');
+            throw new Exception('Unable to read uploaded file');
 
         $this->_uploadedFile = $path;
     }
@@ -176,7 +173,7 @@ class Image {
      */
     public function createThumbnail($maxW, $maxH) {
         $imagePath = $this->getImagePath();
-        
+
         $ts = (int) filemtime($imagePath);
         $info = getimagesize($imagePath);
 
@@ -235,7 +232,7 @@ class Image {
                 break;
 
             default:
-                throw new \Exception('Invalid image type');
+                throw new Exception('Invalid image type');
         }
 
         // create a unique filename based on the specified options
@@ -246,7 +243,7 @@ class Image {
         if (!file_exists($path))
             mkdir($path, 0777);
         if (!is_writable($path))
-            throw new \Exception('Unable to write to thumbnail dir');
+            throw new Exception('Unable to write to thumbnail dir');
 
         // determine the full path for the new thumbnail
         $thumbPath = sprintf('%s/%s', $path, $filename);
@@ -255,7 +252,7 @@ class Image {
             // read the image in to GD
             $im = @$infunc($imagePath);
             if (!$im)
-                throw new \Exception('Unable to read image file');
+                throw new Exception('Unable to read image file');
 
             // create the output image
             $thumb = imagecreatetruecolor($newW, $newH);
@@ -267,9 +264,9 @@ class Image {
         }
 
         if (!file_exists($thumbPath))
-            throw new \Exception('Unknown error occurred creating thumbnail');
+            throw new Exception('Unknown error occurred creating thumbnail');
         if (!is_readable($thumbPath))
-            throw new \Exception('Unable to read thumbnail');
+            throw new Exception('Unable to read thumbnail');
 
         return $thumbPath;
     }

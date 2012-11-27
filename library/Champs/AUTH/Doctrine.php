@@ -1,14 +1,11 @@
 <?php
-
-namespace Champs\Auth;
-
 /**
  * Doctrine's authenticate class
  *
  * @author RyanChan
  *
  */
-class Doctrine implements Zend_Auth_Adapter_Interface {
+class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
 
     const NOT_FOUND_MSG = 'Account not found';
     const BAD_PW_MSG = 'Username or password is invalid';
@@ -77,4 +74,16 @@ class Doctrine implements Zend_Auth_Adapter_Interface {
         return new Zend_Auth_Result($code, $this->user, $message);
     }
 
+    /**
+     * Returns current user entity
+     *
+     * @return Champs\Entity\User
+     */
+    public function getUser(){
+        if ($this->user){
+            return $this->user;
+        }
+
+        return NULL;
+    }
 }
