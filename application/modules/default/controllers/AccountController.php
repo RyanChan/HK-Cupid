@@ -97,7 +97,7 @@ class AccountController extends Champs_Controller_MasterController{
      * show up the message that if the user completed registration process
      */
     public function completeAction(){
-        $this->view->html = Zend_Registry::get('smarty')->render('email/account/email-verification.tpl');
+        
     }
 
     /**
