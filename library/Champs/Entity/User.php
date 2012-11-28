@@ -1,4 +1,5 @@
 <?php
+
 namespace Champs\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +11,8 @@ use Champs\Entity\UserProfile;
  * @HasLifecycleCallbacks
  * @author RyanChan
  */
-class User{
+class User {
+
     /**
      *
      * @var bigint $id
@@ -19,48 +21,56 @@ class User{
      * @Id
      */
     private $id;
+
     /**
      *
      * @var string $username
      * @Column(type="string")
      */
     private $username;
+
     /**
      *
      * @var string $password
      * @Column(type="string", length=32)
      */
     private $password;
+
     /**
      *
      * @var string $password_salt
      * @Column(type="string")
      */
     private $password_salt;
+
     /**
      *
      * @var \Champs\Entity\Role $role
      * @ManyToOne(targetEntity="Role")
      */
     private $role;
+
     /**
      *
      * @var \DateTime $ts_created
      * @Column(type="datetime")
      */
     private $ts_created;
+
     /**
      *
      * @var \DateTime $ts_last_updated
      * @Column(type="datetime", nullable=true)
      */
     private $ts_last_updated;
+
     /**
      *
      * @var \ArrayCollection $profiles
-     * @OneToMany(targetEntity="UserProfile", mappedBy="user")
+     * @OneToMany(targetEntity="UserProfile", mappedBy="user", cascade={"persist", "remove"})
      */
     private $profiles;
+
     /**
      *
      * @var \ArrayCollection $followers
@@ -75,58 +85,67 @@ class User{
      * )
      */
     private $followers;
+
     /**
      *
      * @var \ArrayCollection $followersWithMe
      * @ManyToMany(targetEntity="User", mappedBy="followers")
      */
     private $followersWithMe;
+
     /**
      *
      * @var ArrayCollection $events
      * @OneToMany(targetEntity="Event", mappedBy="user")
      */
     private $events;
+
     /**
      *
      * @var ArrayCollection $notifications
      * @OneToMany(targetEntity="Notification", mappedBy="receiver")
      */
     private $notifications;
+
     /**
      *
      * @var ArrayCollection $newsfeeds
      * @OneToMany(targetEntity="Newsfeed", mappedBy="user")
      */
     private $newsfeeds;
+
     /**
      *
      * @var ArrayCollection $sentMessages
      * @OneToMany(targetEntity="Message", mappedBy="sender")
      */
     private $sentMessages;
+
     /**
      *
      * @var ArrayCollection $receivedMessages
      * @OneToMany(targetEntity="Message", mappedBy="receiver")
      */
     private $receivedMessages;
+
     /**
      *
      * @var ArrayCollection $albums
      * @OneToMany(targetEntity="Album", mappedBy="user")
      */
     private $albums;
+
     /**
      *
      * @var ArrayCollection $payments
      * @OneToMany(targetEntity="Payment", mappedBy="user")
      */
     private $payments;
+
     /**
      * Initialize method
      */
-    public function __construct(){
+    public function __construct() {
         $this->profiles = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->followersWithMe = new ArrayCollection();
@@ -138,47 +157,67 @@ class User{
         $this->albums = new ArrayCollection();
         $this->payments = new ArrayCollection();
     }
+
     /**
      *
      * @param string $key
      * @param mixed $value
      */
-    public function __set($key, $value){
+    public function __set($key, $value) {
         $this->$key = $value;
     }
+
     /**
      *
      * @param string $key
      * @return mixed
      */
-    public function __get($key){
+    public function __get($key) {
         return $this->$key;
     }
+
     /**
      * @PrePersist
      */
-    public function doPrePersist(){
+    public function doPrePersist() {
         $this->ts_created = new \DateTime();
     }
+
     /**
      * @PreUpdate
      */
-    public function doPreUpdate(){
+    public function doPreUpdate() {
         $this->ts_last_updated = new \DateTime();
     }
+
+    /**
+     * @PostPersist
+     */
+    public function doPostPersist() {
+        // persist profiles
+//        $this->postProfileEntities();
+        // generate activation key
+        $this->generateActivationKey();
+        // send activation email
+        $this->sendComfirmEmail();
+    }
+
     /**
      *
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(UserProfile $profile){
-        foreach ($this->profiles as $p){
-            if ($p->profile_key == $profile->profile_key){
+    public function setProfile(UserProfile $profile) {
+        foreach ($this->profiles as $p) {
+            if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
                 return;
             }
         }
 
+//        if ($this->id < 0 || $this->id == null)
+//            $this->tempProfiles->add($profile);
+//        else
         $this->profiles->add($profile);
     }
 
@@ -188,35 +227,35 @@ class User{
      * @param string $key
      * @param string $value
      */
-    public function setProfileWithKeyAndValue($key, $value){
+    public function setProfileWithKeyAndValue($key, $value) {
         $profile = new \Champs\Entity\UserProfile();
         $profile->user = $this;
         $profile->profile_key = $key;
         $profile->profile_value = $value;
 
-        \Zend_Registry::get('doctrine')->getEntityManager()->persist($profile);
-
         $this->setProfile($profile);
     }
+
     /**
      *
      * @param string $key
      */
-    public function unsetProfile($key){
-        foreach ($this->profiles as $profile){
-            if ($profile->profile_key == $key){
+    public function unsetProfile($key) {
+        foreach ($this->profiles as $profile) {
+            if ($profile->profile_key == $key) {
                 $this->profiles->removeElement($profile);
             }
         }
     }
+
     /**
      *
      * @param UserProfile $profile
      */
-    public function getProfile($key = null){
-        if (strlen($key) > 0){
-            foreach ($this->profiles as $profile){
-                if ($profile->profile_key == $key){
+    public function getProfile($key = null) {
+        if (strlen($key) > 0) {
+            foreach ($this->profiles as $profile) {
+                if ($profile->profile_key == $key) {
                     return $profile->profile_value;
                 }
             }
@@ -225,18 +264,20 @@ class User{
             return $this->profiles;
         }
     }
+
     /**
      *
      * @return \DateTime
      */
-    public function getCreated(){
+    public function getCreated() {
         return $this->ts_created->format('Y-m-d H:i:s');
     }
+
     /**
      *
      * @return \DateTime
      */
-    public function getLastUpdated(){
+    public function getLastUpdated() {
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
     }
 
@@ -245,20 +286,20 @@ class User{
      *
      * @param type $password
      */
-    public function setPassword($password){
-        $salt = sha1(md5($password.time()));
+    public function setPassword($password) {
+        $salt = sha1(md5($password . time()));
         $this->password_salt = $salt;
-        $this->password = md5($password.$salt);
+        $this->password = md5($password . $salt);
     }
 
     /**
      * Set up the username by using the email.
      *
      */
-    public function setUsername($email){
+    public function setUsername($email) {
         // get the email address from the profile array
         if (empty($email))
-            throw new Exception ('Email address have not been set yet');
+            throw new Exception('Email address have not been set yet');
 
         // explode the email address by delimiter "@"
         $pattern = explode('@', $email);
@@ -272,7 +313,7 @@ class User{
      * Send confirmation email
      *
      */
-    public function sendComfirmEmail(){
+    public function sendComfirmEmail() {
         $mail = new \Champs_Mail();
         $mail->setObject(array('user' => $this));
         $mail->setSubject('Email address verification');
@@ -285,4 +326,23 @@ class User{
         $mail->setBodyHTML('account/email-verification.tpl');
         $mail->send();
     }
+
+    /**
+     * Generate the activation key for user
+     *
+     */
+    public function generateActivationKey() {
+        $this->setProfileWithKeyAndValue('activate_account_key', md5(uniqid() . $this->id . $this->password . $this->password_salt));
+        $this->setProfileWithKeyAndValue('activate_account_ts', time());
+    }
+
+    /**
+     * Post profiles entities if the user entity isn't saved
+     */
+    public function postProfileEntities(){
+        foreach ($this->tempProfiles as $profile){
+            $this->setProfile($profile);
+        }
+    }
+
 }
