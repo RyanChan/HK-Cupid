@@ -18,6 +18,7 @@
                         <a href="{geturl controller="account" action="index"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
                         <ul>
                             {if $authenticated}
+                                <li><a href="{geturl controller="account" action="logout"}">{translate name="logout"}</a></li>
                             {else}
                                 <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
                                 <li><a href="{geturl controller="account" action="register"}">{translate name="Register"}</a></li>

@@ -4,6 +4,7 @@
     <div class="sixteen columns bottom-2">
         <h2 class="title">Login to {translate name="Champs"}<span class="line"></span></h2>
         <form action="{geturl action="login"}" method="POST" class="form-elements2">
+            <input type="hidden" name="redirect" value="{$redirect|escape}" />
             <fieldset>
                 <label id="username">Username</label>
                 <input type="text" name="username" id="username" />

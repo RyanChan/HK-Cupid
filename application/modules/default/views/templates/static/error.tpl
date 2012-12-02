@@ -1,4 +1,4 @@
-{if $error|is_array || $error|strlen > 0}
+{if $error|is_array && $error|count > 0 || !$error|is_array && $error|strlen > 0}
     {assign var=hasError value=true}
 {else}
     {assign var=hasError value=false}
