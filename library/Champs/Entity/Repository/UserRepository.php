@@ -29,6 +29,7 @@ class UserRepository extends EntityRepository {
      *
      * @param type $username
      * @param type $password
+     * @return Champs\Entity\User
      */
     public function authenticate($username, $password) {
         $user = $this->getUserByUsername($username);
@@ -70,14 +71,14 @@ class UserRepository extends EntityRepository {
 
         $query->setParameter(1, $username);
 
-        $result = null;
-
         try {
             $result = $query->getSingleResult();
         } catch (NonUniqueResultException $e) {
-
+            throw new \Exception($e->getMessage());
         } catch (NoResultException $e) {
-
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e){
+            throw new \Exception($e->getMessage());
         }
 
         return $result;
@@ -194,10 +195,52 @@ class UserRepository extends EntityRepository {
             $em->flush();
 
             return $user;
-
         } catch (Exception $e) {
-            throw new \Exception($e->getMessage());
+            throw new Exception($e->getMessage());
         }
+    }
+
+    /**
+     * Activate user account
+     *
+     * @return boolean return true if activated
+     */
+    public function activateAccount($id, $key) {
+
+        $user = $this->find($id);
+
+        if (!$user->getProfile('activate_account_key') || !$user->getProfile('activate_account_ts') || $user->getProfile('activated') == 1)
+            return false;
+
+
+        if (time() - $user->getProfile('activate_account_ts') > 86400)
+            return false;
+
+        if ($user->getProfile('activate_account_key') != $key)
+            return false;
+
+        $user->unsetProfile('activate_account_key');
+        $user->unsetProfile('activate_account_ts');
+        $user->setProfileWithKeyAndValue('activated', 1);
+
+        $this->getEntityManager()->flush();
+
+        return true;
+    }
+
+    /**
+     * Check whether the user is activated.
+     *
+     * @param type $id
+     * @return boolean return true if the user is activated
+     */
+    public function isActivatedUser($id) {
+        $id = (int) $id;
+        $user = $this->find($id);
+
+        $isActivated = $user->getProfile('activated');
+
+        return (int) $isActivated == 1;
     }
 
 }

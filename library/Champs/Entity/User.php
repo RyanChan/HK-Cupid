@@ -181,6 +181,9 @@ class User {
      */
     public function doPrePersist() {
         $this->ts_created = new \DateTime();
+        $this->setProfileWithKeyAndValue('activated', 0);
+        // generate activation key
+        $this->generateActivationKey();
     }
 
     /**
@@ -194,10 +197,6 @@ class User {
      * @PostPersist
      */
     public function doPostPersist() {
-        // persist profiles
-//        $this->postProfileEntities();
-        // generate activation key
-        $this->generateActivationKey();
         // send activation email
         $this->sendComfirmEmail();
     }
@@ -208,16 +207,13 @@ class User {
      * @param string $profile_value
      */
     public function setProfile(UserProfile $profile) {
-        foreach ($this->profiles as $p) {
-            if ($p->profile_key == $profile->profile_key) {
+        foreach ($this->profiles->getValues() as $p){
+            if ($p->profile_key == $profile->profile_key){
                 $p->profile_value = $profile->profile_value;
                 return;
             }
         }
 
-//        if ($this->id < 0 || $this->id == null)
-//            $this->tempProfiles->add($profile);
-//        else
         $this->profiles->add($profile);
     }
 
@@ -241,9 +237,11 @@ class User {
      * @param string $key
      */
     public function unsetProfile($key) {
-        foreach ($this->profiles as $profile) {
+        foreach ($this->profiles->getValues() as $profile) {
             if ($profile->profile_key == $key) {
                 $this->profiles->removeElement($profile);
+                \Zend_Registry::get('doctrine')->getEntityManager()->remove($profile);
+                return;
             }
         }
     }
@@ -336,13 +334,5 @@ class User {
         $this->setProfileWithKeyAndValue('activate_account_ts', time());
     }
 
-    /**
-     * Post profiles entities if the user entity isn't saved
-     */
-    public function postProfileEntities(){
-        foreach ($this->tempProfiles as $profile){
-            $this->setProfile($profile);
-        }
-    }
 
 }

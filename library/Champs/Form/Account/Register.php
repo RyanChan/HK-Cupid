@@ -35,6 +35,8 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
             $this->addError('email', 'Please enter your e-mail address');
         else if (!$validator->isValid($this->email))
             $this->addError('email', 'Please enter a valid e-mail address');
+        else if ($this->_userRepository->hasSameEmail($this->email))
+            $this->addError ('email', 'Your email have been registered');
         else {
             $this->user->setUsername($this->email);
             $this->user->setProfileWithKeyAndValue('email', $this->email);
@@ -66,8 +68,6 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
         if (!$this->hasError()) {
             try {
                 $this->_userRepository->storeUserEntity($this->user);
-
-//                $user->sendComfirmEmail();
             } catch (Exception $e) {
                 $this->addError('error', $e->getMessage());
             }
