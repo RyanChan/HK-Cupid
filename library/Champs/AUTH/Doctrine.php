@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Doctrine's authenticate class
  *
@@ -9,12 +10,6 @@ class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
 
     const NOT_FOUND_MSG = 'Account not found';
     const BAD_PW_MSG = 'Username or password is invalid';
-
-    /**
-     *
-     * @var Champs\Entity\User $user
-     */
-    protected $user;
 
     /**
      *
@@ -51,16 +46,16 @@ class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
     public function authenticate() {
         try {
             $userRepository = Zend_Registry::get('doctrine')->getEntityManager()->getRepository('Champs\Entity\User');
-            $this->user = $userRepository->authencate($this->username, $this->password);
+            $user = $userRepository->authenticate($this->username, $this->password);
         } catch (Exception $e) {
             if ($e->getMessage() == Champs\Entity\Repository\UserRepository::NOT_FOUND)
-                return $this->_createResult(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, self::NOT_FOUND_MSG);
+                return $this->_createResult(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null, self::NOT_FOUND_MSG);
 
             if ($e->getMessage() == Champs\Entity\Repository\UserRepository::WRONG_PW)
-                return $this->_createResult(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, self::BAD_PW_MSG);
+                return $this->_createResult(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, null, self::BAD_PW_MSG);
         }
 
-        return $this->_createResult(Zend_Auth_Result::SUCCESS);
+        return $this->_createResult(Zend_Auth_Result::SUCCESS, $user);
     }
 
     /**
@@ -70,20 +65,8 @@ class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
      * @param array|string $message
      * @return \Zend_Auth_Result
      */
-    private function _createResult($code, $message = array()) {
-        return new Zend_Auth_Result($code, $this->user, $message);
+    private function _createResult($code, $object, $message = array()) {
+        return new Zend_Auth_Result($code, $object, $message);
     }
 
-    /**
-     * Returns current user entity
-     *
-     * @return Champs\Entity\User
-     */
-    public function getUser(){
-        if ($this->user){
-            return $this->user;
-        }
-
-        return NULL;
-    }
 }
