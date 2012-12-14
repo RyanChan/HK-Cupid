@@ -18,6 +18,13 @@ class AccountController extends Champs_Controller_MasterController {
 
     }
 
+
+    /**
+     * logoutAction function.
+     * 
+     * @access public
+     * @return void
+     */
     public function logoutAction() {
         $auth = Zend_Auth::getInstance();
 
@@ -52,7 +59,7 @@ class AccountController extends Champs_Controller_MasterController {
         $errors = array();
 
         if ($request->isPost()) {
-            
+
             $username = $request->getPost('username');
             $password = $request->getPost('password');
 
@@ -114,9 +121,38 @@ class AccountController extends Champs_Controller_MasterController {
     public function resetpasswordAction() {
 
     }
+    
+    
+    /**
+     * detailsAction function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function detailsAction() {
+	    $form = new Champs_Form_Account_Details(1);
+        $request = $this->getRequest();
 
+        if ($request->isPost()) {
+            if ($form->process($request)){
+                $this->_redirect($this->getUrl());
+            }
+        }
+
+        $user = $this->em->find('Champs\Entity\User', 1);
+        $this->view->user = $user;
+        $this->view->form = $form;
+    }
+    
+    
+    /**
+     * profileAction function.
+     * 
+     * @access public
+     * @return void
+     */
     public function profileAction() {
-
+	    
     }
 
     /**
@@ -147,5 +183,4 @@ class AccountController extends Champs_Controller_MasterController {
         $this->view->errors = $errors;
         $this->view->action = $action;
     }
-
 }

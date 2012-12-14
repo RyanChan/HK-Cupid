@@ -85,6 +85,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'locale' => 'zh_CN',
         ));
 
+        
+
         // add to zend_registry
         Zend_Registry::set('translate', $translate);
 

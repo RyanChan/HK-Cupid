@@ -243,4 +243,8 @@ class UserRepository extends EntityRepository {
         return (int) $isActivated == 1;
     }
 
+    public function updateUserEntity(){
+        $em = $this->getEntityManager();
+        $em->flush();
+    }
 }

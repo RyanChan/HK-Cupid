@@ -645,6 +645,27 @@ class Smarty extends Smarty_Internal_TemplateBase {
         $this->smarty = $this;
     }
 
+    /**
+     * Get the plugin path
+     *
+     * @param string $type
+     * @param string $name
+     * @return string
+     */
+    public function _get_plugin_filepath($type, $name){
+        $type = trim($type);
+        $name = trim($name);
+
+        foreach ($this->plugins_dir as $value){
+            $filepath = sprintf('%s%s.%s.php', $value, $type, $name);
+            if(file_exists($filepath)){
+                return $filepath;
+            }
+        }
+
+        return null;
+    }
+
 
     /**
      * <<magic>> Generic getter.

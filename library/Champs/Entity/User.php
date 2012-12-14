@@ -198,7 +198,7 @@ class User {
      */
     public function doPostPersist() {
         // send activation email
-        $this->sendComfirmEmail();
+        //$this->sendComfirmEmail();
     }
 
     /**

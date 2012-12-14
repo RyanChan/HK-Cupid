@@ -17,7 +17,6 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
     /**
      * Initialize method
      *
-     * @param Doctrine\ORM\EntityManager $em
      */
     public function __construct() {
         parent::__construct();
@@ -28,7 +27,7 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
 
     public function process(\Zend_Controller_Request_Abstract $request) {
         // email address
-        $this->email = trim($request->getPost('email'));
+        $this->email = $this->sanitize($request->getPost('email'));
         $validator = new Zend_Validate_EmailAddress();
 
         if (strlen($this->email) == 0)
@@ -43,7 +42,7 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
         }
 
         // first name
-        $this->first_name = trim($request->getPost('first_name'));
+        $this->first_name = $this->sanitize($request->getPost('first_name'));
 
         if (strlen($this->first_name) == 0)
             $this->addError('first_name', 'Please enter your first name');
@@ -51,14 +50,14 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
             $this->user->setProfileWithKeyAndValue('first_name', $this->first_name);
 
         // last name
-        $this->last_name = trim($request->getPost('last_name'));
+        $this->last_name = $this->sanitize($request->getPost('last_name'));
 
         if (strlen($this->last_name) == 0)
             $this->addError('last_name', 'Please enter your last name');
         else
             $this->user->setProfileWithKeyAndValue('last_name', $this->last_name);
 
-        $this->password = trim($request->getPost('password'));
+        $this->password = $this->sanitize($request->getPost('password'));
 
         if (strlen($this->password) < 8)
             $this->addError('password', 'Please enter a password that is longer than 8 characters');

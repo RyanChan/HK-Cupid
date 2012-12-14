@@ -67,8 +67,9 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     }
 
     public function postDispatch() {
-        // get the controller name for the active navigation menu
+        // get the controller & action name for the active navigation menu
         $this->view->controller = $this->getRequest()->getControllerName();
+        $this->view->action = $this->getRequest()->getActionName();
     }
 
     /**
