@@ -13,15 +13,16 @@ class AccountController extends Champs_Controller_MasterController {
      * Index action of account controller
      *
      * show up all the information of the user
+     *
+     * forward to profile page instead
      */
     public function indexAction() {
-
+        $this->_forward('profile');
     }
-
 
     /**
      * logoutAction function.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -121,38 +122,38 @@ class AccountController extends Champs_Controller_MasterController {
     public function resetpasswordAction() {
 
     }
-    
-    
+
     /**
      * detailsAction function.
-     * 
+     *
      * @access public
      * @return void
      */
     public function detailsAction() {
-	    $form = new Champs_Form_Account_Details(1);
+        $identity = Zend_Auth::getInstance()->getIdentity();
+
+        $form = new Champs_Form_Account_Details($identity->user_id);
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($form->process($request)){
+            if ($form->process($request)) {
                 $this->_redirect($this->getUrl());
             }
         }
 
-        $user = $this->em->find('Champs\Entity\User', 1);
+        $user = $this->em->find('Champs\Entity\User', $identity->user_id);
         $this->view->user = $user;
         $this->view->form = $form;
     }
-    
-    
+
     /**
      * profileAction function.
-     * 
+     *
      * @access public
      * @return void
      */
     public function profileAction() {
-	    
+
     }
 
     /**
@@ -183,4 +184,5 @@ class AccountController extends Champs_Controller_MasterController {
         $this->view->errors = $errors;
         $this->view->action = $action;
     }
+
 }
