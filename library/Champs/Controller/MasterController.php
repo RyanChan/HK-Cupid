@@ -1,4 +1,5 @@
 <?php
+
 class Champs_Controller_MasterController extends Zend_Controller_Action {
 
     /**
@@ -29,8 +30,8 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         $this->_initACL();
     }
 
-    protected function getUrl($action = null, $controller = null){
-        $url = rtrim($this->getRequest()->getBaseUrl(), '/').'/';
+    protected function getUrl($action = null, $controller = null) {
+        $url = rtrim($this->getRequest()->getBaseUrl(), '/') . '/';
         $url .= $this->_helper->url->simple($action, $controller);
 
         return $url;
@@ -39,7 +40,7 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     /**
      * initialize auth object
      */
-    private function _initAuth(){
+    private function _initAuth() {
         $this->auth = Zend_Auth::getInstance();
         $this->auth->setStorage(new \Zend_Auth_Storage_Session());
     }
@@ -47,25 +48,29 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     /**
      * initialize acl object
      */
-    private function _initACL(){
+    private function _initACL() {
         $this->acl = new Champs_Acl_Acl($this->auth);
     }
 
     /**
      * preDispatch method
      */
-    public function preDispatch(){
+    public function preDispatch() {
         // check ACL before everything have executed
         $this->acl->checkACL($this->getRequest());
 
         // check whether user logged in or not
         $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity())
+        if ($auth->hasIdentity()) {
             $this->view->authenticated = true;
-        else
+            $this->view->identity = $auth->getIdentity();
+        } else
             $this->view->authenticated = false;
     }
 
+    /**
+     * postDispatch method
+     */
     public function postDispatch() {
         // get the controller & action name for the active navigation menu
         $this->view->controller = $this->getRequest()->getControllerName();
@@ -75,7 +80,8 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     /**
      * Short out helper of setNoRender
      */
-    public function setNoRender(){
+    public function setNoRender() {
         $this->_helper->viewRenderer->setNoRender();
     }
+
 }
