@@ -19,13 +19,13 @@
                         <ul>
                             {if $authenticated}
                                 <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
+                                <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
                                 <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
                             {else}
                                 <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
                                 <li><a href="{geturl controller="account" action="register"}">{translate name="Register"}</a></li>
                             {/if}
                         </ul>
-                        
                     </li>
                 </ul>
             </nav>
