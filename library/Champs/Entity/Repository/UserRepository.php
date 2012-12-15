@@ -37,7 +37,15 @@ class UserRepository extends EntityRepository {
         if ($user) {
             $password = md5($password . $user->password_salt);
             if ($user->password === $password) {
-                return $user;
+                $identity = new \stdClass;
+                $identity->user_id = $user->id;
+                $identity->username = $user->username;
+                $identity->first_name = $user->getProfile('first_name');
+                $identity->last_name = $user->getProfile('last_name');
+                $identity->nickname = $user->getProfile('nickname');
+                $identity->email = $user->getProfile('email');
+
+                return $identity;
             }
 
             throw new \Exception(self::WRONG_PW);
