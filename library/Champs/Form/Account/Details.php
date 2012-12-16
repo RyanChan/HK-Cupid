@@ -71,10 +71,16 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
             $this->user->setProfileWithKeyAndValue ('bodytype', $this->bodytype);
 
         // living situation
-        $this->living_situation = $this->sanitize($request->getPost('living_situation'));
+        $this->living_situation = $this->sanitize($request->getPost('house_tag'));
 
         if (is_numeric($this->living_situation))
-            $this->user->setProfileWithKeyAndValue ('living_situation', $this->living_situation);
+            $this->user->setProfileWithKeyAndValue ('house_tag', $this->living_situation);
+
+        // smoking
+        $this->smoking = $this->sanitize($request->getPost('smoking'));
+
+        if (is_numeric($this->smoking))
+            $this->user->setProfileWithKeyAndValue ('smoking', $this->smoking);
 
         // location
         $this->location = $this->sanitize($request->getPost('location'));
