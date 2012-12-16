@@ -17,16 +17,52 @@
                 <input type="text" id="email" name="email" value="{$user->getProfile('email')|escape}" />
             </fieldset>
             <fieldset>
+                <label for="mobile">{translate name="Mobile"}</label>
+                <input type="text" id="mobile" name="mobile" value="{$user->getProfile('mobile')|escape}" />
+            </fieldset>
+            <fieldset>
                 <label for="birthday">{translate name="Birthday"}</label>
                 {html_select_date prefix="birthday_" time=$user->getProfile('birthday') start_year=-100}
+            </fieldset>
+            <fieldset>
+                <label for="relationship">{translate name="Relationship"}</label>
+                {relationship default=$user->getProfile('relationship')}
+            </fieldset>
+            <fieldset>
+                <label for="bodytype">{translate name="Body Type"}</label>
+                {bodytype default=$user->getProfile('bodytype')}
+            </fieldset>
+            <fieldset>
+                <label for="smoking">{translate name="Smoke"}</label>
+                {smoking default=$user->getProfile('smoking')}
+            </fieldset>
+            <fieldset>
+                <label for="drinking">{translate name="Drinking"}</label>
+                {drinking default=$user->getProfile('drinking')}
+            </fieldset>
+            <fieldset>
+                <label for="resting">{translate name="Resting"}</label>
+                {resting default=$user->getProfile('resting')}
+            </fieldset>
+            <fieldset>
+                <label for="cartag">{translate name="Car tag"}</label>
+                {cartag default=$user->getProfile('cartag')}
+            </fieldset>
+            <fieldset>
+                <label for="maxconsume">{translate name="Max Consume"}</label>
+                {maxconsume default=$user->getProfile('maxconsume')}
+            </fieldset>
+            <fieldset>
+                <label for="romance">{translate name="Romance"}</label>
+                {romance default=$user->getProfile('romance')}
             </fieldset>
             <fieldset>
                 <label for="location">{translate name="Location"}</label>
                 <input type="text" id="location" name="location" value="{$user->getProfile('location')|escape}" />
             </fieldset>
             <fieldset>
-                <label for="mobile">{translate name="Mobile"}</label>
-                <input type="text" id="mobile" name="mobile" value="{$user->getProfile('mobile')|escape}" />
+                <label for="house_tag">{translate name="House Tag"}</label>
+                {housetag default=$user->getProfile('house_tag')}
             </fieldset>
             <fieldset>
                 <label for="education">{translate name="Education"}</label>
@@ -57,7 +93,7 @@
     </div>
 
     {include file="user/navigation.tpl"}
-    
+
     {if $form->hasError()}
         {include file="error.tpl" error=$form->getErrors()}
     {/if}
