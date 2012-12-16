@@ -58,6 +58,24 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
         if (checkdate($this->birthdayMonth, $this->birthdayDay, $this->birthdayYear))
             $this->user->setProfileWithKeyAndValue('birthday', $this->birthday);
 
+        // relationship
+        $this->relationship = $this->sanitize($request->getPost('relationship'));
+
+        if (is_numeric($this->relationship))
+            $this->user->setProfileWithKeyAndValue('relationship', $this->relationship);
+
+        // bodytype
+        $this->bodytype = $this->sanitize($request->getPost('bodytype'));
+
+        if (is_numeric($this->bodytype))
+            $this->user->setProfileWithKeyAndValue ('bodytype', $this->bodytype);
+
+        // living situation
+        $this->living_situation = $this->sanitize($request->getPost('living_situation'));
+
+        if (is_numeric($this->living_situation))
+            $this->user->setProfileWithKeyAndValue ('living_situation', $this->living_situation);
+
         // location
         $this->location = $this->sanitize($request->getPost('location'));
 
