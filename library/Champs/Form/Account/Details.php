@@ -88,6 +88,30 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
         if (is_numeric($this->drinking))
             $this->user->setProfileWithKeyAndValue ('drinking', $this->drinking);
 
+        // resting habit
+        $this->resting = $this->sanitize($request->getPost('resting'));
+
+        if (is_numeric($this->resting))
+            $this->user->setProfileWithKeyAndValue ('resting', $this->resting);
+
+        // car tag
+        $this->cartag = $this->sanitize($request->getPost('cartag'));
+
+        if (is_numeric($this->cartag))
+            $this->user->setProfileWithKeyAndValue ('cartag', $this->cartag);
+
+        // max consume
+        $this->maxconsume = $this->sanitize($request->getPost('maxconsume'));
+
+        if (is_numeric($this->maxconsume))
+            $this->user->setProfileWithKeyAndValue ('maxconsume', $this->maxconsume);
+
+        // romance
+        $this->romance = $this->sanitize($request->getPost('romance'));
+
+        if (is_numeric($this->romance))
+            $this->user->setProfileWithKeyAndValue ('romance', $this->romance);
+
         // location
         $this->location = $this->sanitize($request->getPost('location'));
 
