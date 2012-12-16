@@ -82,6 +82,12 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
         if (is_numeric($this->smoking))
             $this->user->setProfileWithKeyAndValue ('smoking', $this->smoking);
 
+        // drinking
+        $this->drinking = $this->sanitize($request->getPost('drinking'));
+
+        if (is_numeric($this->drinking))
+            $this->user->setProfileWithKeyAndValue ('drinking', $this->drinking);
+
         // location
         $this->location = $this->sanitize($request->getPost('location'));
 
