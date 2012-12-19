@@ -10,7 +10,7 @@ class AlbumController extends Champs_Controller_MasterController {
     }
 
     public function indexAction() {
-
+        $this->_forward('browse');
     }
 
     public function createAction() {
