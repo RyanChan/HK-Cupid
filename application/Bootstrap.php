@@ -64,7 +64,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                             'controller' => 'dating',
                             'action' => 'browse'
                         )
-        ));
+                )
+        );
 
         // dating online
         $router->addRoute('dating_online', new Zend_Controller_Router_Route(
@@ -73,7 +74,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                             'controller' => 'dating',
                             'action' => 'online'
                         )
-        ));
+                )
+        );
 
         // dating user
         $router->addRoute('dating_user', new Zend_Controller_Router_Route(
@@ -82,14 +84,55 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                             'controller' => 'dating',
                             'action' => 'user'
                         )
-        ));
+                )
+        );
 
-        // album
+        // album of user
         $router->addRoute('album_album', new Zend_Controller_Router_Route(
                         'album/:id/photos',
                         array(
                             'controller' => 'album',
                             'action' => 'photos'
+                        )
+                )
+        );
+
+        // albums of user
+        $router->addRoute('album_albums', new Zend_Controller_Router_Route(
+                        'album/:nickname/albums',
+                        array(
+                            'controller' => 'album',
+                            'action' => 'albums'
+                        )
+                )
+        );
+
+        // create album
+        $router->addRoute('album_create', new Zend_Controller_Router_Route(
+                        'album/:nickname/create',
+                        array(
+                            'controller' => 'album',
+                            'action' => 'create'
+                        )
+                )
+        );
+
+        // edit album
+        $router->addRoute('album_edit', new Zend_Controller_Router_Route(
+                        'album/:id/edit',
+                        array(
+                            'controller' => 'album',
+                            'action' => 'edit'
+                        )
+                )
+        );
+
+        // delete album
+        $router->addRoute('album_delete', new Zend_Controller_Router_Route(
+                        'album/:id/delete',
+                        array(
+                            'controller' => 'album',
+                            'action' => 'delete'
                         )
                 )
         );
