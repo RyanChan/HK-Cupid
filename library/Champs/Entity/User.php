@@ -66,6 +66,13 @@ class User {
 
     /**
      *
+     * @var \DateTime $ts_last_login
+     * @Column(type="datetime", nullable=true)
+     */
+    private $ts_last_login;
+
+    /**
+     *
      * @var \ArrayCollection $profiles
      * @OneToMany(targetEntity="UserProfile", mappedBy="user", cascade={"persist", "remove"})
      */
@@ -334,5 +341,10 @@ class User {
         $this->setProfileWithKeyAndValue('activate_account_ts', time());
     }
 
-
+    /**
+     * Update last login time
+     */
+    public function doUpdateLastLogin(){
+        $this->ts_last_login = new \DateTime();
+    }
 }
