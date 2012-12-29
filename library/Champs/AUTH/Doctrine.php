@@ -49,10 +49,10 @@ class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
             $user = $userRepository->authenticate($this->username, $this->password);
         } catch (Exception $e) {
             if ($e->getMessage() == Champs\Entity\Repository\UserRepository::NOT_FOUND)
-                return $this->_createResult(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null, self::NOT_FOUND_MSG);
+                return $this->_createResult(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null, array(self::NOT_FOUND_MSG));
 
             if ($e->getMessage() == Champs\Entity\Repository\UserRepository::WRONG_PW)
-                return $this->_createResult(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, null, self::BAD_PW_MSG);
+                return $this->_createResult(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, null, array(self::BAD_PW_MSG));
         }
 
         return $this->_createResult(Zend_Auth_Result::SUCCESS, $user);
