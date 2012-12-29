@@ -25,6 +25,16 @@ class UserRepository extends EntityRepository {
     const WRONG_PW = 2;
 
     /**
+     * Male
+     */
+    const MALE = 1;
+
+    /**
+     * Female
+     */
+    const FEMALE = 2;
+
+    /**
      * Performs authentication of a user
      *
      * @param type $username
@@ -37,6 +47,9 @@ class UserRepository extends EntityRepository {
         if ($user) {
             $password = md5($password . $user->password_salt);
             if ($user->password === $password) {
+                $user->doUpdateLastLogin();
+                $this->getEntityManager()->flush();
+
                 $identity = new \stdClass;
                 $identity->user_id = $user->id;
                 $identity->username = $user->username;
@@ -44,6 +57,7 @@ class UserRepository extends EntityRepository {
                 $identity->last_name = $user->getProfile('last_name');
                 $identity->nickname = $user->getProfile('nickname');
                 $identity->email = $user->getProfile('email');
+                $identity->gender = $user->getProfile('gender');
 
                 return $identity;
             }
@@ -85,7 +99,26 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         } catch (NoResultException $e) {
             throw new \Exception($e->getMessage());
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function getUserByNickname($nickname) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'nickname' and up.profile_value = ?1");
+        $query->setParameter(1, $nickname);
+
+        try {
+            $result = $query->getSingleResult();
+        } catch (NonUniqueResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (NoResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
 
@@ -119,7 +152,7 @@ class UserRepository extends EntityRepository {
     public function hasSameEmail($email) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
+        $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
 
         $query->setParameter(1, $email);
 
@@ -170,7 +203,7 @@ class UserRepository extends EntityRepository {
     public function getAllAdminUsers() {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'administrator' and u.role = r");
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.user = u and r.rolename = 'administrator'");
 
         return $query->getResult();
     }
@@ -183,7 +216,7 @@ class UserRepository extends EntityRepository {
     public function getAllMemberUsers() {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.rolename = 'member' and u.role = r");
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\Role r WHERE r.user = u and r.rolename = 'member'");
 
         return $query->getResult();
     }
@@ -236,6 +269,73 @@ class UserRepository extends EntityRepository {
         return true;
     }
 
+    public function getHottestUsers($offset = 0, $limit = 30) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'vote' ORDER BY up.profile_value ASC");
+
+        try {
+            $query->setFirstResult($offset)->setMaxResults($limit);
+            $result = $query->getResult();
+        } catch (NonUniqueResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (NoResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    public function getActiveUsers($offset = 0, $limit = 30) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'activated' and up.profile_value = '1' ORDER BY u.ts_last_login DESC");
+
+        try {
+            $query->setFirstResult($offset)->setMaxResults($limit);
+            $result = $this->_filterActivateUsers($query->getResult());
+        } catch (NonUniqueResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (NoResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
+    /**
+     *
+     * @param integer $limit
+     * @param integer $offset
+     * @return array
+     * @throws \Exception
+     */
+    public function getNewestUsers($offset = 0, $limit = 30) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'activated' and up.profile_value = '1' ORDER BY u.ts_created DESC");
+
+        try {
+            $query->setFirstResult($offset)
+                    ->setMaxResults($limit);
+
+//            $result = $this->_filterActivateUsers($query->getResult());
+            $result = $query->getResult();
+        } catch (NonUniqueResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (NoResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
     /**
      * Check whether the user is activated.
      *
@@ -246,13 +346,40 @@ class UserRepository extends EntityRepository {
         $id = (int) $id;
         $user = $this->find($id);
 
-        $isActivated = $user->getProfile('activated');
+        $isActivated = $user->activated;
 
         return (int) $isActivated == 1;
     }
 
-    public function updateUserEntity(){
+    public function updateUserEntity() {
         $em = $this->getEntityManager();
         $em->flush();
     }
+
+    /**
+     *
+     * @param integer $male
+     */
+    public function getUsersByGender($male, $offset = 0, $limit = 30) {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'gender' and up.profile_value = ?1 ORDER BY u.ts_last_updated DESC");
+
+        try {
+            $query->setParameter(1, $male)
+                  ->setFirstResult($offset)
+                  ->setMaxResults($limit);
+
+            $result = $query->getResult();
+        } catch (NonUniqueResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (NoResultException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $result;
+    }
+
 }

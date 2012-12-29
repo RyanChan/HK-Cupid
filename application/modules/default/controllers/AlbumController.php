@@ -29,4 +29,8 @@ class AlbumController extends Champs_Controller_MasterController {
 
     }
 
+    public function photosAction() {
+        
+    }
+
 }

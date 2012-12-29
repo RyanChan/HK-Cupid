@@ -137,7 +137,7 @@ class AccountController extends Champs_Controller_MasterController {
 
         if ($request->isPost()) {
             if ($form->process($request)) {
-                $this->_redirect($this->getUrl());
+                $this->_redirect($this->getUrl('details'));
             }
         }
 
@@ -183,6 +183,27 @@ class AccountController extends Champs_Controller_MasterController {
 
         $this->view->errors = $errors;
         $this->view->action = $action;
+    }
+
+    public function authAction() {
+        $identity = Zend_Auth::getInstance()->getIdentity();
+
+        //$form = new Champs_Form_Account_Details($identity->user_id);
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            if ($form->process($request)) {
+                $this->_redirect($this->getUrl('details'));
+            }
+        }
+
+        $user = $this->em->find('Champs\Entity\User', $identity->user_id);
+        $this->view->user = $user;
+        //$this->view->form = $form;
+    }
+
+    public function settingsAction() {
+        
     }
 
 }

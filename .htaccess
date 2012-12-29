@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Map http://xxx.com to /public.
+RewriteRule ^$ /public/ [L]
+
+# Map http://xxx.com/x to /public/x unless these is a x in the web root.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1

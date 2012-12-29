@@ -38,8 +38,6 @@ var styleswitcherstr = ' \
     <a id="subtlenet2" class="pattern"></a> \
     </div> \
     <div class="clear"></div> \
-    <h3>Dark Style</h3> \
-	<a href="../Dark/index.html" class="dark-style">Dark Theme</a> \
     </div><!-- End content --> \
 	';
 

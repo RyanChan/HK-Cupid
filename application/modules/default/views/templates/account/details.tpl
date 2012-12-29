@@ -21,6 +21,11 @@
                 <input type="text" id="mobile" name="mobile" value="{$user->getProfile('mobile')|escape}" />
             </fieldset>
             <fieldset>
+                <label for="gender">{translate name="Gender"}</label>
+                <input type="radio" id="gender" name="gender" value="1" {if $user->getProfile('gender') == 1} checked {/if} /> {translate name="Male"}
+                <input type="radio" id="gender" name="gender" value="2" {if $user->getProfile('gender') == 2} checked {/if} /> {translate name="Female"}
+            </fieldset>
+            <fieldset>
                 <label for="birthday">{translate name="Birthday"}</label>
                 {html_select_date prefix="birthday_" time=$user->getProfile('birthday') start_year=-100}
             </fieldset>

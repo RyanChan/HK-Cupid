@@ -48,6 +48,14 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
         if (strlen($this->nickname) > 0)
             $this->user->setProfileWithKeyAndValue('nickname', $this->nickname);
 
+        // gender
+        $this->gender = $this->sanitize($request->getPost('gender'));
+
+        if ($this->gender < 1 || $this->gender > 2)
+            $this->addError('gender', 'Please select your gender');
+        else
+            $this->user->setProfileWithKeyAndValue('gender', $this->gender);
+
         // birthday
         $this->birthdayMonth = $this->sanitize($request->getPost('birthday_Month'));
         $this->birthdayDay = $this->sanitize($request->getPost('birthday_Day'));
@@ -68,49 +76,49 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
         $this->bodytype = $this->sanitize($request->getPost('bodytype'));
 
         if (is_numeric($this->bodytype))
-            $this->user->setProfileWithKeyAndValue ('bodytype', $this->bodytype);
+            $this->user->setProfileWithKeyAndValue('bodytype', $this->bodytype);
 
         // living situation
         $this->living_situation = $this->sanitize($request->getPost('house_tag'));
 
         if (is_numeric($this->living_situation))
-            $this->user->setProfileWithKeyAndValue ('house_tag', $this->living_situation);
+            $this->user->setProfileWithKeyAndValue('house_tag', $this->living_situation);
 
         // smoking
         $this->smoking = $this->sanitize($request->getPost('smoking'));
 
         if (is_numeric($this->smoking))
-            $this->user->setProfileWithKeyAndValue ('smoking', $this->smoking);
+            $this->user->setProfileWithKeyAndValue('smoking', $this->smoking);
 
         // drinking
         $this->drinking = $this->sanitize($request->getPost('drinking'));
 
         if (is_numeric($this->drinking))
-            $this->user->setProfileWithKeyAndValue ('drinking', $this->drinking);
+            $this->user->setProfileWithKeyAndValue('drinking', $this->drinking);
 
         // resting habit
         $this->resting = $this->sanitize($request->getPost('resting'));
 
         if (is_numeric($this->resting))
-            $this->user->setProfileWithKeyAndValue ('resting', $this->resting);
+            $this->user->setProfileWithKeyAndValue('resting', $this->resting);
 
         // car tag
         $this->cartag = $this->sanitize($request->getPost('cartag'));
 
         if (is_numeric($this->cartag))
-            $this->user->setProfileWithKeyAndValue ('cartag', $this->cartag);
+            $this->user->setProfileWithKeyAndValue('cartag', $this->cartag);
 
         // max consume
         $this->maxconsume = $this->sanitize($request->getPost('maxconsume'));
 
         if (is_numeric($this->maxconsume))
-            $this->user->setProfileWithKeyAndValue ('maxconsume', $this->maxconsume);
+            $this->user->setProfileWithKeyAndValue('maxconsume', $this->maxconsume);
 
         // romance
         $this->romance = $this->sanitize($request->getPost('romance'));
 
         if (is_numeric($this->romance))
-            $this->user->setProfileWithKeyAndValue ('romance', $this->romance);
+            $this->user->setProfileWithKeyAndValue('romance', $this->romance);
 
         // location
         $this->location = $this->sanitize($request->getPost('location'));

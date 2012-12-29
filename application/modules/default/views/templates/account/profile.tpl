@@ -1,7 +1,7 @@
 {include file="header.tpl" title="Profile"}
 
 <div class="container clearfix">
-    <div class="recent-work gallery clearfix">
+    <div class="recent-work gallery clearfix top">
         <div class="slidewrap">
             <div class="sixteen columns">
                 <h2 class="title">
@@ -12,10 +12,10 @@
 
             <ul class="slidecontrols">
                 <li>
-                    <a href="#next" class="next">{translate name="Next"}</a>
+                    <a href="#sliderName" class="next">{translate name="Next"}</a>
                 </li>
                 <li>
-                    <a href="#prev" class="prev">{translate name="Prev"}</a>
+                    <a href="#sliderName" class="prev">{translate name="Prev"}</a>
                 </li>
             </ul>
 
@@ -30,6 +30,46 @@
             </ul>
         </div>
     </div>
+
+    <div class="eleven columns top bottom">
+        <div class="bottom">
+            <h2 class="title">
+                {translate name="Profile"}
+                <span class="line"></span>
+            </h2>
+            <div class="box">
+                <p>
+                <h2>{$identity->nickname|escape}</h2>
+                </p>
+            </div>
+        </div>
+
+        <!-- Hide if completed Start -->
+        <div class="bottom">
+            <h2 class="title">
+                {translate name="Profile Completion"} (60%)
+                <span class="line"></span>
+            </h2>
+            <div class="meter"><span style="width:60%;"></span></div>
+        </div>
+        <!-- Hide if completed End -->
+
+        <!-- Show Matching girls if the user is enabled dating function -->
+
+        <div class="bottom">
+            <h2 class="title">
+                {translate name="My Tags"}
+                <span class="line"></span>
+            </h2>
+            <div class="box">
+                <p>
+                    {translate name="Add your tags"}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {include file="user/navigation.tpl"}
 </div>
 
 {include file="footer.tpl"}

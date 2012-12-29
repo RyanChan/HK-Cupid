@@ -21,10 +21,24 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     protected $em;
 
     /**
+     *
+     * @var Zend_Controller_Request_Abstract $request
+     */
+    protected $request;
+
+    /**
+     * User's identity class
+     *
+     * @var stdClass $identity
+     */
+    protected $identity;
+
+    /**
      * initialize method
      */
     public function init() {
         $this->em = Zend_Registry::get('doctrine')->getEntityManager();
+        $this->request = $this->getRequest();
 
         $this->_initAuth();
         $this->_initACL();
@@ -64,6 +78,7 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         if ($auth->hasIdentity()) {
             $this->view->authenticated = true;
             $this->view->identity = $auth->getIdentity();
+            $this->identity = $auth->getIdentity();
         } else
             $this->view->authenticated = false;
     }
