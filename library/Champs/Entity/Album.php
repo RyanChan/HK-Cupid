@@ -101,6 +101,76 @@ class Album{
         $this->ts_last_updated = new \DateTime();
     }
     /**
+     * @PostInsert
+     */
+    public function doPostInsert(){
+        // create album folder
+        $this->_createAlbumFolder();
+    }
+
+    /**
+     *
+     * @param string $profile_key
+     * @param string $profile_value
+     */
+    public function setProfile(UserProfile $profile) {
+        foreach ($this->profiles->getValues() as $p) {
+            if ($p->profile_key == $profile->profile_key) {
+                $p->profile_value = $profile->profile_value;
+                return;
+            }
+        }
+
+        $this->profiles->add($profile);
+    }
+
+    /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value) {
+        $profile = new \Champs\Entity\UserProfile();
+        $profile->album = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        $this->setProfile($profile);
+    }
+
+    /**
+     *
+     * @param string $key
+     */
+    public function unsetProfile($key) {
+        foreach ($this->profiles->getValues() as $profile) {
+            if ($profile->profile_key == $key) {
+                $this->profiles->removeElement($profile);
+                \Zend_Registry::get('doctrine')->getEntityManager()->remove($profile);
+                return;
+            }
+        }
+    }
+
+    /**
+     *
+     * @param UserProfile $profile
+     */
+    public function getProfile($key = null) {
+        if (strlen($key) > 0) {
+            foreach ($this->profiles as $profile) {
+                if ($profile->profile_key == $key) {
+                    return $profile->profile_value;
+                }
+            }
+            return null;
+        } else {
+            return $this->profiles;
+        }
+    }
+
+    /**
      *
      * @return \DateTime
      */
@@ -113,5 +183,24 @@ class Album{
      */
     public function getLastUpdated(){
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * get the album folder path
+     */
+    public function getAlbumFolder(User $user = null){
+        $userPath = ($user == null) ? $this->user->getUserFolder() : $user->getUserFolder();
+
+        return $userPath . DIRECTORY_SEPARATOR . $this->id;
+    }
+
+    /**
+     * create the album folder for current user
+     */
+    private function _createAlbumFolder(){
+        $albumPath = $this->getAlbumFolder();
+
+        if(!is_dir($albumPath))
+            mkdir($albumPath, 0777);
     }
 }
