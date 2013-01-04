@@ -18,6 +18,6 @@ class DealsController extends Champs_Controller_MasterController{
      * Index Action
      */
     public function indexAction() {
-
+        
     }
 }
