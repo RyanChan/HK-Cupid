@@ -2,7 +2,6 @@
 
 namespace Champs\Entity\Repository;
 
-use Champs\Entity\User;
 use Champs\Entity\Role;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -53,11 +52,12 @@ class UserRepository extends EntityRepository {
                 $identity = new \stdClass;
                 $identity->user_id = $user->id;
                 $identity->username = $user->username;
-                $identity->first_name = $user->getProfile('first_name');
-                $identity->last_name = $user->getProfile('last_name');
-                $identity->nickname = $user->getProfile('nickname');
-                $identity->email = $user->getProfile('email');
-                $identity->gender = $user->getProfile('gender');
+
+                // assign all the profile key/value pairs to identity object
+                foreach ($user->getProfile() as $profile) {
+                    $profile_key = $profile->profile_key;
+                    $identity->$profile_key = $profile->profile_value;
+                }
 
                 return $identity;
             }
