@@ -63,4 +63,50 @@ class AlbumRepository extends EntityRepository {
         }
     }
 
+    public function getNewestAlbums() {
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery('SELECT a FROM Champs\Entity\Album a ORDER BY a.ts_created DESC');
+
+            // return result
+            return $query->getResult();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function getHottestAlbums() {
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery('SELECT a FROM Champs\Entity\Album a ORDER BY a.ts_last_updated DESC');
+
+            // return result
+            return $query->getResult();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function getAlbumsByGender($gender) {
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT a FROM Champs\Entity\Album a, Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and a.user = u and up.profile_key = 'gender' and up.profile_value = ?1 ORDER BY a.ts_created DESC");
+            $query->setParameter(1, $gender);
+            
+            // return result
+            return $query->getResult();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
 }
