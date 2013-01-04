@@ -18,7 +18,6 @@
                         <ul>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Member"}</a></li>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Member"}</a></li>
-                            <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'active']}">{translate name="Most Active Member"}</a></li>
                             <li>
                                 <a href="{geturl controller="dating" action="online"}">{translate name="Online Member"}</a>
                                 <ul>
@@ -26,31 +25,32 @@
                                     <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
                                 </ul>
                             </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{geturl controller="album" action="index"}">{translate name="Photo Shares"}</a>
-                        <ul>
-                            <li><a href="{geturl controller="album" action="albums" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
-                            <li><a href="{geturl controller="album" action="albums" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
                             <li>
-                                <a href="{geturl controller="album" action="albums"}">{translate name="Albums"}</a>
+                                <a href="{geturl controller="album" action="index"}">{translate name="Photo Shares"}</a>
                                 <ul>
-                                    <li><a href="{geturl controller="album" action="albums" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
-                                    <li><a href="{geturl controller="album" action="albums" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
+                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
+                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
+                                    <li>
+                                        <a href="{geturl controller="album" action="browse"}">{translate name="Albums"}</a>
+                                        <ul>
+                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
+                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Photos"}</a></li>
+                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Photos"}</a>
+                                    <li>
+                                        <a href="{geturl controller="album" action="browse"}">{translate name="Photos"}</a>
+                                        <ul>
+                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
+                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
-                            <li><a href="{geturl controller="album" action="photos" parameters=['view' => 'newest']}">{translate name="Newest Photos"}</a></li>
-                            <li><a href="{geturl controller="album" action="photos" parameters=['view' => 'hottest']}">{translate name="Hottest Photos"}</a>
-                            <li>
-                                <a href="{geturl controller="album" action="photos"}">{translate name="Photos"}</a>
-                                <ul>
-                                    <li><a href="{geturl controller="album" action="photos" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
-                                    <li><a href="{geturl controller="album" action="photos" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
+                    <li><a href="{geturl controller="deals" action="index"}" {if $controller == "shops"} class="active"{/if}>{translate name="Deals Center"}</a></li>
                     <li>
                         <a href="{geturl controller="account" action="index"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
                         <ul>
@@ -65,7 +65,6 @@
                             {/if}
                         </ul>
                     </li>
-
                 </ul>
             </nav>
         </div><!-- End Menu -->
