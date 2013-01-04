@@ -152,7 +152,7 @@ class UserRepository extends EntityRepository {
     public function hasSameEmail($email) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
+        $query = $em->createQuery("SELECT count(u) FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'email' and up.profile_value = ?1");
 
         $query->setParameter(1, $email);
 
@@ -381,5 +381,4 @@ class UserRepository extends EntityRepository {
 
         return $result;
     }
-
 }
