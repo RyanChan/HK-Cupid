@@ -206,6 +206,22 @@ class User {
     public function doPostPersist() {
         // send activation email
         //$this->sendComfirmEmail();
+        // create media folder
+        $this->_createUserFolder();
+    }
+
+    public function getUserFolder() {
+        return \Zend_Registry::get('config')->image->path . DIRECTORY_SEPARATOR . $this->getProfile('email');
+    }
+
+    /**
+     * Create a folder for user to store the media
+     */
+    private function _createUserFolder() {
+        $mediaPath = $this->getUserFolder();
+
+        if (!is_dir($mediaPath))
+            mkdir($mediaPath, 0777);
     }
 
     /**
@@ -214,8 +230,8 @@ class User {
      * @param string $profile_value
      */
     public function setProfile(UserProfile $profile) {
-        foreach ($this->profiles->getValues() as $p){
-            if ($p->profile_key == $profile->profile_key){
+        foreach ($this->profiles->getValues() as $p) {
+            if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
                 return;
             }
@@ -344,7 +360,8 @@ class User {
     /**
      * Update last login time
      */
-    public function doUpdateLastLogin(){
+    public function doUpdateLastLogin() {
         $this->ts_last_login = new \DateTime();
     }
+
 }
