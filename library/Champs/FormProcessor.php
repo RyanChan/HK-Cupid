@@ -10,9 +10,15 @@ abstract class Champs_FormProcessor {
     protected $_errors = array();
     protected $_vals = array();
     private $_sanitizeChain = null;
+    /**
+     *
+     * @var Zend_Translate $translator
+     */
+    protected $translator = null;
 
     public function __construct() {
         $this->em = Zend_Registry::get('doctrine')->getEntityManager();
+        $this->translator = Zend_Registry::get('translate');
     }
 
     abstract function process(Zend_Controller_Request_Abstract $request);
