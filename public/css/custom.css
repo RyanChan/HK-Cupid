@@ -3,3 +3,7 @@
 
 /* you can add any custom css code for any class, id, tags and anything here, it will be active.. */
 
+/* fixed size for img.pic */
+img.pic-fixed-size-161 {
+    height: 161px;
+}
