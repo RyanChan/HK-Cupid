@@ -6,7 +6,7 @@
     <ul class="arrow-list categories bottom">
         <li><a href="{geturl action="profile"}">{translate name="Profile"}</a></li>
         <li><a href="{geturl action="details"}">{translate name="Details"}</a></li>
-        <li><a href="{geturl action="index" controller="album"}">{translate name="Albums"}</a></li>
+        <li><a href="/{$identity->nickname|escape}/albums">{translate name="Albums"}</a></li>
         <li><a href="{geturl action="auth"}">{translate name="Authenticate"}</a></li>
         <li><a href="{geturl action="settings"}">{translate name="Settings"}</a></li>
     </ul>
