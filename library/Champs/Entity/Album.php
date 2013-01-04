@@ -1,14 +1,16 @@
 <?php
+
 namespace Champs\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\AlbumRepository")
  * @Table(name="albums")
  * @HasLifecycleCallbacks
  */
-class Album{
+class Album {
+
     /**
      *
      * @var bigint $id
@@ -16,96 +18,117 @@ class Album{
      * @Id @GeneratedValue
      */
     private $id;
+
     /**
      *
      * @var Champs\Entity\Category $category
      * @OneToOne(targetEntity="Category")
      */
     private $category;
+
     /**
      *
      * @var Champs\Entity\User $user
      * @ManyToOne(targetEntity="User", inversedBy="albums")
      */
     private $user;
+
     /**
      *
      * @var string $title
      * @Column(type="string")
      */
     private $title;
+
     /**
      *
      * @var ArrayCollection $photos
      * @OneToMany(targetEntity="Photo", mappedBy="album")
      */
     private $photos;
+
     /**
      *
      * @var datetime $ts_created
      * @Column(type="datetime")
      */
     private $ts_created;
+
     /**
      *
      * @var datetime $ts_last_updated
      * @Column(type="datetime", nullable=true)
      */
     private $ts_last_updated;
+
     /**
      *
      * @var ArrayCollection $comments
      * @OneToMany(targetEntity="AlbumComment", mappedBy="album")
      */
     private $comments;
+
     /**
      *
      * @var ArrayCollection $profiles
-     * @OneToMany(targetEntity="AlbumProfile", mappedBy="album")
+     * @OneToMany(targetEntity="AlbumProfile", mappedBy="album", cascade={"persist", "remove"})
      */
     private $profiles;
+
     /**
      * Initialize Method
      */
-    public function __construct(){
+    public function __construct() {
         $this->photos = new ArrayCollection();
         $this->profiles = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
+
     /**
      *
      * @param string $key
      * @param mixed $value
      */
-    public function __set($key, $value){
+    public function __set($key, $value) {
         $this->$key = $value;
     }
+
     /**
      *
      * @param string $key
      * @return mixed
      */
-    public function __get($key){
+    public function __get($key) {
         return $this->$key;
     }
+
     /**
      * @PrePersist
      */
-    public function doPrePersist(){
+    public function doPrePersist() {
         $this->ts_created = new \DateTime();
     }
+
+    /**
+     * @PostPersist
+     */
+    public function doPostPersist() {
+        // create album folder
+        $this->_createAlbumFolder();
+    }
+
     /**
      * @PreUpdate
      */
-    public function doPreUpdate(){
+    public function doPreUpdate() {
         $this->ts_last_updated = new \DateTime();
     }
+
     /**
      * @PostInsert
      */
-    public function doPostInsert(){
-        // create album folder
-        $this->_createAlbumFolder();
+    public function doPostInsert() {
+
     }
 
     /**
@@ -113,7 +136,7 @@ class Album{
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(UserProfile $profile) {
+    public function setProfile(AlbumProfile $profile) {
         foreach ($this->profiles->getValues() as $p) {
             if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
@@ -131,7 +154,7 @@ class Album{
      * @param string $value
      */
     public function setProfileWithKeyAndValue($key, $value) {
-        $profile = new \Champs\Entity\UserProfile();
+        $profile = new \Champs\Entity\AlbumProfile();
         $profile->album = $this;
         $profile->profile_key = $key;
         $profile->profile_value = $value;
@@ -155,7 +178,7 @@ class Album{
 
     /**
      *
-     * @param UserProfile $profile
+     * @param AlbumProfile $profile
      */
     public function getProfile($key = null) {
         if (strlen($key) > 0) {
@@ -174,21 +197,22 @@ class Album{
      *
      * @return \DateTime
      */
-    public function getCreated(){
+    public function getCreated() {
         return $this->ts_created->format('Y-m-d H:i:s');
     }
+
     /**
      *
      * @return \DateTime
      */
-    public function getLastUpdated(){
+    public function getLastUpdated() {
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
     }
 
     /**
      * get the album folder path
      */
-    public function getAlbumFolder(User $user = null){
+    public function getAlbumFolder(User $user = null) {
         $userPath = ($user == null) ? $this->user->getUserFolder() : $user->getUserFolder();
 
         return $userPath . DIRECTORY_SEPARATOR . $this->id;
@@ -197,10 +221,11 @@ class Album{
     /**
      * create the album folder for current user
      */
-    private function _createAlbumFolder(){
+    private function _createAlbumFolder() {
         $albumPath = $this->getAlbumFolder();
 
-        if(!is_dir($albumPath))
+        if (!is_dir($albumPath))
             mkdir($albumPath, 0777);
     }
+
 }
