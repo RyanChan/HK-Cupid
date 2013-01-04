@@ -5,7 +5,7 @@ namespace Champs\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\PhotoRepository")
  * @Table(name="photos")
  * @HasLifecycleCallbacks
  */
@@ -76,6 +76,20 @@ class Photo {
     private $comments;
 
     /**
+     * Album folder path
+     *
+     * @var string $_imagePath
+     */
+    private $_albumPath;
+
+    /**
+     * Uploaded file
+     *
+     * @var string $_uploadedFile
+     */
+    private $_uploadedFile;
+
+    /**
      * Initialize Method
      */
     public function __construct() {
@@ -89,7 +103,15 @@ class Photo {
      * @param mixed $value
      */
     public function __set($key, $value) {
-        $this->$key = $value;
+        switch ($key) {
+            case 'album':
+                $this->_albumPath = $value->getAlbumFolder();
+                $this->$key = $value;
+                break;
+            default:
+                $this->$key = $value;
+                break;
+        }
     }
 
     /**
@@ -178,6 +200,21 @@ class Photo {
     }
 
     /**
+     * @PostLoad
+     */
+    public function doPostLoad() {
+        // get the album path when load
+        $this->_albumPath = $this->album->getAlbumFolder();
+    }
+
+    /**
+     * @PostPersist
+     */
+    public function doPostPersist() {
+        $this->uploadProcess();
+    }
+
+    /**
      *
      * @return \DateTime
      */
@@ -191,6 +228,146 @@ class Photo {
      */
     public function getLastUpdated() {
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
+    }
+
+    public function getThumbnailPath() {
+        return $this->_albumPath . DIRECTORY_SEPARATOR . 'thumbnail';
+    }
+
+    public function uploadFile($path) {
+        if (!file_exists($path) || !is_file($path))
+            throw new \Exception('Unable to find uploaded file');
+        if (!is_readable($path))
+            throw new \Exception('Unable to read uploaded file');
+
+        $this->_uploadedFile = $path;
+    }
+
+    public function getFullPath() {
+        return sprintf('%s/%d', $this->_albumPath, $this->id);
+    }
+
+    public function uploadProcess() {
+        if (strlen($this->_uploadedFile) > 0)
+            return move_uploaded_file($this->_uploadedFile, $this->getFullPath());
+
+        return false;
+    }
+
+    /**
+     * Create thumbnail image
+     *
+     * @param integer $maxW
+     * @param integer $maxH
+     * @return string
+     * @throws \Exception
+     */
+    public function createThumbnail($maxW, $maxH) {
+        $imagePath = $this->getFullPath();
+
+        $ts = (int) filemtime($imagePath);
+        $info = getimagesize($imagePath);
+
+        // original width
+        $w = $info[0];
+        // original height
+        $h = $info[1];
+
+        // width/height ratio
+        $ratio = $w / $h;
+
+        // new width can't be more than $maxW
+        $maxW = min($w, $maxW);
+        // check if only max height has been specified
+        if ($maxW == 0)
+            $maxW = $w;
+
+        // new height can't be more than $maxH
+        $maxH = min($h, $maxH);
+        // check if only max width has been specified
+        if ($maxH == 0)
+            $maxH = $h;
+
+        // first use the max width to determine new
+        // height by using original image w:h ratio
+        $newW = $maxW;
+        $newH = $newW / $ratio;
+
+        // check if new height is too big, and if
+        // so determine the new width based on the
+        // max height
+        if ($newH > $maxH) {
+            $newH = $maxH;
+            $newW = $newH * $ratio;
+        }
+
+        if ($w == $newW && $h == $newH) {
+            // no thumbnail required, just return the original path
+            return $imagePath;
+        }
+
+        switch ($info[2]) {
+            case IMAGETYPE_GIF:
+                $infunc = 'ImageCreateFromGif';
+                $outfunc = 'ImageGif';
+                break;
+
+            case IMAGETYPE_JPEG:
+                $infunc = 'ImageCreateFromJpeg';
+                $outfunc = 'ImageJpeg';
+                break;
+
+            case IMAGETYPE_PNG:
+                $infunc = 'ImageCreateFromPng';
+                $outfunc = 'ImagePng';
+                break;
+
+            default:
+                throw new Exception('Invalid image type');
+        }
+
+        // create a unique filename based on the specified options
+        $filename = sprintf('%d.%dx%d.%d', $this->id, $newW, $newH, $ts);
+
+        // autocreate the directory for storing thumbanils
+        $path = $this->getThumbnailPath();
+        if (!file_exists($path))
+            mkdir($path, 0777);
+        if (!is_writable($path))
+            throw new Exception('Unable to write to thumbnail dir');
+
+        // determine the full path for the new thumbnail
+        $thumbPath = sprintf('%s/%s', $path, $filename);
+
+        if (!file_exists($thumbPath)) {
+            // read the image in to GD
+            $im = @$infunc($imagePath);
+            if (!$im)
+                throw new Exception('Unable to read image file');
+
+            // create the output image
+            $thumb = imagecreatetruecolor($newW, $newH);
+
+            // now resample the original image to the new image
+            imagecopyresampled($thumb, $im, 0, 0, 0, 0, $newW, $newH, $w, $h);
+
+            $outfunc($thumb, $thumbPath);
+        }
+
+        if (!file_exists($thumbPath))
+            throw new Exception('Unknown error occurred creating thumbnail');
+        if (!is_readable($thumbPath))
+            throw new Exception('Unable to read thumbnail');
+
+        return $thumbPath;
+    }
+
+    public static function GetImageHash($image_id, $w, $h) {
+        $image_id = (int) $image_id;
+        $w = (int) $w;
+        $h = (int) $h;
+
+        return md5(sprintf('%s,%s,%s', $image_id, $w, $h));
     }
 
 }
