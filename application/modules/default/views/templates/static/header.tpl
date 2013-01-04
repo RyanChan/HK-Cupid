@@ -26,21 +26,12 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{geturl controller="album" action="index"}">{translate name="Photo Shares"}</a>
+                                <a href="{geturl controller="album" action="index"}">{translate name="Album Shares"}</a>
                                 <ul>
                                     <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
                                     <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
                                     <li>
                                         <a href="{geturl controller="album" action="browse"}">{translate name="Albums"}</a>
-                                        <ul>
-                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
-                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Photos"}</a></li>
-                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Photos"}</a>
-                                    <li>
-                                        <a href="{geturl controller="album" action="browse"}">{translate name="Photos"}</a>
                                         <ul>
                                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
                                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
