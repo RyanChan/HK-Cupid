@@ -34,19 +34,27 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     protected $identity;
 
     /**
+     * Bootstrap object
+     *
+     * @var Bootstrap $bootstrap
+     */
+    protected $bootstrap;
+
+    /**
      * initialize method
      */
     public function init() {
         $this->em = Zend_Registry::get('doctrine')->getEntityManager();
         $this->request = $this->getRequest();
+        $this->bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
 
         $this->_initAuth();
         $this->_initACL();
     }
 
-    protected function getUrl($action = null, $controller = null) {
+    protected function getUrl($action = null, $controller = null, array $params = null, $module = null) {
         $url = rtrim($this->getRequest()->getBaseUrl(), '/') . '/';
-        $url .= $this->_helper->url->simple($action, $controller);
+        $url .= $this->_helper->url->simple($action, $controller, $module, $params);
 
         return $url;
     }
@@ -81,6 +89,10 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
             $this->identity = $auth->getIdentity();
         } else
             $this->view->authenticated = false;
+
+        // config object
+        $config = $this->bootstrap->getResource('config');
+        $this->view->config = $config;
     }
 
     /**
