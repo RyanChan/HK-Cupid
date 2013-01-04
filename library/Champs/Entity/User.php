@@ -328,6 +328,8 @@ class User {
         $username = $pattern[0];
         // set the value to username property
         $this->username = $username;
+        // set as nickname by default
+        $this->setProfileWithKeyAndValue('nickname', $username);
     }
 
     /**
