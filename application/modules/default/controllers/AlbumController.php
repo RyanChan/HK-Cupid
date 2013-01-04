@@ -76,10 +76,10 @@ class AlbumController extends Champs_Controller_MasterController {
     /**
      * browseAction
      *
-     * browse all the albums
+     * browse all the albums or photos
      */
     public function browseAction() {
-        
+
     }
 
     /**
@@ -115,10 +115,6 @@ class AlbumController extends Champs_Controller_MasterController {
         $albums = $this->albumRepository->getAlbumsForCurrentUser();
 
         $this->view->albums = $albums;
-    }
-
-    public function albumAction() {
-
     }
 
     /**
