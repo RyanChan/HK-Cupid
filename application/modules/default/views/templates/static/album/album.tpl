@@ -6,5 +6,4 @@
         </a>
     </div>
     <h4><a href="/{$album->user->getProfile('nickname')|escape}/albums/{$album->id|escape}/photos">{$album->title|escape}</a></h4>
-    <p style="word-wrap:break-word;word-break:break-all;">{$album->getProfile('description')|escape|truncate:50:"..."}</p>
 </div>
