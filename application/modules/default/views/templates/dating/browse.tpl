@@ -12,10 +12,6 @@
         <div class="title clearfix" id="options">
             <ul class="option-set clearfix" id="filters" data-option-key="filter">
                 <li><a href="#filter" data-option-value="*" class="selected">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
             </ul>
         </div>
     </div>
