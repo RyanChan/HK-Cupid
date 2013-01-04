@@ -89,7 +89,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // album of user
         $router->addRoute('album_album', new Zend_Controller_Router_Route(
-                        'album/:id/photos',
+                        ':nickname/albums/:id/photos',
                         array(
                             'controller' => 'album',
                             'action' => 'photos'
@@ -99,7 +99,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // albums of user
         $router->addRoute('album_albums', new Zend_Controller_Router_Route(
-                        'album/:nickname/albums',
+                        ':nickname/albums',
                         array(
                             'controller' => 'album',
                             'action' => 'albums'
@@ -109,7 +109,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // create album
         $router->addRoute('album_create', new Zend_Controller_Router_Route(
-                        'album/:nickname/create',
+                        ':nickname/albums/create',
                         array(
                             'controller' => 'album',
                             'action' => 'create'
@@ -119,7 +119,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // edit album
         $router->addRoute('album_edit', new Zend_Controller_Router_Route(
-                        'album/:id/edit',
+                        ':nickname/albums/edit/:id',
                         array(
                             'controller' => 'album',
                             'action' => 'edit'
@@ -129,13 +129,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // delete album
         $router->addRoute('album_delete', new Zend_Controller_Router_Route(
-                        'album/:id/delete',
+                        ':nickname/albums/delete/:id',
                         array(
                             'controller' => 'album',
                             'action' => 'delete'
                         )
                 )
         );
+
     }
 
     /**
