@@ -12,10 +12,6 @@
         <div class="title clearfix" id="options">
             <ul class="option-set clearfix" id="filters" data-option-key="filter">
                 <li><a href="#filter" data-option-value="*" class="selected">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
-                <li><a href="#filter" data-option-value="*">{translate name="All"}</a></li>
             </ul>
         </div>
     </div>
@@ -24,9 +20,9 @@
 
     <div class="portfolio">
         <div class="gallery" id="contain">
-            {for $i=0 to 12}
-                {include file="album/album.tpl" action="link"}
-            {/for}
+            {foreach from=$albums item=album}
+                {include file="album/album.tpl" action="zoom" album=$album}
+            {/foreach}
         </div>
     </div>
 </div>
