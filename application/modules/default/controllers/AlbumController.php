@@ -79,7 +79,33 @@ class AlbumController extends Champs_Controller_MasterController {
      * browse all the albums or photos
      */
     public function browseAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the view
+        $view = $request->getParam('view');
+        // initialize albums array
+        $albums = array();
 
+        switch ($view) {
+            case 'newest':
+                $albums = $this->albumRepository->getNewestAlbums();
+                break;
+            case 'hottest':
+                $albums = $this->albumRepository->getHottestAlbums();
+                break;
+            case 'male':
+                $albums = $this->albumRepository->getAlbumsByGender(Champs\Entity\Repository\UserRepository::MALE);
+                break;
+            case 'female':
+                $albums = $this->albumRepository->getAlbumsByGender(Champs\Entity\Repository\UserRepository::FEMALE);
+                break;
+            default:
+                $albums = $this->albumRepository->findAll();
+                break;
+        }
+
+        // assign albums to view
+        $this->view->albums = $albums;
     }
 
     /**
@@ -133,11 +159,11 @@ class AlbumController extends Champs_Controller_MasterController {
 
             if ($album_id > 0) {
                 // get the album entity
-                $album = $this->albumRepository->findOneBy(array('id' => $album_id));//find('Champs\Entity\Album', $album_id);
+                $album = $this->albumRepository->findOneBy(array('id' => $album_id)); //find('Champs\Entity\Album', $album_id);
 
                 if (!$album) {
-                   $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-                   $this->_redirect($redirectURL);
+                    $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
+                    $this->_redirect($redirectURL);
                 }
 
                 $form = new Champs_Form_Album_Upload($album);
