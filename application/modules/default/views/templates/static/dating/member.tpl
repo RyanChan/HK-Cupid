@@ -14,5 +14,5 @@
             {/if}
         </a>
     </h4>
-    <p>{$user->getProfile('intro')|escape}</p>
+    <p>{$user->getProfile('intro')}</p>
 </div>

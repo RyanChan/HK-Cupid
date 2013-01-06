@@ -12,9 +12,9 @@
         <div class="two-thirds column">
             <nav id="menu" class="navigation">
                 <ul id="nav">
-                    <li><a href="{geturl controller="index" action="index"}" {if $controller == "index"} class="active"{/if}>{translate name="Home"}</a></li>
+                    <li><a href="{geturl controller="index"}" {if $controller == "index"} class="active"{/if}>{translate name="Home"}</a></li>
                     <li>
-                        <a href="{geturl controller="dating" action="index"}" {if $controller == "dating"} class="active"{/if}>{translate name="Online Dating"}</a>
+                        <a href="{geturl controller="dating"}" {if $controller == "dating"} class="active"{/if}>{translate name="Online Dating"}</a>
                         <ul>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Member"}</a></li>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Member"}</a></li>
@@ -26,7 +26,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{geturl controller="album" action="index"}">{translate name="Album Shares"}</a>
+                                <a href="{geturl controller="album"}">{translate name="Album Shares"}</a>
                                 <ul>
                                     <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
                                     <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
@@ -41,9 +41,9 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="{geturl controller="deals" action="index"}" {if $controller == "shops"} class="active"{/if}>{translate name="Deals Center"}</a></li>
+                    <li><a href="{geturl controller="deals"}" {if $controller == "shops"} class="active"{/if}>{translate name="Deals Center"}</a></li>
                     <li>
-                        <a href="{geturl controller="account" action="index"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
+                        <a href="{geturl controller="account"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
                         <ul>
                             {if $authenticated}
                                 <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
