@@ -116,7 +116,7 @@ class AccountController extends Champs_Controller_MasterController {
 
         // setup hash
         $this->initHash();
-
+        // assign form to view
         $this->view->fp = $fp;
     }
 
