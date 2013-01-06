@@ -62,7 +62,7 @@ class Champs_Form_Album_Create extends Champs_FormProcessor {
         $this->album->setProfileWithKeyAndValue('privacy', $this->album_status);
 
         // album description
-        $this->album_description = $this->sanitize($request->getPost('album_description'));
+        $this->album_description = $this->cleanHtml($request->getPost('album_description'));
 
         if (strlen($this->album_description) > 0)
             $this->album->setProfileWithKeyAndValue ('description', $this->album_description);

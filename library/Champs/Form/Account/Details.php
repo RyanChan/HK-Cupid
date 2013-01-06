@@ -161,7 +161,7 @@ class Champs_Form_Account_Details extends Champs_FormProcessor {
             $this->user->setProfileWithKeyAndValue('occupation', $this->occupation);
 
         // intro
-        $this->intro = $this->sanitize($request->getPost('intro'));
+        $this->intro = $this->cleanHtml($request->getPost('intro'));
 
         if (strlen($this->intro) > 0)
             $this->user->setProfileWithKeyAndValue('intro', $this->intro);
