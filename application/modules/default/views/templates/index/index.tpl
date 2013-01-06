@@ -20,7 +20,7 @@
 
             <!-- item 1 -->
             <li class="four columns">
-                <a href="#">
+                <a href="{geturl controller="dating"}">
                     <span data-type="icon" class="sti-icon sti-item color-5"></span>
                     <h2 data-type="mText" class="sti-item">互動交友</h2>
                     <p data-type="sText" class="sti-item"> 認識更多朋友，擴闊社交圈子，開展你的精彩人生。 </p>
@@ -50,7 +50,7 @@
 
             <!-- item 4 -->
             <li class="four columns">
-                <a href="#">
+                <a href="{geturl controller="account"}">
                     <span data-type="icon" class="sti-icon sti-item color-3"></span>
                     <h2 data-type="mText" class="sti-item">個人中心</h2>
                     <p data-type="sText" class="sti-item"> 設置你的個人信息，讓更多人認識你。 </p>
