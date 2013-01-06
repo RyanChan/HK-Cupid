@@ -60,25 +60,32 @@ class AccountController extends Champs_Controller_MasterController {
         $errors = array();
 
         if ($request->isPost()) {
+            // get the hash
+            $hash = $request->getPost('hash');
 
-            $username = $request->getPost('username');
-            $password = $request->getPost('password');
+            if ($this->checkHash($hash)) {
+                $username = $request->getPost('username');
+                $password = $request->getPost('password');
 
-            if (strlen($username) == 0 || strlen($password) == 0)
-                $errors['username'] = 'Required field must not be blank';
+                if (strlen($username) == 0 || strlen($password) == 0)
+                    $errors['username'] = 'Required field must not be blank';
 
-            if (count($errors) == 0) {
-                $adapter = new Champs_Auth_Doctrine($username, $password);
+                if (count($errors) == 0) {
+                    $adapter = new Champs_Auth_Doctrine($username, $password);
 
-                $result = $auth->authenticate($adapter);
+                    $result = $auth->authenticate($adapter);
 
-                if ($result->isValid()) {
-                    $this->_redirect($this->getUrl());
+                    if ($result->isValid()) {
+                        $this->_redirect($this->getUrl());
+                    }
+
+                    $errors['username'] = 'Your login details were invalid';
                 }
-
-                $errors['username'] = 'Your login details were invalid';
             }
         }
+
+        // setup hash
+        $this->initHash();
 
         $this->view->errors = $errors;
         $this->view->redirect = $redirect;
@@ -95,12 +102,20 @@ class AccountController extends Champs_Controller_MasterController {
         $fp = new Champs_Form_Account_Register($this->em);
 
         if ($request->isPost()) {
-            if ($fp->process($request)) {
-                $session = new Zend_Session_Namespace('registration');
-                $session->user_id = $fp->user->id;
-                $this->_redirect($this->getUrl('complete'));
+            // get the hash
+            $hash = $request->getPost('hash');
+
+            if ($this->checkHash($hash)) {
+                if ($fp->process($request)) {
+                    $session = new Zend_Session_Namespace('registration');
+                    $session->user_id = $fp->user->id;
+                    $this->_redirect($this->getUrl('complete'));
+                }
             }
         }
+
+        // setup hash
+        $this->initHash();
 
         $this->view->fp = $fp;
     }
@@ -136,10 +151,18 @@ class AccountController extends Champs_Controller_MasterController {
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-            if ($form->process($request)) {
-                $this->_redirect($this->getUrl('details'));
+            // get the hash
+            $hash = $request->getPost('hash');
+
+            if ($this->checkHash($hash)) {
+                if ($form->process($request)) {
+                    $this->_redirect($this->getUrl('details'));
+                }
             }
         }
+
+        // setup hash
+        $this->initHash();
 
         $user = $this->em->find('Champs\Entity\User', $identity->user_id);
         $this->view->user = $user;
@@ -203,7 +226,7 @@ class AccountController extends Champs_Controller_MasterController {
     }
 
     public function settingsAction() {
-        
+
     }
 
 }
