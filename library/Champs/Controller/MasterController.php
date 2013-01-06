@@ -111,4 +111,39 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender();
     }
 
+    /**
+     * Redirect to user's album
+     *
+     * @param string $nickname
+     * @param integer $album_id
+     */
+    public function redirectToAlbum($nickname, $album_id) {
+        $url = sprintf('%s/albums/%d/photos', $nickname, $album_id);
+        $this->_redirect($url);
+    }
+
+    /**
+     * Validate the hash
+     *
+     * @param string $hash
+     */
+    public function checkHash($hash) {
+        $session_hash = new Zend_Session_Namespace('hash');
+        if ($session_hash->hash == $hash)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Init hash
+     */
+    public function initHash() {
+        $session_hash = new Zend_Session_Namespace('hash');
+        $session_hash->setExpirationSeconds(900);
+        $session_hash->hash = md5(uniqid(time()));
+
+        // assign hash to view
+        $this->view->hash = $session_hash->hash;
+    }
 }
