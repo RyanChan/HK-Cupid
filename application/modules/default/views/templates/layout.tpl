@@ -52,6 +52,7 @@
         <script src="/js/jflickrfeed.min.js"></script> <!-- jQuery Flickr -->
         <script src="/js/twitter-flickr-options.js"></script> <!-- jQuery Tweets Options -->
         <script src="/js/styleswitch.js"></script> <!-- Style Switcher -->
+        <script src="/ckeditor/ckeditor.js"></script> <!-- CKEditor -->
 
         <!-- End JavaScript -->
 
