@@ -9,10 +9,12 @@
     </div>
 
     <div class="sixteen columns">
-        <div class="title clearfix" id="options">
-            <ul class="option-set clearfix" id="filters" data-option-key="filter">
-                <li><a href="#filter" data-option-value="*" class="selected">{translate name="All"}</a></li>
-            </ul>
+        <div class="title clearfix">
+            <a href="{geturl controller="album"}" class="{if $view == ''}color{else}black{/if} button small">{translate name="All"}</a>
+            <a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}" class="{if $view == 'newest'}color{else}black{/if} button small">{translate name="Newest"}</a>
+            <a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}" class="{if $view == 'hottest'}color{else}black{/if} button small">{translate name="Hottest"}</a>
+            <a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}" class="{if $view == 'male'}color{else}black{/if} button small">{translate name="Male"}</a>
+            <a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}" class="{if $view == 'female'}color{else}black{/if} button small">{translate name="Female"}</a>
         </div>
     </div>
 

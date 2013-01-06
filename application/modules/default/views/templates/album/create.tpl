@@ -9,17 +9,24 @@
     </div>
     <div class="sixteen columns">
         <form action="{geturl action="create"}" method="POST" id="form-album-create" class="form-elements">
+            {formhash hash=$hash}
             <fieldset>
-                <label for="album_name">{translate name="Album Name"}</label>
+                <h3>
+                    <label for="album_name">{translate name="Album Name"}</label>
+                </h3>
                 <input type="text" name="album_name" id="album_name" value="{$form->album_name|escape}" />
             </fieldset>
             <fieldset>
-                <label for="album_status">{translate name="Privacy"}</label>
+                <h3>
+                    <label for="album_status">{translate name="Privacy"}</label>
+                </h3>
                 {status default=$form->album_status}
             </fieldset>
             <fieldset>
-                <label for="album_description">{translate name="description"}</label>
-                <textarea name="album_description">{$form->album_description|escape}</textarea>
+                <h3>
+                    <label for="album_description">{translate name="Description"}</label>
+                </h3>
+                <textarea class="ckeditor" name="album_description">{$form->album_description|escape}</textarea>
             </fieldset>
             <fieldset>
                 <input type="submit" value="{translate name="Create Album"}" class="button small color" />

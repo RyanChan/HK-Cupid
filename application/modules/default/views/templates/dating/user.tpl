@@ -44,7 +44,7 @@
             <span class="line"></span>
         </h2>
         <div class="about-project bottom">
-            {$user->getProfile('intro')|escape}
+            {$user->getProfile('intro')}
         </div>
         <div class="clearfix"></div>
 

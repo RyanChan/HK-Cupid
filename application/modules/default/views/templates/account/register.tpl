@@ -6,6 +6,7 @@
         <h2 class="title">Register to {translate name="Champs"}<span class="line"></span></h2>
 
         <form action="{geturl action="register"}" method="POST" class="form-elements2">
+            <input type="hidden" name="hash" value="{$hash}" />
             <fieldset>
                 <label id="first_name">First Name</label>
                 <input type="text" name="first_name" id="first_name" />

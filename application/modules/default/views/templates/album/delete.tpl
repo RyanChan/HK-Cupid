@@ -7,9 +7,15 @@
             <span class="line"></span>
         </h2>
 
-        <div class="">
+        <div class="welcome">
+            {if $deleted}
+                <p>{translate name="Your album have been deleted"}</p>
+            {else}
+                <p>{translate name="You can't delete this album"}</p>
+            {/if}
 
         </div>
+        <a href="/{$nickname|escape}/albums" class="button small color">{translate name="Back to albums"}</a>
     </div>
 </div>
 

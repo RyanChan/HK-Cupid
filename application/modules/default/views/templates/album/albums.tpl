@@ -21,7 +21,7 @@
     <div class="portfolio">
         <div class="gallery" id="contain">
             {foreach from=$albums item=album}
-                {include file="album/album.tpl" action="link" album=$album}
+                {include file="album/album.tpl" action="zoom" album=$album}
             {/foreach}
         </div>
     </div>

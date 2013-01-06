@@ -10,6 +10,7 @@
 
     <div class="sixteen columns">
         <form action="{geturl action="upload"}" id="form-album-upload" enctype="multipart/form-data" method="POST" class="form-elements">
+            <input type="hidden" name="hash" value="{$hash}" />
             <fieldset>
                 <label for="image">{translate name="Upload photo"}</label>
                 <input type="file" name="image" id="image" />
