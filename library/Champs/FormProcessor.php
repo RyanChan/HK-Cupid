@@ -7,9 +7,43 @@ abstract class Champs_FormProcessor {
      * @var Doctrine\ORM\EntityManager $em
      */
     protected $em = null;
+
+    /**
+     *
+     * @var array $_errors
+     */
     protected $_errors = array();
+
+    /**
+     *
+     * @var array $_vals
+     */
     protected $_vals = array();
+
+    /**
+     *
+     * @var mixed $_sanitizeChain
+     */
     private $_sanitizeChain = null;
+
+    /**
+     *
+     * @var array $tags
+     */
+    static $tags = array(
+        'a' => array('href', 'target', 'name'),
+        'img' => array('src', 'alt'),
+        'b' => array(),
+        'strong' => array(),
+        'em' => array(),
+        'i' => array(),
+        'ul' => array(),
+        'li' => array(),
+        'ol' => array(),
+        'p' => array(),
+        'br' => array()
+    );
+
     /**
      *
      * @var Zend_Translate $translator
@@ -74,6 +108,26 @@ abstract class Champs_FormProcessor {
         return array_key_exists($name, $this->_vals) ? $this->_vals[$name] : null;
     }
 
-}
+    public function cleanHtml($html) {
+        $chain = new Zend_Filter();
+        $chain->addFilter(new Zend_Filter_StripTags(self::$tags));
+        $chain->addFilter(new Zend_Filter_StringTrim());
 
-?>
+        $html = $chain->filter($html);
+
+        $tmp = $html;
+        while (1) {
+            // Try and replace an occurrence of javascript:
+            $html = preg_replace('/(<[^>]*)javascript:([^>]*>)/i', '$1$2', $html);
+
+            // If nothing changed this iteration then break the loop
+            if ($html == $tmp)
+                break;
+
+            $tmp = $html;
+        }
+
+        return $html;
+    }
+
+}
