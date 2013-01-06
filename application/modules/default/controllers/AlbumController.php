@@ -46,11 +46,18 @@ class AlbumController extends Champs_Controller_MasterController {
         $form = new Champs_Form_Album_Create();
 
         if ($request->isPost()) {
-            if ($form->process($request)) {
-                $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $form->album->id);
-                $this->_redirect($redirectURL);
+            // get the hash
+            $hash = $request->getPost('hash');
+
+            if ($this->checkHash($hash)) {
+                if ($form->process($request)) {
+                    $this->redirectToAlbum($this->identity->nickname, $form->album->id);
+                }
             }
         }
+
+        // setup hash
+        $this->initHash();
 
         $this->view->form = $form;
     }
@@ -61,7 +68,37 @@ class AlbumController extends Champs_Controller_MasterController {
      * edit an album of user
      */
     public function editAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the album id and entity
+        $album_id = $request->getParam('id');
+        $album = $this->em->find('Champs\Entity\Album', $album_id);
+        // get the nickname
+        $nickname = $request->getParam('nickname');
 
+        // form object
+        $form = new Champs_Form_Album_Edit($album);
+
+        if ($request->isPost()) {
+            // get the hash
+            $hash = $request->getPost('hash');
+
+            if ($this->checkHash($hash)) {
+                if ($form->process($request)) {
+                    $this->redirectToAlbum($nickname, $album_id);
+                }
+            }
+        }
+
+        // setup / refresh hash for security reason
+        $this->initHash();
+
+        // assign album id to view
+        $this->view->album_id = $album_id;
+        // assign form to view
+        $this->view->form = $form;
+        // assign nickname to vew
+        $this->view->nickname = $nickname;
     }
 
     /**
@@ -70,7 +107,25 @@ class AlbumController extends Champs_Controller_MasterController {
      * delete an album
      */
     public function deleteAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the album id
+        $album_id = $request->getParam('id');
+        // get the album entity
+        $album = $this->em->find('Champs\Entity\Album', $album_id);
+        // get the user entity
+        $user = $this->em->find('Champs\Entity\User', $this->identity->user_id);
+        // init delete
+        $deleted = false;
 
+        if ($album->user == $user) {
+            $this->em->remove($album);
+            $this->em->flush();
+            $deleted = true;
+        }
+
+        $this->view->deleted = $deleted;
+        $this->view->nickname = $this->identity->nickname;
     }
 
     /**
@@ -100,12 +155,14 @@ class AlbumController extends Champs_Controller_MasterController {
                 $albums = $this->albumRepository->getAlbumsByGender(Champs\Entity\Repository\UserRepository::FEMALE);
                 break;
             default:
-                $albums = $this->albumRepository->findAll();
+                $albums = $this->albumRepository->getAlbums();
                 break;
         }
 
         // assign albums to view
         $this->view->albums = $albums;
+        // assign view mode to view
+        $this->view->view = $view;
     }
 
     /**
@@ -162,26 +219,21 @@ class AlbumController extends Champs_Controller_MasterController {
                 $album = $this->albumRepository->findOneBy(array('id' => $album_id)); //find('Champs\Entity\Album', $album_id);
 
                 if (!$album) {
-                    $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-                    $this->_redirect($redirectURL);
+                    $this->redirectToAlbum($this->identity->nickname, $album_id);
                 }
 
                 $form = new Champs_Form_Album_Upload($album);
 
                 if ($form->process($request)) {
-                    $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-                    $this->_redirect($redirectURL);
+                    $this->redirectToAlbum($this->identity->nickname, $album_id);
                 } else {
-                    $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-                    $this->_redirect($redirectURL);
+                    $this->redirectToAlbum($this->identity->nickname, $album_id);
                 }
             } else {
-                $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-                $this->_redirect($redirectURL);
+                $this->redirectToAlbum($this->identity->nickname, $album_id);
             }
         } else {
-            $redirectURL = sprintf('%s/albums/%d/photos', $this->identity->nickname, $album_id);
-            $this->_redirect($redirectURL);
+            $this->redirectToAlbum($this->identity->nickname, $album_id);
         }
     }
 
