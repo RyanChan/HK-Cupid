@@ -48,6 +48,13 @@ class Product {
 
     /**
      *
+     * @var Champs\Entity\Category $category
+     * @OneToMany(targetEntity="Category")
+     */
+    private $categories;
+
+    /**
+     *
      * @var smallint $ranking
      * @Column(type="smallint")
      */
@@ -87,6 +94,7 @@ class Product {
     public function __construct() {
         $this->profiles = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->ranking = 0;
     }
 
@@ -106,6 +114,14 @@ class Product {
      */
     public function __get($key) {
         return $this->$key;
+    }
+
+    /**
+     * @PostLoad
+     */
+    public function doPostLoad() {
+        // increase browse counting
+        $this->_increaseBrowseCounting();
     }
 
     /**
@@ -134,7 +150,7 @@ class Product {
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(UserProfile $profile) {
+    public function setProfile(ProductProfile $profile) {
         foreach ($this->profiles as $p) {
             if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
@@ -175,6 +191,21 @@ class Product {
     }
 
     /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value) {
+        $profile = new \Champs\Entity\ProductProfile();
+        $profile->product = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        $this->setProfile($profile);
+    }
+
+    /**
      *
      * @return \DateTime
      */
@@ -210,5 +241,14 @@ class Product {
 
         if (!is_dir($productPath))
             mkdir ($productPath, 0777);
+    }
+
+    /**
+     * increase browse counting when the entity is loaded in everytime
+     */
+    private function _increaseBrowseCounting() {
+        $count = $this->getProfile('browse_count');
+        $count++;
+        $this->setProfileWithKeyAndValue('browse_count', $count);
     }
 }
