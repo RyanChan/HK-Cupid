@@ -215,7 +215,7 @@ class Album {
     public function getAlbumFolder(User $user = null) {
         $userPath = ($user == null) ? $this->user->getUserFolder() : $user->getUserFolder();
 
-        return $userPath . DIRECTORY_SEPARATOR . $this->id;
+        return $userPath . DIRECTORY_SEPARATOR . 'album' . DIRECTORY_SEPARATOR . $this->id;
     }
 
     /**
