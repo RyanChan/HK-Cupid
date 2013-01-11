@@ -48,13 +48,6 @@ class Product {
 
     /**
      *
-     * @var Champs\Entity\Category $category
-     * @OneToMany(targetEntity="Category")
-     */
-    private $categories;
-
-    /**
-     *
      * @var smallint $ranking
      * @Column(type="smallint")
      */
