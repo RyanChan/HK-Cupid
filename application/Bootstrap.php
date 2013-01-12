@@ -1,13 +1,7 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
-
-    protected function _initSessionPath() {
-        //$session = $this->getOption('session');
-
-        //Zend_Session::setOptions($session);
-    }
-
+    
     /**
      * Bootstrap application.ini config
      */
