@@ -3,7 +3,7 @@
 /**
  * Album Controller
  */
-class AlbumController extends Champs_Controller_MasterController {
+class AlbumController extends Champs_Controller_MasterController implements Champs_Controller_Interface_CRUDInterface {
 
     /**
      * Album's repository
