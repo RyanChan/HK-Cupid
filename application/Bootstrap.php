@@ -1,7 +1,7 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
-    
+
     /**
      * Bootstrap application.ini config
      */
@@ -51,6 +51,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         // router object
         $router = $controller->getRouter();
 
+        /******************* Start Dating *********************/
+
         // dating browse
         $router->addRoute('dating_browse', new Zend_Controller_Router_Route(
                         'dating/browse/view/:view/page/:page',
@@ -80,6 +82,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                         )
                 )
         );
+        /******************* End  Dating *********************/
+        /******************* Start Album *********************/
 
         // album of user
         $router->addRoute('album_album', new Zend_Controller_Router_Route(
@@ -131,6 +135,83 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                 )
         );
 
+        /******************* End   Album *********************/
+
+        /******************* Start Deals *********************/
+
+        // user products
+        $router->addRoute('deals_user_products', new Zend_Controller_Router_Route(
+                        ':nickname/products',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'products'
+                        )
+                )
+        );
+
+        // user product
+        $router->addRoute('deals_user_product', new Zend_Controller_Router_Route(
+                        ':nickname/products/:id',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'product'
+                        )
+                )
+        );
+
+        // user create product
+        $router->addRoute('deals_user_product_create', new Zend_Controller_Router_Route(
+                        ':nickname/products/create',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'create'
+                        )
+                )
+        );
+
+        // user edit product
+        $router->addRoute('deals_user_product_edit', new Zend_Controller_Router_Route(
+                        ':nickname/products/edit/:id',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'edit'
+                        )
+                )
+        );
+
+        // user delete product
+        $router->addRoute('deals_user_product_delete', new Zend_Controller_Router_Route(
+                        ':nickname/products/delete/:id',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'delete'
+                        )
+                )
+        );
+
+        // user payments
+        $router->addRoute('deals_user_payments', new Zend_Controller_Router_Route(
+                        ':nickname/payments',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'payments'
+                        )
+                )
+        );
+
+        // user payment
+        $router->addRoute('deals_user_payment', new Zend_Controller_Router_Route(
+                        ':nickname/payment/:id',
+                        array(
+                            'controller' => 'deals',
+                            'action' => 'payment'
+                        )
+                )
+        );
+
+
+
+        /******************* End   Deals *********************/
     }
 
     /**
@@ -165,8 +246,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'content' => APPLICATION_PATH . '/languages/zh_CN.php',
             'locale' => 'zh_CN',
         ));
-
-
 
         // add to zend_registry
         Zend_Registry::set('translate', $translate);
