@@ -52,6 +52,12 @@ class Product {
      * @Column(type="smallint")
      */
     private $ranking;
+    
+    /**
+     * @var decimal $price
+     * @Column(type="decimal", scale=2)
+     */
+    private $price;
 
     /**
      *

@@ -2,7 +2,7 @@
 namespace Champs\Entity;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\PaymentRepository")
  * @Table(name="payments")
  * @HasLifecycleCallbacks
  */
@@ -46,23 +46,26 @@ class Payment{
      * @Column(type="smallint")
      */
     private $progress;
+    
     /**
      *
      * @var datetime $ts_cretaed
      * @Column(type="datetime")
      */
     private $ts_created;
+    
     /**
      *
      * @var datetime $ts_last_updated
      * @Column(type="datetime", nullable=true)
      */
     private $ts_last_updated;
+    
     /**
      * Initialize method
      */
     public function __construct(){
-        $this->progress = 1;
+        $this->progress = Champs\Entity\Repository\PaymentRepository::IN_PROCESS;
     }
     /**
      *
@@ -93,13 +96,13 @@ class Payment{
         $this->ts_last_updated = new \DateTime();
     }
     /**
-     *
+     * 
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(UserProfile $profile){
-        foreach ($this->profiles as $p){
-            if ($p->profile_key == $profile->profile_key){
+    public function setProfile(PaymentProfile $profile) {
+        foreach ($this->profiles->getValues() as $p) {
+            if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
                 return;
             }
@@ -107,25 +110,44 @@ class Payment{
 
         $this->profiles->add($profile);
     }
+
+    /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value) {
+        $profile = new \Champs\Entity\PaymentProfile();
+        $profile->user = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        $this->setProfile($profile);
+    }
+
     /**
      *
      * @param string $key
      */
-    public function unsetProfile($key){
-        foreach ($this->profiles as $profile){
-            if ($profile->profile_key == $key){
+    public function unsetProfile($key) {
+        foreach ($this->profiles->getValues() as $profile) {
+            if ($profile->profile_key == $key) {
                 $this->profiles->removeElement($profile);
+                \Zend_Registry::get('doctrine')->getEntityManager()->remove($profile);
+                return;
             }
         }
     }
+
     /**
      *
-     * @param UserProfile $profile
+     * @param PaymentProfile $profile
      */
-    public function getProfile($key = null){
-        if (strlen($key) > 0){
-            foreach ($this->profiles as $profile){
-                if ($profile->profile_key == $key){
+    public function getProfile($key = null) {
+        if (strlen($key) > 0) {
+            foreach ($this->profiles as $profile) {
+                if ($profile->profile_key == $key) {
                     return $profile->profile_value;
                 }
             }

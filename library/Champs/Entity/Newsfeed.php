@@ -70,9 +70,9 @@ class Newsfeed{
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(NewsfeedProfile $profile){
-        foreach ($this->profiles as $p){
-            if ($p->profile_key == $profile->profile_key){
+    public function setProfile(NewsfeedProfile $profile) {
+        foreach ($this->profiles->getValues() as $p) {
+            if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
                 return;
             }
@@ -80,25 +80,29 @@ class Newsfeed{
 
         $this->profiles->add($profile);
     }
+
     /**
      *
      * @param string $key
      */
-    public function unsetProfile($key){
-        foreach ($this->profiles as $profile){
-            if ($profile->profile_key == $key){
+    public function unsetProfile($key) {
+        foreach ($this->profiles->getValues() as $profile) {
+            if ($profile->profile_key == $key) {
                 $this->profiles->removeElement($profile);
+                \Zend_Registry::get('doctrine')->getEntityManager()->remove($profile);
+                return;
             }
         }
     }
+
     /**
      *
-     * @param UserProfile $profile
+     * @param NewsfeedProfile $profile
      */
-    public function getProfile($key = null){
-        if (strlen($key) > 0){
-            foreach ($this->profiles as $profile){
-                if ($profile->profile_key == $key){
+    public function getProfile($key = null) {
+        if (strlen($key) > 0) {
+            foreach ($this->profiles as $profile) {
+                if ($profile->profile_key == $key) {
                     return $profile->profile_value;
                 }
             }

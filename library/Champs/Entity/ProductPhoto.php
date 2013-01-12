@@ -86,6 +86,69 @@ class ProductPhoto{
     public function __get($key){
         return $this->$key;
     }
+    
+    /**
+     *
+     * @param string $profile_key
+     * @param string $profile_value
+     */
+    public function setProfile(ProductPhotoProfile $profile) {
+        foreach ($this->profiles->getValues() as $p) {
+            if ($p->profile_key == $profile->profile_key) {
+                $p->profile_value = $profile->profile_value;
+                return;
+            }
+        }
+
+        $this->profiles->add($profile);
+    }
+
+    /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value) {
+        $profile = new \Champs\Entity\ProductPhotoProfile();
+        $profile->user = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        $this->setProfile($profile);
+    }
+
+    /**
+     *
+     * @param string $key
+     */
+    public function unsetProfile($key) {
+        foreach ($this->profiles->getValues() as $profile) {
+            if ($profile->profile_key == $key) {
+                $this->profiles->removeElement($profile);
+                \Zend_Registry::get('doctrine')->getEntityManager()->remove($profile);
+                return;
+            }
+        }
+    }
+
+    /**
+     *
+     * @param ProductPhotoProfile $profile
+     */
+    public function getProfile($key = null) {
+        if (strlen($key) > 0) {
+            foreach ($this->profiles as $profile) {
+                if ($profile->profile_key == $key) {
+                    return $profile->profile_value;
+                }
+            }
+            return null;
+        } else {
+            return $this->profiles;
+        }
+    }
+    
     /**
      * @PrePersist
      */

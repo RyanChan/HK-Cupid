@@ -128,7 +128,7 @@ class Photo {
      * @param string $profile_key
      * @param string $profile_value
      */
-    public function setProfile(UserProfile $profile) {
+    public function setProfile(PhotoProfile $profile) {
         foreach ($this->profiles->getValues() as $p) {
             if ($p->profile_key == $profile->profile_key) {
                 $p->profile_value = $profile->profile_value;
@@ -146,7 +146,7 @@ class Photo {
      * @param string $value
      */
     public function setProfileWithKeyAndValue($key, $value) {
-        $profile = new \Champs\Entity\UserProfile();
+        $profile = new \Champs\Entity\PhotoProfile();
         $profile->user = $this;
         $profile->profile_key = $key;
         $profile->profile_value = $value;
