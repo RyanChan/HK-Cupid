@@ -66,6 +66,9 @@ class Champs_Form_Album_Create extends Champs_FormProcessor {
 
         if (strlen($this->album_description) > 0)
             $this->album->setProfileWithKeyAndValue ('description', $this->album_description);
+            
+        //Profile
+            // code here
 
         if (!$this->hasError()) {
             try {

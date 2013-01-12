@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Create an album
+ * Create an albumComment
  *
  * @author RyanChan <ryanchan.tc@gmail.com>
  */
@@ -58,7 +58,7 @@ class Champs_Form_AlbumComment_Create extends Champs_FormProcessor {
             $this->albumComment->title = $this->albumComment_title;
         }
             
-        // comment title
+        // comment content
         $this->albumComment_content = $this->sanitize($request->getPost('albumComment_content'));
 
         if (strlen($this->albumComment_content) == 0){
@@ -69,14 +69,15 @@ class Champs_Form_AlbumComment_Create extends Champs_FormProcessor {
         
         //album id
         $this->album_id = $request->getPost('album_id');
-
-        // comment isHidden
-        $this->albumComment_isHidden = $request->getPost('albumComment_isHidden');
+        if($this->album_id <= 0){
+            $this->addError('ablum_id', $this->translator->_('Album id must greater than 0'));
+        }else{
+            $album = $this->em->find('Champs\Entity\Album', $this->album_id);
+            $this->albumComment->album = $album;
+        }
 
         if (!$this->hasError()) {
             try {
-                $album = $this->em->find('Champs\Entity\Album', $this->album_id);
-                $this->albumComment->album = $album;
                 $this->_albumCommentRepository->storeAlbumCommentEntity($this->albumComment, $this->_user_id);
             } catch (Exception $e) {
                 $this->addError('error', $e->getMessage());
