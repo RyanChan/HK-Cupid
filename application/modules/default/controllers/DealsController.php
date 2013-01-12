@@ -5,7 +5,7 @@
  *
  * @author RyanChan <ryanchan.tc@gmail.com>
  */
-class DealsController extends Champs_Controller_MasterController{
+class DealsController extends Champs_Controller_MasterController implements Champs_Controller_Interface_CRUDInterface{
 
     /**
      *
@@ -105,4 +105,6 @@ class DealsController extends Champs_Controller_MasterController{
     public function paymentAction () {
 
     }
+
+
 }
