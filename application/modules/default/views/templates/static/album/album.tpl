@@ -5,5 +5,5 @@
             <span class="hover-effect {$action|escape}"></span>
         </a>
     </div>
-    <h4><a href="/{$album->user->getProfile('nickname')|escape}/albums/{$album->id|escape}/photos">{$album->title|escape}</a></h4>
+    <h4><a href="/{$album->user->getProfile('nickname')|escape}/albums/{$album->id|escape}/photos">{$product->title|escape}</a></h4>
 </div>

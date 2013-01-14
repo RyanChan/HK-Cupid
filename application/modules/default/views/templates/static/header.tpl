@@ -41,7 +41,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="{geturl controller="deals"}" {if $controller == "shops"} class="active"{/if}>{translate name="Deals Center"}</a></li>
+                    <li>
+                        <a href="{geturl controller="deals"}" {if $controller == "deals"} class="active"{/if}>{translate name="Deals Center"}</a>
+                        <ul>
+                            <li><a href="{geturl controller="deals" parameters=['view' => 'newest']}">{translate name="Newest Product"}</a></li>
+                            <li><a href="{geturl controller="deals" parameters=['view' => 'hottest']}">{translate name="Hottest Product"}</a></li>
+                            <li><a href="{geturl controller="deals" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="{geturl controller="account"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
                         <ul>

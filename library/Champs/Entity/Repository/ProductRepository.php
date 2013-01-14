@@ -231,23 +231,48 @@ class ProductRepository extends EntityRepository {
      */
     public function getHottestProduct($offset = 0, $limit = 30) {
         try {
-             // create query
+            // create query
             $query = $this->getEntityManager()->createQuery(
                     "SELECT p
                      FROM Champs\Entity\Product p, Champs\Entity\ProductProfile pp
                      WHERE pp.product = p and pp.profile_key = 'status' and pp.profile_value = ?1
                      ORDER BY p.ts_last_updated DESC"
             );
-            
+
             $query->setFirstResult($offset)
                     ->setMaxResults($limit)
                     ->setParameter(1, self::ON_SALE);
-                    
+
             // get result
             $result = $query->getResult();
-            
+
             return $result;
-            
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function getProductsForCurrentUser() {
+        try {
+            // get user id
+            $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get user entity
+            $user = $this->getEntityManager()->find('Champs\Entity\User', $user_id);
+
+            // create query
+            $query = $this->getEntityManager()->createQuery(
+                    "SELECT p
+                     FROM Champs\Entity\Product p
+                     WHERE p.user = ?1"
+            );
+
+            $query->setParameter(1, $user);
+
+            // get result
+            $result = $query->getResult();
+
+            return $result;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -317,7 +342,7 @@ class ProductRepository extends EntityRepository {
         try {
             // get product entity
             $product = $this->find($product_id);
-            // delete entity 
+            // delete entity
             $this->getEntityManager()->remove($product);
             $this->getEntityManager()->flush();
         } catch (\Exception $e) {
