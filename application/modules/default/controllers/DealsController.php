@@ -21,6 +21,15 @@ class DealsController extends Champs_Controller_MasterController implements Cham
     }
 
     /**
+     * Browse Action
+     *
+     * forward to index action
+     */
+    public function browseAction() {
+        $this->_forward('index');
+    }
+
+    /**
      * Index Action
      */
     public function indexAction() {

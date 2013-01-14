@@ -1,57 +1,56 @@
-<header>
-    <div class="container clearfix">
-
-        <div class="one-third column">
-            <div class="logo">
-                <a href="{geturl controller="index" action="index"}">
-                    <img src="/images/logo2.png" alt="{translate name="Podot"}" />
-                </a>
-            </div>
-        </div><!-- End Logo -->
-
-        <div class="two-thirds column">
-            <nav id="menu" class="navigation">
-                <ul id="nav">
-                    <li><a href="{geturl controller="index"}" {if $controller == "index"} class="active"{/if}>{translate name="Home"}</a></li>
-                    <li>
-                        <a href="{geturl controller="dating"}" {if $controller == "dating"} class="active"{/if}>{translate name="Online Dating"}</a>
-                        <ul>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">{translate name="Champs"}</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="{if $controller == "index"}active{/if}">
+                        <a href="/">{translate name="Home"}</a>
+                    </li>
+                    <li class="dropdown {if $controller == "dating"}active{/if}">
+                        <a href="{geturl controller="dating"}" class="dropdown-toggle" data-toggle="dropdown">
+                            {translate name="Dating"}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-header">{translate name="Find your target"}</li>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Member"}</a></li>
                             <li><a href="{geturl controller="dating" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Member"}</a></li>
-                            <li>
-                                <a href="{geturl controller="dating" action="online"}">{translate name="Online Member"}</a>
-                                <ul>
-                                    <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'male']}">{translate name="Male Member"}</a></li>
-                                    <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{geturl controller="album"}">{translate name="Album Shares"}</a>
-                                <ul>
-                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
-                                    <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
-                                    <li>
-                                        <a href="{geturl controller="album" action="browse"}">{translate name="Albums"}</a>
-                                        <ul>
-                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
-                                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                            <li class="divider"></li>
+                            <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'male']}">{translate name="Male Member"}</a></li>
+                            <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
+                            <li class="divider"></li>
+                            <li class="nav-header">{translate name="Album Shares"}</li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
+
                         </ul>
                     </li>
-                    <li>
-                        <a href="{geturl controller="deals"}" {if $controller == "deals"} class="active"{/if}>{translate name="Deals Center"}</a>
-                        <ul>
-                            <li><a href="{geturl controller="deals" parameters=['view' => 'newest']}">{translate name="Newest Product"}</a></li>
-                            <li><a href="{geturl controller="deals" parameters=['view' => 'hottest']}">{translate name="Hottest Product"}</a></li>
-                            <li><a href="{geturl controller="deals" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
+                    <li class="dropdown {if $controller == "deals"}active{/if}">
+                        <a href="{geturl controller="deals"}" class="dropdown-toggle" data-toggle="dropdown">
+                            {translate name="Deals"}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Product"}</a></li>
+                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Product"}</a></li>
+                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="{geturl controller="account"}" {if $controller == "account"} class="active"{/if}>{translate name="Account"}</a>
-                        <ul>
+                    <li class="dropdown {if $controller == "account"}active{/if}">
+                        <a href="{geturl controller="account"}" class="dropdown-toggle" data-toggle="dropdown">
+                            {translate name="Account"}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
                             {if $authenticated}
                                 <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
                                 <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
@@ -64,14 +63,12 @@
                         </ul>
                     </li>
                 </ul>
-            </nav>
-        </div><!-- End Menu -->
-
-        <div class="sixteen columns"><hr /></div>
-
-    </div><!-- End Container -->
-</header><!-- <<< End Header >>> -->
-
-{if $title == 'Home'}
-    {include file="slider.tpl"}
-{/if}
+                <form class="navbar-form pull-right">
+                    <input class="span2" type="text" placeholder="Email">
+                    <input class="span2" type="password" placeholder="Password">
+                    <button type="submit" class="btn">Sign in</button>
+                </form>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
