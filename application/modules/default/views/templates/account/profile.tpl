@@ -1,4 +1,4 @@
-{include file="header.tpl" title="Profile"}
+{include file="header.tpl"}
 
 <div class="container clearfix">
     <div class="recent-work gallery clearfix top">
@@ -71,5 +71,3 @@
 
     {include file="user/navigation.tpl"}
 </div>
-
-{include file="footer.tpl"}
