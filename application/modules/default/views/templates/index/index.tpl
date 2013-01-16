@@ -28,10 +28,12 @@
     </div>
 
     <div class="row-fluid">
+        <h2>{translate name="Components"}</h2>
+        <hr />
         <ul class="thumbnails">
             <li class="span3">
                 <div class="thumbnail">
-                    <img src="/img/placeholder300x200.png" alt="" />
+                    <img data-src="holder.js/300x200" alt="" />
                     <div class="caption">
                         <h3>{translate name="Dating"}</h3>
                         <p>{translate name="Dateting with your target where you find on our website"}</p>
@@ -41,7 +43,7 @@
             </li>
             <li class="span3">
                 <div class="thumbnail">
-                    <img src="/img/placeholder300x200.png" alt="" />
+                    <img data-src="holder.js/300x200" alt="" />
                     <div class="caption">
                         <h3>{translate name="Albums"}</h3>
                         <p>{translate name="Explode other people's album, just have fun with it."}</p>
@@ -51,7 +53,7 @@
             </li>
             <li class="span3">
                 <div class="thumbnail">
-                    <img src="/img/placeholder300x200.png" alt="" />
+                    <img data-src="holder.js/300x200" alt="" />
                     <div class="caption">
                         <h3>{translate name="Deals"}</h3>
                         <p>{translate name="Find out your favorite products on our markets"}</p>
@@ -61,13 +63,94 @@
             </li>
             <li class="span3">
                 <div class="thumbnail">
-                    <img src="/img/placeholder300x200.png" alt="" />
+                    <img data-src="holder.js/300x200" alt="" />
                     <div class="caption">
                         <h3>{translate name="Account"}</h3>
                         <p>{translate name="Sign up or Login to our website. Get start with your life"}</p>
                         <p><a href="{geturl controller="delas"}" class="btn btn-primary">{translate name="Enter"}</a></p>
                     </div>
                 </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <h2>{translate name="Featured Members"}</h2>
+        <hr />
+        <ul class="thumbnails">
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="spen3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <h2>{translate name="Featured Albums"}</h2>
+        <hr />
+        <ul class="thumbnails">
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="spen3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <h2>{translate name="Featured Products"}</h2>
+        <hr />
+        <ul class="thumbnails">
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="span3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
+            </li>
+            <li class="spen3">
+                <a href="#" class="thumbnail">
+                    <img data-src="holder.js/260x180" alt="" />
+                </a>
             </li>
         </ul>
     </div>
