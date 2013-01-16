@@ -1,18 +1,22 @@
-<div class="four columns item element-4" data-categories="">
-    <div class="caption">
-        <a href="/images/img/thumbs/thumb-1.jpg" rel="prettyPhoto[gallery1]">
-            <img src="/images/img/thumbs/thumb-1.jpg" alt="" class="pic" />
-            <span class="hover-effect {$action|escape}"></span>
-        </a>
+<li class="span3">
+    <div class="thumbnail">
+        <img data-src="holder.js/300x200" alt="" />
+        <div class="caption">
+            <h3>
+                {if $user->getProfile('nickname')}
+                    {$user->getProfile('nickname')|escape}
+                {else}
+                    {$user->getProfile('first_name')|escape} , {$user->getProfile('last_name')|escape}
+                {/if}
+            </h3>
+            <p>
+                {if $user->getProfile('intro')}
+                    {$user->getProfile('intro')|truncate:150}
+                {else}
+                    {translate name="No intro"}
+                {/if}
+            </p>
+            <p><a href="{geturl action="user"}/{$user->getProfile('nickname')|escape}" class="btn btn-primary">{translate name="View"}</a></p>
+        </div>
     </div>
-    <h4>
-        <a href="{geturl action="user"}/{$user->getProfile('nickname')|escape}">
-            {if $user->getProfile('nickname')}
-                {$user->getProfile('nickname')|escape}
-            {else}
-                {$user->getProfile('first_name')|escape} , {$user->getProfile('last_name')|escape}
-            {/if}
-        </a>
-    </h4>
-    <p>{$user->getProfile('intro')}</p>
-</div>
+</li>
