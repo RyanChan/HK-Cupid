@@ -35,5 +35,6 @@
         <!-- JavaScript -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="http://twitter.github.com/bootstrap/assets/js/holder/holder.js"></script>
     </body>
 </html>
