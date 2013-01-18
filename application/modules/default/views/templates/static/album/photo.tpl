@@ -1,3 +1,4 @@
+{*
 <div class="four columns item element-4" data-categories="">
     <div class="caption">
         <a href="{imagefile id=$photo->id}" {if $action == 'zoom'} rel="prettyPhoto[gallery1]" {/if}>
@@ -7,3 +8,9 @@
     </div>
     <p style="word-wrap:break-word;word-break:break-all;">{$photo->description|escape|truncate:50:"..."}</p>
 </div>
+*}
+<li class="span3">
+    <div class="thumbnail">
+        <img src="{imagefile id=$photo->id h=200}" alt="" />
+    </div>
+</li>
