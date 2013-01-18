@@ -3,6 +3,7 @@
         <h1 class="page-title">
             {translate name="Browse Members"}
         </h1>
+        <hr />
     </div>
 
     <div class="row-fluid">
