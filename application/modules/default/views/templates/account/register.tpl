@@ -29,10 +29,22 @@
     <form class="form-signup" action="{geturl action="register"}" method="POST">
         <h2 class="form-signup-heading">{translate name="Register to Champs"}</h2>
         {formhash hash=$hash}
-        <input type="text" class="input-block-level" name="first_name" placeholder="First Name" />
-        <input type="text" class="input-block-level" name="last_name" placeholder="Last Name" />
-        <input type="text" class="input-block-level" name="email" placeholder="Email address" />
-        <input type="password" class="input-block-level" name="password" placeholder="Password" />
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-font"></i></span>
+            <input type="text" class="span4" name="first_name" placeholder="First Name" />
+        </div>
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-bold"></i></span>
+            <input type="text" class="span4" name="last_name" placeholder="Last Name" />
+        </div>
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-envelope"></i></span>
+            <input type="text" class="span4" name="email" placeholder="Email Address" />
+        </div>
+        <div class="input-prepend">
+            <span class="add-on"><i class="icon-lock"></i></span>
+            <input type="password" class="span4" name="password" placeholder="Password" />
+        </div>
         {*<label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>*}
