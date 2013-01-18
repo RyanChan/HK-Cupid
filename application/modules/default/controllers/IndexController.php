@@ -11,6 +11,8 @@ class IndexController extends Champs_Controller_MasterController {
     }
 
     public function indexAction() {
+        // get hash
+        $this->initHash();
     }
 
 }
