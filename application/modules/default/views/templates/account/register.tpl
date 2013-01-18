@@ -25,8 +25,6 @@
     }
 </style>
 
-{$fp->getErrors()|print_r}
-
 <div class="container">
     <form class="form-signup" action="{geturl action="register"}" method="POST">
         <h2 class="form-signup-heading">{translate name="Register to Champs"}</h2>
