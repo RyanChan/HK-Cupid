@@ -18,16 +18,19 @@
     }
     .form-signup input[type="text"],
     .form-signup input[type="password"] {
-        font-size: 16px;
+        /*font-size: 16px;*/
         height: auto;
+        width:310px;
         margin-bottom: 15px;
-        padding: 7px 9px;
+        /*padding: 7px 9px;*/
     }
 </style>
 
 <div class="container">
     <form class="form-signup" action="{geturl action="register"}" method="POST">
         <h2 class="form-signup-heading">{translate name="Register to Champs"}</h2>
+        <hr />
+
         {formhash hash=$hash}
         <div class="input-prepend">
             <span class="add-on"><i class="icon-font"></i></span>
