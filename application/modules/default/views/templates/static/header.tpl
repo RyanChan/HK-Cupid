@@ -6,13 +6,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">{translate name="Champs"}</a>
+            <a class="brand" href="/">{translate name="Champs"}</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
+                    <li class="divider-vertical"></li>
                     <li class="{if $controller == "index"}active{/if}">
                         <a href="/">{translate name="Home"}</a>
                     </li>
-                    <li class="dropdown {if $controller == "dating"}active{/if}">
+                    <li class="dropdown {if $controller == "dating" || $controller == "album"}active{/if}">
                         <a href="{geturl controller="dating"}" class="dropdown-toggle" data-toggle="dropdown">
                             {translate name="Dating"}
                             <b class="caret"></b>
@@ -45,29 +46,38 @@
                             <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown {if $controller == "account"}active{/if}">
-                        <a href="{geturl controller="account"}" class="dropdown-toggle" data-toggle="dropdown">
-                            {translate name="Account"}
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {if $authenticated}
-                                <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
-                                <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
-                                <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
-                                <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
-                            {else}
-                                <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
-                                <li><a href="{geturl controller="account" action="register"}">{translate name="Register"}</a></li>
-                            {/if}
-                        </ul>
-                    </li>
                 </ul>
-                <form class="navbar-form pull-right">
-                    <input class="span2" type="text" placeholder="Email">
-                    <input class="span2" type="password" placeholder="Password">
-                    <button type="submit" class="btn">Sign in</button>
+                <form class="navbar-search pull-left" action="">
+                    <input type="text" class="search-query" placeholder="Search">
                 </form>
+                {if $authenticated}
+                    <ul class="nav pull-right">
+                        <li class="dropdown {if $controller == "account"}active{/if}">
+                            <a href="{geturl controller="account"}" class="dropdown-toggle" data-toggle="dropdown">
+                                {translate name="Account"}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {if $authenticated}
+                                    <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
+                                    <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
+                                    <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
+                                    <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
+                                {else}
+                                    <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
+                                    <li><a href="{geturl controller="account" action="register"}">{translate name="Register"}</a></li>
+                                {/if}
+                            </ul>
+                        </li>
+                    </ul>
+                {else}
+                    <form class="navbar-form pull-right" method="POST" action="{geturl controller="account" action="login"}">
+                        {formhash hash=$hash}
+                        <input class="span2" name="username" type="text" placeholder="Username">
+                        <input class="span2" name="password" type="password" placeholder="Password">
+                        <button type="submit" class="btn">{translate name="Sign in"}</button>
+                    </form>
+                {/if}
             </div><!--/.nav-collapse -->
         </div>
     </div>
