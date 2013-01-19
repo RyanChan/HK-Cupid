@@ -66,7 +66,7 @@
                     <img data-src="holder.js/300x200" alt="" />
                     <div class="caption">
                         <h3>{translate name="Account"}</h3>
-                        <p>{translate name="Sign up or Login to our website. Get start with your life"}</p>
+                        <p>{translate name="Sign up or Login to our website. Get start your life"}</p>
                         <p><a href="{geturl controller="delas"}" class="btn btn-primary">{translate name="Enter"}</a></p>
                     </div>
                 </div>

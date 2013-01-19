@@ -70,7 +70,7 @@ class Champs_Acl_Acl {
         // check if a user is logged in and has a valid role,
         // otherwise, assign them the default role(guest)
         if ($this->auth->hasIdentity()) {
-            $role = $this->auth->getIdentity()->rolename;
+            $role = @$this->auth->getIdentity()->rolename;
         } else {
             $role = $this->_defaultRole;
         }

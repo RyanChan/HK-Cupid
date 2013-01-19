@@ -5,7 +5,7 @@
  *
  * @author RyanChan <ryanchan.tc@gmail.com>
  */
-class DealsController extends Champs_Controller_MasterController implements Champs_Controller_Interface_CRUDInterface{
+class DealsController extends Champs_Controller_MasterController implements Champs_Controller_Interface_CRUDInterface {
 
     /**
      *
@@ -16,8 +16,10 @@ class DealsController extends Champs_Controller_MasterController implements Cham
     /**
      * initialize controller
      */
-    public function init(){
+    public function init() {
         parent::init();
+
+        $this->productRepository = $this->em->getRepository('Champs\Entity\Product');
     }
 
     /**
@@ -56,6 +58,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
         $this->view->view = $view;
         // assign products to view
         $this->view->products = $products;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -69,10 +73,11 @@ class DealsController extends Champs_Controller_MasterController implements Cham
         // get the nickname
         $nickname = $request->getParam('nickname');
         // get user entity by nickname
-        $user = $this->productRepository->
-
+//        $user = $this->productRepository->
         // assign nickname to view
         $this->view->nickname = $nickname;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -81,7 +86,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * single product details
      */
     public function productAction() {
-
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -91,6 +97,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      */
     public function createAction() {
 
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -99,7 +107,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * edit a product
      */
     public function editAction() {
-
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -108,7 +117,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * delete a product
      */
     public function deleteAction() {
-
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -117,7 +127,8 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * list out all the payments of the current user
      */
     public function paymentsAction() {
-
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -125,9 +136,9 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      *
      * show up the single payment
      */
-    public function paymentAction () {
-
+    public function paymentAction() {
+        // get hash
+        $this->initHash();
     }
-
 
 }

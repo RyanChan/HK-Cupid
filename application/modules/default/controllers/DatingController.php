@@ -57,6 +57,8 @@ class DatingController extends Champs_Controller_MasterController {
         $this->view->page = $page;
         $this->view->view = $view;
         $this->view->users = $users;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -82,6 +84,8 @@ class DatingController extends Champs_Controller_MasterController {
         $this->view->users = $users;
         $this->view->page = $page;
         $this->view->view = $view;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -101,6 +105,8 @@ class DatingController extends Champs_Controller_MasterController {
 
         $this->view->user = $user;
         $this->view->notFound = $notFound;
+        // get hash
+        $this->initHash();
     }
 
 }

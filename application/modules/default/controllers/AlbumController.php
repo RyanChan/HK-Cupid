@@ -163,6 +163,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->albums = $albums;
         // assign view mode to view
         $this->view->view = $view;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -187,6 +189,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->photos = $album->photos;
         // assign album to view
         $this->view->album = $album;
+        // get hash
+        $this->initHash();
     }
 
     /**
@@ -198,6 +202,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $albums = $this->albumRepository->getAlbumsForCurrentUser();
 
         $this->view->albums = $albums;
+        // get hash
+        $this->initHash();
     }
 
     /**

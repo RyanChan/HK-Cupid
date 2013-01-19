@@ -1,5 +1,3 @@
-{include file="header.tpl" title="Products"}
-
 <div class="clearfix container">
     <div class="sixteen columns">
         <h1 class="page-title">
@@ -29,5 +27,3 @@
         </div>
     </div>
 </div>
-
-{include file="footer.tpl"}

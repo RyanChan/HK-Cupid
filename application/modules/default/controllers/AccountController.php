@@ -126,7 +126,8 @@ class AccountController extends Champs_Controller_MasterController {
      * show up the message that if the user completed registration process
      */
     public function completeAction() {
-
+        // setup hash
+        $this->initHash();
     }
 
     /**
@@ -135,7 +136,8 @@ class AccountController extends Champs_Controller_MasterController {
      * show up the form for reset user's password
      */
     public function resetpasswordAction() {
-
+        // setup hash
+        $this->initHash();
     }
 
     /**
@@ -176,7 +178,8 @@ class AccountController extends Champs_Controller_MasterController {
      * @return void
      */
     public function profileAction() {
-
+        // setup hash
+        $this->initHash();
     }
 
     /**
@@ -206,6 +209,8 @@ class AccountController extends Champs_Controller_MasterController {
 
         $this->view->errors = $errors;
         $this->view->action = $action;
+        // get hash
+        $this->initHash();
     }
 
     public function authAction() {
@@ -223,10 +228,14 @@ class AccountController extends Champs_Controller_MasterController {
         $user = $this->em->find('Champs\Entity\User', $identity->user_id);
         $this->view->user = $user;
         //$this->view->form = $form;
+
+        // get hash
+        $this->initHash();
     }
 
     public function settingsAction() {
-
+        // get hash
+        $this->initHash();
     }
 
 }
