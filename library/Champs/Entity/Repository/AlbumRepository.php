@@ -85,7 +85,7 @@ class AlbumRepository extends EntityRepository {
      * @return array
      * @throws \Exception
      */
-    public function getNewestAlbums() {
+    public function getNewestAlbums($offset = 0, $limit = 30) {
         try {
             // get the entity manager
             $em = $this->getEntityManager();
@@ -95,7 +95,8 @@ class AlbumRepository extends EntityRepository {
                                        FROM Champs\Entity\Album a, Champs\Entity\AlbumProfile ap
                                        WHERE ap.album = a and ap.profile_key = 'privacy' and ap.profile_value = ?1
                                        ORDER BY a.ts_created DESC");
-            $query->setParameter(1, self::PRIVACY_PUBLIC);
+            
+            $query->setFirstResult($offset)->setMaxResults($limit)->setParameter(1, self::PRIVACY_PUBLIC);
 
             // return result
             return $query->getResult();

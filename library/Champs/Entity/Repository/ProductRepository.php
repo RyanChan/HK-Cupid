@@ -14,22 +14,22 @@ class ProductRepository extends EntityRepository {
      * On Sale
      */
 
-    const ON_SALE = 1;
+    const ON_SALE = 0;
 
     /**
      * Out of stock
      */
-    const OUT_OF_STOCK = 2;
+    const OUT_OF_STOCK = 1;
 
     /**
      * Removed from sale
      */
-    const REMOVED_FROM_SALE = 3;
+    const REMOVED_FROM_SALE = 2;
 
     /**
      * Rejected by administrator
      */
-    const REJECTED = 4;
+    const REJECTED = 3;
 
     /**
      * get all the products
@@ -286,7 +286,7 @@ class ProductRepository extends EntityRepository {
     public function storeProductEntity(Product $product) {
         try {
             // get user id
-            $user_id = Zend_Auth::getInstance()->getIdentity()->user_id;
+            $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
             // get user entity
             $user = $this->getEntityManager()->find('Champs\Entity\User', $user_id);
             // assign user to product
