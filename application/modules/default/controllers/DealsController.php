@@ -14,12 +14,19 @@ class DealsController extends Champs_Controller_MasterController implements Cham
     protected $productRepository = null;
 
     /**
+     *
+     * @var Champs\Entity\Repository\UserRepository $userRepository
+     */
+    protected $userRepository = null;
+
+    /**
      * initialize controller
      */
     public function init() {
         parent::init();
 
         $this->productRepository = $this->em->getRepository('Champs\Entity\Product');
+        $this->userRepository = $this->em->getRepository('Champs\Entity\User');
     }
 
     /**
@@ -51,6 +58,7 @@ class DealsController extends Champs_Controller_MasterController implements Cham
 //                $products = $this->productRepository->getFeaturedProduct();
                 break;
             default:
+                $products = $this->productRepository->getNewestProduct();
                 break;
         }
 
@@ -72,8 +80,17 @@ class DealsController extends Champs_Controller_MasterController implements Cham
         $request = $this->getRequest();
         // get the nickname
         $nickname = $request->getParam('nickname');
-        // get user entity by nickname
-//        $user = $this->productRepository->
+        // get user entity
+        $user = $this->userRepository->getUserByNickname($nickname);
+        // get current user products
+        $products = $this->productRepository->getProductsByUser($user);
+
+        $isOwner = $nickname == @$this->identity->nickname;
+
+        // assign isOwner to view
+        $this->view->isOwner = $isOwner;
+        // assign products to view
+        $this->view->products = $products;
         // assign nickname to view
         $this->view->nickname = $nickname;
         // get hash
@@ -86,6 +103,18 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * single product details
      */
     public function productAction() {
+        // get request object
+        $request = $this->getRequest();
+        // get product id
+        $product_id = $request->getParam('id');
+        // product entity
+        $product = $this->productRepository->find($product_id);
+
+        // assign isOwner to view
+        $this->view->isOwner = ($product->user->id == $this->identity->user_id);
+
+        // assign product to view
+        $this->view->product = $product;
         // get hash
         $this->initHash();
     }
@@ -96,6 +125,21 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * create a product
      */
     public function createAction() {
+        // get the request
+        $request = $this->getRequest();
+
+        // create product form
+        $form = new Champs_Form_Product_Create();
+
+        if ($request->isPost()) {
+            if ($form->process($request)) {
+                $redirect = sprintf('%s/products', $this->identity->nickname);
+                $this->_redirect($redirect);
+            }
+        }
+
+        // assign form to view
+        $this->view->form = $form;
 
         // get hash
         $this->initHash();
@@ -107,6 +151,30 @@ class DealsController extends Champs_Controller_MasterController implements Cham
      * edit a product
      */
     public function editAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the product id
+        $product_id = $this->request->getParam('id');
+        // get the product entity
+        $product = $this->productRepository->find($product_id);
+
+        // init the form object
+        $form = new Champs_Form_Product_Edit($product);
+
+        if ($request->isPost()) {
+            if ($form->process($request)) {
+                $redirect = sprintf('%s/products/%d', $this->identity->nickname, $product_id);
+                $this->_redirect($redirect);
+            }
+        }
+
+        // assign product_id to view
+        $this->view->product_id = $product_id;
+        // assign product to view
+        $this->view->product = $product;
+        // assign form to view
+        $this->view->form = $form;
+
         // get hash
         $this->initHash();
     }
