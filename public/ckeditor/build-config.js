@@ -1,6 +1,6 @@
 ﻿
 /**
- * @license Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
@@ -24,7 +24,6 @@ var CKBUILDER_CONFIG = {
 		'.mailmap'
 	],
 	plugins : {
-		'about' : 1,
 		'basicstyles' : 1,
 		'clipboard' : 1,
 		'toolbar' : 1,
@@ -33,14 +32,12 @@ var CKBUILDER_CONFIG = {
 		'floatingspace' : 1,
 		'wysiwygarea' : 1,
 		'indent' : 1,
-		'link' : 1,
 		'list' : 1,
 		'pastetext' : 1,
 		'undo' : 1,
 		'dialog' : 1,
 		'dialogui' : 1,
-		'button' : 1,
-		'fakeobjects' : 1
+		'button' : 1
 	},
 	languages : {
 		'zh-cn' : 1,
