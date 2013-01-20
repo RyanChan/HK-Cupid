@@ -78,26 +78,9 @@
         <h2>{translate name="Featured Members"}</h2>
         <hr />
         <ul class="thumbnails">
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="spen3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
+            {foreach from=$users item=user}
+                {include file="index/member.tpl" user=$user}
+            {/foreach}
         </ul>
     </div>
 

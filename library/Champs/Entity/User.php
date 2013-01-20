@@ -366,4 +366,48 @@ class User {
         $this->ts_last_login = new \DateTime();
     }
 
+    /**
+     * Get the age of user
+     *
+     * @return integer|null
+     */
+    public function getAge() {
+        // get the age
+        $birthday = $this->getProfile('birthday') == null ? null : $this->getProfile('birthday');
+
+        if ($birthday === null)
+            return null;
+
+        $date = date('Y-m-d', $birthday);
+
+        list($year, $month, $day) = explode('-', $date);
+
+        $year_diff = date('Y') - $year;
+        $month_diff = date('m') - $month;
+        $day_diff = date('d') - $day;
+
+        if ($month_diff < 0 )
+            $year_diff--;
+        else if (($month_diff == 0) && ($day_diff < 0))
+            $year_diff--;
+
+        return $year_diff;
+    }
+
+    /**
+     * get the gender of user
+     *
+     * @return string|null
+     */
+    public function getGender() {
+        // get translator
+        $translator = \Zend_Registry::get('translate');
+
+        if ($this->getProfile('gender') == Repository\UserRepository::MALE)
+            return $translator->_('Male');
+        else if ($this->getProfile('gender') == Repository\UserRepository::FEMALE)
+            return $translator->_('Female');
+        else
+            return null;
+    }
 }
