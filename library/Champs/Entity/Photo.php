@@ -369,5 +369,40 @@ class Photo {
 
         return md5(sprintf('%s,%s,%s', $image_id, $w, $h));
     }
-
+    
+    /**
+     *  get likes count
+     * 
+     *  @return int
+     */
+    public function getLikeCount(){
+        return $this->getProfile('likes');
+    }
+    
+    /**
+     *  get dislikes count
+     * 
+     *  @return int
+     */
+    public function getDislikeCount(){
+        return $this->getProfile('dislikes');
+    }
+    
+    /**
+     *  get comments count
+     * 
+     *  @return int
+     */
+    public function getCommentCount(){
+        return count($this->comments);
+    }
+    
+    /**
+     *  get the privacy
+     * 
+     *  @return smallint
+     */
+    public function getPrivacy(){
+        return $this->getProfile('privacy');
+    }
 }
