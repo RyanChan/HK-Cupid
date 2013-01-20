@@ -1,8 +1,10 @@
 <?php
 
+namespace Champs\Entity;
+
 /**
  * Photo comment profile
- * 
+ *
  * @Entity
  * @Table(name="photo_comments_profile")
  * @HasLifecycleCallbacks
