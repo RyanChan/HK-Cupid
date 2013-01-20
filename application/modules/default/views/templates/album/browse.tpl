@@ -23,6 +23,11 @@
             <li class="{if $view == 'female'}active{/if}">
                 <a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a>
             </li>
+            {if $authenticated}
+                <li class="pull-right">
+                    <a href="/{$identity->nickname|escape}/albums/create">{translate name="Create Album"}</a>
+                </li>
+            {/if}
         </ul>
     </div>
 

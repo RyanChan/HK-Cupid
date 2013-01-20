@@ -12,6 +12,9 @@
             <li><a href="#upload" data-toggle="tab">{translate name="Upload"}</a>
             <li><a href="#settings" data-toggle="tab">{translate name="Settings"}</a></li>
         {/if}
+        <li class="pull-right">
+            <a href="/{$album->user->getProfile('nickname')|escape}/albums">{translate name="Back to Albums"}</a>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -25,12 +28,12 @@
                 {if $photos|count > 0}
                     <ul class="thumbnails">
                         {foreach from=$photos item=photo}
-                            {include file="album/photo.tpl" action="zoom" photo=$photo}
+                            {include file="album/photo.tpl" photo=$photo}
                         {/foreach}
                     </ul>
                 {else}
                     <div class="hero-unit">
-                        <p>{translate name="No more albums here!"}</p>
+                        <p>{translate name="No more photos here!"}</p>
                     </div>
                 {/if}
             </div>
@@ -68,7 +71,54 @@
             </div>
 
             <div class="tab-pane" id="settings">
+                <style>
+                    .form-create-album {
+                        max-width: 700px;
+                        padding: 19px 29px 29px;
+                        margin: 0 auto 20px;
+                        background-color: #fff;
+                        border: 1px solid #e5e5e5;
+                        -webkit-border-radius: 5px;
+                        -moz-border-radius: 5px;
+                        border-radius: 5px;
+                        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                    }
+                    .form-create-album .form-create-album-heading,
+                    .form-create-album .checkbox {
+                        margin-bottom: 10px;
+                    }
+                    .form-create-album input[type="text"],
+                    .form-create-album input[type="password"] {
+                        font-size: 16px;
+                        height: auto;
+                        width:310px;
+                        margin-bottom: 15px;
+                        padding: 7px 9px;
+                    }
+                </style>
 
+                <div class="container">
+                    <form class="form-create-album" action="/{$album->user->getProfile('nickname')|escape}/albums/edit/{$album->id|escape}" method="POST">
+                        {formhash hash=$hash}
+                        <fieldset>
+                            <legend>{translate name="Edit Album"}</legend>
+
+                            <label for="album_name">{translate name="Album Name"}</label>
+                            <input type="text" name="album_name" id="album_name" value="{$album->title|escape}" />
+
+                            <label for="album_status">{translate name="Privacy"}</label>
+                            {status default=$album->getProfile('privacy')}
+
+                            <label for="album_description">{translate name="Description"}</label>
+                            <textarea class="ckeditor editor-html" name="album_description">{$album->getProfile('description')}</textarea>
+                        </fieldset>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary pull-right">{translate name="Update Album"}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         {/if}
     </div>

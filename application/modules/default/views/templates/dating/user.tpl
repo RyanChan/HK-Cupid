@@ -42,7 +42,7 @@
         <ul id="descriptionTabs" class="nav nav-tabs">
             <li class="active"><a href="#intro" data-toggle="tab">{translate name="Intro"}</a></li>
             <li><a href="#activity" data-toggle="tab">{translate name="Activity"}</a></li>
-            <li><a href="#recent-albums" data-toggle="tab">{translate name="Recent Photo"}</a></li>
+            <li><a href="#recent-albums" data-toggle="tab">{translate name="Recent Albums"}</a></li>
         </ul>
         <div id="descriptionTabsContent" class="tab-content">
             <div class="tab-pane fade in active" id="intro">

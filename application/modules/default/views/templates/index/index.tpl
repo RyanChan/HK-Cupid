@@ -57,7 +57,7 @@
                     <div class="caption">
                         <h3>{translate name="Deals"}</h3>
                         <p>{translate name="Find out your favorite products on our markets"}</p>
-                        <p><a href="{geturl controller="delas"}" class="btn btn-primary">{translate name="Enter"}</a></p>
+                        <p><a href="{geturl controller="deals"}" class="btn btn-primary">{translate name="Enter"}</a></p>
                     </div>
                 </div>
             </li>
@@ -67,7 +67,7 @@
                     <div class="caption">
                         <h3>{translate name="Account"}</h3>
                         <p>{translate name="Sign up or Login to our website. Get start your life"}</p>
-                        <p><a href="{geturl controller="delas"}" class="btn btn-primary">{translate name="Enter"}</a></p>
+                        <p><a href="{geturl controller="account"}" class="btn btn-primary">{translate name="Enter"}</a></p>
                     </div>
                 </div>
             </li>
@@ -88,26 +88,9 @@
         <h2>{translate name="Featured Albums"}</h2>
         <hr />
         <ul class="thumbnails">
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="spen3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
+            {foreach from=$albums item=album}
+                {include file="index/album.tpl" album=$album}
+            {/foreach}
         </ul>
     </div>
 
@@ -115,26 +98,9 @@
         <h2>{translate name="Featured Products"}</h2>
         <hr />
         <ul class="thumbnails">
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="span3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
-            <li class="spen3">
-                <a href="#" class="thumbnail">
-                    <img data-src="holder.js/260x180" alt="" />
-                </a>
-            </li>
+            {foreach from=$products item=product}
+                {include file="index/product.tpl" product=$product}
+            {/foreach}
         </ul>
     </div>
 </div>

@@ -10,7 +10,7 @@
         <!-- Css -->
         <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
-       
+
         <style type="text/css">
             body {
                 padding-top: 60px;
@@ -35,8 +35,10 @@
         {include file="footer.tpl"}
 
         <!-- JavaScript -->
+        <script src="/ckeditor/ckeditor.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="http://twitter.github.com/bootstrap/assets/js/holder/holder.js"></script>
+
     </body>
 </html>

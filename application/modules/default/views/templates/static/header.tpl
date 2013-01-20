@@ -48,7 +48,7 @@
                     </li>
                 </ul>
                 <form class="navbar-search pull-left" action="">
-                    <input type="text" class="search-query" placeholder="Search">
+                    <input type="text" class="search-query span3" placeholder="Search" />
                 </form>
                 {if $authenticated}
                     <ul class="nav pull-right">
@@ -59,6 +59,16 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {if $authenticated}
+                                    <li class="nav-header">{translate name="Dating"}</li>
+
+                                    <li class="divider"></li>
+                                    <li class="nav-header">{translate name="Album"}</li>
+                                    <li><a href="/{$identity->nickname|escape}/albums">{translate name="Albums"}</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">{translate name="Deals"}</li>
+                                    <li><a href="/{$identity->nickname|escape}/products">{translate name="Products"}</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">{translate name="Profile"}</li>
                                     <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
                                     <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
                                     <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
@@ -75,7 +85,15 @@
                         {formhash hash=$hash}
                         <input class="span2" name="username" type="text" placeholder="Username">
                         <input class="span2" name="password" type="password" placeholder="Password">
-                        <button type="submit" class="btn">{translate name="Sign in"}</button>
+                        <div class="btn-group">
+                            <button class="btn">{translate name="Sign In"}</button>
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{geturl controller="account" action="register"}">{translate name="Register"}</a></li>
+                            </ul>
+                        </div>
                     </form>
                 {/if}
             </div><!--/.nav-collapse -->
