@@ -155,7 +155,7 @@ class Album {
      */
     public function setProfileWithKeyAndValue($key, $value) {
         $profile = new \Champs\Entity\AlbumProfile();
-        $profile->user = $this;
+        $profile->album = $this;
         $profile->profile_key = $key;
         $profile->profile_value = $value;
 

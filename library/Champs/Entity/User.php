@@ -150,6 +150,13 @@ class User {
     private $payments;
 
     /**
+     *
+     * @var ArrayCollection $products
+     * @OneToMany(targetEntity="Product", mappedBy="user")
+     */
+    private $products;
+
+    /**
      * Initialize method
      */
     public function __construct() {
@@ -163,6 +170,7 @@ class User {
         $this->receivedMessages = new ArrayCollection();
         $this->albums = new ArrayCollection();
         $this->payments = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -208,6 +216,10 @@ class User {
         $this->sendComfirmEmail();
         // create media folder
         $this->_createUserFolder();
+        // create album folder
+        $this->_createAlbumFolder();
+        // create product folder
+        $this->_createProductFolder();
     }
 
     public function getUserFolder() {
@@ -222,6 +234,20 @@ class User {
 
         if (!is_dir($mediaPath))
             mkdir($mediaPath, 0777);
+    }
+
+    private function _createAlbumFolder() {
+        $albumPath = $this->getUserFolder() . DIRECTORY_SEPARATOR . 'album';
+
+        if (!is_dir($albumPath))
+            mkdir ($albumPath, 0777);
+    }
+
+    private function _createProductFolder() {
+        $productPath = $this->getUserFolder() . DIRECTORY_SEPARATOR . 'product';
+
+        if (!is_dir($productPath))
+            mkdir ($productPath, 0777);
     }
 
     /**

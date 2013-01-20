@@ -52,7 +52,7 @@ class Product {
      * @Column(type="smallint")
      */
     private $ranking;
-    
+
     /**
      * @var decimal $price
      * @Column(type="decimal", scale=2)
@@ -76,7 +76,7 @@ class Product {
     /**
      *
      * @var ArrayCollection $profiles
-     * @OneToMany(targetEntity="ProductProfile", mappedBy="product")
+     * @OneToMany(targetEntity="ProductProfile", mappedBy="product", cascade={"persist", "remove"})
      */
     private $profiles;
 
