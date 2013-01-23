@@ -111,7 +111,7 @@ class DealsController extends Champs_Controller_MasterController implements Cham
         $product = $this->productRepository->find($product_id);
 
         // assign isOwner to view
-        $this->view->isOwner = ($product->user->id == $this->identity->user_id);
+        $this->view->isOwner = ($product->user->id == @$this->identity->user_id);
 
         // assign product to view
         $this->view->product = $product;
