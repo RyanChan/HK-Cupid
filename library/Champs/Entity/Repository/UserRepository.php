@@ -381,4 +381,298 @@ class UserRepository extends EntityRepository {
 
         return $result;
     }
+
+    /**
+     *
+     * @param Champs\Entity\User $follower
+     * @return boolean
+     */
+    public function addFollower(User $follower){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // add follower to user
+        $user->follower->add($follower);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $follower
+     * @return boolean
+     */
+    public function removeFollower(User $follower){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // remove follower from user
+        $user->follower->remove($follower);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $role
+     * @return boolean
+     */
+    public function addRole(User $role){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // add role to user
+        $user->role->add($role);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $role
+     * @return boolean
+     */
+    public function removeRole(User $role){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // remove role from user
+        $user->role->remove($role);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $product
+     * @return boolean
+     */
+    public function addProduct(User $product){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // add product to user
+        $user->product->add($product);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $product_id
+     * @return boolean
+     */
+    public function removeProduct($product_id){
+        try {
+            // current user id, for validate that is the owner
+            $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT p
+                                       FROM Champs\Entity\User u, Champs\Entity\Product p
+                                       WHERE p.user = u and u.id = ?1 and p.id = ?2");
+
+            $query->setParameter(1, $current_user_id)->setParameter(2, $product_id);
+
+            // get result
+            $product = $query->getSingleResult();
+
+            if (!$product)
+                return false;
+
+            $em->remove($product);
+            $em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $notification
+     * @return boolean
+     */
+    public function addNotification(User $notification){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // add notification to user
+        $user->notification->add($notification);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $notification_id
+     * @return boolean
+     */
+    public function removeNotification($notification_id){
+        try {
+            // current user id, for validate that is the owner
+            $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT n
+                                       FROM Champs\Entity\User u, Champs\Entity\Notification n
+                                       WHERE n.user = u and u.id = ?1 and n.id = ?2");
+
+            $query->setParameter(1, $current_user_id)->setParameter(2, $notification_id);
+
+            // get result
+            $notification = $query->getSingleResult();
+
+            if (!$notification)
+                return false;
+
+            $em->remove($notification);
+            $em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $newsfeed
+     * @return boolean
+     */
+    public function addNewsfeed(User $newsfeed){
+        // get current user id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+        // get current user entity
+        $user = $this->find($user_id);
+
+        if (!$user)
+            return false;
+
+        // add newsfeed to user
+        $user->newsfeed->add($newsfeed);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the user entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\User $newsfeed
+     * @return boolean
+     */
+    public function removeNewsfeed($newsfeed_id){
+        try {
+            // current user id, for validate that is the owner
+            $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT n
+                                       FROM Champs\Entity\User u, Champs\Entity\Newsfeed n
+                                       WHERE n.user = u and u.id = ?1 and n.id = ?2");
+
+            $query->setParameter(1, $current_user_id)->setParameter(2, $newsfeed_id);
+
+            // get result
+            $newsfeed = $query->getSingleResult();
+
+            if (!$newsfeed)
+                return false;
+
+            $em->remove($newsfeed);
+            $em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

@@ -88,7 +88,11 @@ class Champs_Form_ProductPhotoComment_Create extends Champs_FormProcessor {
         }
         
         //Profile
-            //code here
+        // edited
+        $this->productPhotoComment->setProfileWithKeyAndValue('edited', false);
+        
+        // hidden
+        $this->productPhotoComment->setProfileWithKeyAndValue('hidden', false);
 
         if (!$this->hasError()) {
             try {

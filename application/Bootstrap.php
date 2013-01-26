@@ -135,6 +135,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                 )
         );
 
+        // delete photo
+        $router->addRoute('album_photo_delete', new Zend_Controller_Router_Route(
+                        ':nickname/albums/:album_id/photos/delete/:id',
+                        array(
+                            'controller' => 'album',
+                            'action' => 'deletephoto'
+                        )
+                )
+        );
+
         /******************* End   Album *********************/
 
         /******************* Start Deals *********************/

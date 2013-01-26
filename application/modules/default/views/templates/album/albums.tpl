@@ -1,30 +1,40 @@
-{include file="header.tpl" title="Albums"}
-
-<div class="clearfix container">
-    <div class="sixteen columns">
-        <h1 class="page-title">
-            {$identity->nickname|escape} / <span class="gray2">{translate name="Albums"}</span>
-            <span class="line"></span>
-        </h1>
+<div class="container">
+    <div class="row-fluid">
+        <h2 class="page-title">
+            {$nickname|escape} / Albums
+        </h2>
     </div>
 
-    <div class="sixteen columns">
-        <div id="options">
-            <ul class="clearfix">
-                <li><a href="/{$identity->nickname|escape}/albums/create">{translate name="Create Album"}</a></li>
-            </ul>
-        </div>
-    </div>
+    <ul class="nav nav-tabs" id="tabs">
+        <li class="active"><a href="#all" data-toggle="tab">{translate name="All"}</a></li>
+        {if $authenticated}
+            <li class="pull-right">
+                <a href="/{$identity->nickname|escape}/albums/create">{translate name="Create Album"}</a>
+            </li>
+        {/if}
+    </ul>
 
-    <div class="clearfix"></div>
-
-    <div class="portfolio">
-        <div class="gallery" id="contain">
-            {foreach from=$albums item=album}
-                {include file="album/album.tpl" action="zoom" album=$album}
-            {/foreach}
+    <div class="tab-content">
+        <div class="tab-pane active" id="on-sale">
+            <div class="{if $albums|count > 0}row{else}row-fluid{/if}">
+                <style>
+                    ul.thumbnails {
+                        margin-left: 0px;
+                    }
+                </style>
+                {if $albums|count > 0}
+                    <ul class="thumbnails">
+                        {foreach from=$albums item=album}
+                            {include file="album/album.tpl" product=$album isOwner=$isOwner}
+                        {/foreach}
+                    </ul>
+                {else}
+                    <div class="hero-unit">
+                        <p>{translate name="No more albums here!"}</p>
+                    </div>
+                {/if}
+            </div>
         </div>
     </div>
 </div>
-
-{include file="footer.tpl"}
+            

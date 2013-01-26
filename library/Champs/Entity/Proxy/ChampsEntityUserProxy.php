@@ -129,9 +129,111 @@ class ChampsEntityUserProxy extends \Champs\Entity\User implements \Doctrine\ORM
         return parent::doUpdateLastLogin();
     }
 
+    public function getAge()
+    {
+        $this->_load();
+        return parent::getAge();
+    }
+
+    public function getGender()
+    {
+        $this->_load();
+        return parent::getGender();
+    }
+
+    public function getFirstName()
+    {
+        $this->_load();
+        return parent::getFirstName();
+    }
+
+    public function getLastName()
+    {
+        $this->_load();
+        return parent::getLastName();
+    }
+
+    public function getFullName()
+    {
+        $this->_load();
+        return parent::getFullName();
+    }
+
+    public function getNickName()
+    {
+        $this->_load();
+        return parent::getNickName();
+    }
+
+    public function getBirthday()
+    {
+        $this->_load();
+        return parent::getBirthday();
+    }
+
+    public function getIntro()
+    {
+        $this->_load();
+        return parent::getIntro();
+    }
+
+    public function getMobileNumer()
+    {
+        $this->_load();
+        return parent::getMobileNumer();
+    }
+
+    public function getEmail()
+    {
+        $this->_load();
+        return parent::getEmail();
+    }
+
+    public function getFriendCount()
+    {
+        $this->_load();
+        return parent::getFriendCount();
+    }
+
+    public function getMessageCount()
+    {
+        $this->_load();
+        return parent::getMessageCount();
+    }
+
+    public function getProductCount()
+    {
+        $this->_load();
+        return parent::getProductCount();
+    }
+
+    public function getNotificationCount()
+    {
+        $this->_load();
+        return parent::getNotificationCount();
+    }
+
+    public function getAlbumCount()
+    {
+        $this->_load();
+        return parent::getAlbumCount();
+    }
+
+    public function getPhotoCountl()
+    {
+        $this->_load();
+        return parent::getPhotoCountl();
+    }
+
+    public function getProfileAlbum()
+    {
+        $this->_load();
+        return parent::getProfileAlbum();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'username', 'password', 'password_salt', 'role', 'ts_created', 'ts_last_updated', 'ts_last_login', 'profiles', 'followers', 'followersWithMe', 'events', 'notifications', 'newsfeeds', 'sentMessages', 'receivedMessages', 'albums', 'payments');
+        return array('__isInitialized__', 'id', 'username', 'password', 'password_salt', 'role', 'ts_created', 'ts_last_updated', 'ts_last_login', 'profiles', 'followers', 'followersWithMe', 'events', 'notifications', 'newsfeeds', 'sentMessages', 'receivedMessages', 'albums', 'payments', 'products');
     }
 }

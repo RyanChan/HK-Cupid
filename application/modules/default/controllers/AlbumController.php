@@ -19,11 +19,19 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
      */
     protected $photoRepository = null;
 
+    /**
+     * User's repository
+     *
+     * @var Champs\Entity\Repository\UserRepository $userRepository
+     */
+    protected $userRepository = null;
+
     public function init() {
         parent::init();
 
         $this->albumRepository = $this->em->getRepository('Champs\Entity\Album');
         $this->photoRepository = $this->em->getRepository('Champs\Entity\Photo');
+        $this->userRepository = $this->em->getRepository('Champs\Entity\User');
     }
 
     /**
@@ -180,7 +188,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         // get the album entity
         $album = $this->albumRepository->find($album_id);
         // get the user id
-        $user_id = $this->identity->user_id;
+        $user_id = @$this->identity->user_id;
         // assign isOwner to view
         $this->view->isOwner = $album->user->id == $user_id;
         // assign album id to view
@@ -199,8 +207,20 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
      * browse user's albums
      */
     public function albumsAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the nickname
+        $nickname = $request->getParam('nickname');
+
         $albums = $this->albumRepository->getAlbumsForCurrentUser();
 
+        $isOwner = $nickname == @$this->identity->nickname;
+
+        // assign isOwner to view
+        $this->view->isOwner = $isOwner;
+        // assign nickname to view
+        $this->view->nickname = $nickname;
+        // assign albums to view
         $this->view->albums = $albums;
         // get hash
         $this->initHash();
@@ -241,6 +261,24 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         } else {
             $this->redirectToAlbum($this->identity->nickname, $album_id);
         }
+    }
+
+    /**
+     * Delete photo action
+     */
+    public function deletephotoAction() {
+        // get the request object
+        $request = $this->getRequest();
+        // get the nickname
+        $nickname = $request->getParam('nickname');
+        // get the album id
+        $album_id = $request->getParam('album_id');
+        // get the photo id
+        $photo_id = $request->getParam('id');
+
+        // remove photo
+        $this->albumRepository->removePhoto($album_id, $photo_id);
+        $this->redirectToAlbum($nickname, $album_id);
     }
 
 }

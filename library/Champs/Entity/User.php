@@ -4,6 +4,7 @@ namespace Champs\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Champs\Entity\UserProfile;
+use Champs\Entity\Album;
 
 /**
  * @Entity(repositoryClass="Champs\Entity\Repository\UserRepository")
@@ -220,6 +221,8 @@ class User {
         $this->_createAlbumFolder();
         // create product folder
         $this->_createProductFolder();
+        // create profile album
+        $this->_createProfileAlbum();
     }
 
     public function getUserFolder() {
@@ -248,6 +251,21 @@ class User {
 
         if (!is_dir($productPath))
             mkdir ($productPath, 0777);
+    }
+
+    private function _createProfileAlbum() {
+        $profileAlbum = new Album();
+        $profileAlbum->title = 'Profile Album';
+        $profileAlbum->setProfileWithKeyAndValue('privacy', 0);
+        $profileAlbum->setProfileWithKeyAndValue('description', 'Profile album');
+        $profileAlbum->user = $this;
+        $profileAlbum->isProfileAlbum = true;
+
+        // get the entity manager
+        $em = \Zend_Registry::get('doctrine')->getEntityManager();
+        // persist profile album entity
+        $em->persist($profileAlbum);
+        $em->flush();
     }
 
     /**
@@ -435,5 +453,144 @@ class User {
             return $translator->_('Female');
         else
             return null;
+    }
+
+    /**
+     * get the first name of user
+     *
+     * @return string|null
+     */
+    public function getFirstName(){
+        return $this->getProfile('first_name');
+    }
+
+    /**
+     * get the last name of user
+     *
+     * @return string|null
+     */
+    public function getLastName(){
+        return $this->getProfile('last_name');
+    }
+
+    /**
+     * get the full name of user
+     *
+     * @return string|null
+     */
+    public function getFullName(){
+        return sprintf('%s, %s', $this->getFirstName(), $this->getLastName());
+    }
+
+    /**
+     * get the nick name of user
+     *
+     * @return string|null
+     */
+    public function getNickName(){
+        return $this->getProfile('nickname');
+    }
+
+    /**
+     * get the birthday of user
+     *
+     * @return int|null
+     */
+    public function getBirthday(){
+        return $this->getProfile('birthday');
+    }
+
+    /**
+     * get the intro of user
+     *
+     * @return text|null
+     */
+    public function getIntro(){
+        return $this->getProfile('intro');
+    }
+
+    /**
+     * get the mobile number of user
+     *
+     * @return string|null
+     */
+    public function getMobileNumer(){
+        return $this->getProfile('mobile_number');
+    }
+
+    /**
+     * get the email of user
+     *
+     * @return string|null
+     */
+    public function getEmail(){
+        return $this->getProfile('email');
+    }
+
+    /**
+     * get the friend count
+     *
+     * @return int|0
+     */
+    public function getFriendCount(){
+        return $this->followers->count();
+    }
+
+    /**
+     * get the friend count
+     *
+     * @return int|0
+     */
+    public function getMessageCount(){
+        return $this->receivedMessages->count();
+    }
+
+    /**
+     * get the product count
+     *
+     * @return int|0
+     */
+    public function getProductCount(){
+        return $this->products->count();
+    }
+
+    /**
+     * get the notification count
+     *
+     * @return int|0
+     */
+    public function getNotificationCount(){
+        return $this->notifications->count();
+    }
+
+    /**
+     * get the album count
+     *
+     * @return int|0
+     */
+    public function getAlbumCount(){
+        return $this->albums->count();
+    }
+
+    /**
+     * get the photo count
+     *
+     * @return int|0
+     */
+    public function getPhotoCountl(){
+    }
+
+    /**
+     * @return Champs\Entity\Album|null
+     */
+    public function getProfileAlbum() {
+        // find the profile album
+        foreach ($this->albums as $album) {
+            if ($album->isProfileAlbum) {
+                return $album;
+            }
+        }
+
+        return null;
     }
 }

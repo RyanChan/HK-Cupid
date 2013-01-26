@@ -76,6 +76,13 @@ class Album {
     private $profiles;
 
     /**
+     *
+     * @var Boolean $isProfileAlbum
+     * @Column(type="boolean")
+     */
+    private $isProfileAlbum;
+
+    /**
      * Initialize Method
      */
     public function __construct() {
@@ -107,6 +114,8 @@ class Album {
      */
     public function doPrePersist() {
         $this->ts_created = new \DateTime();
+        // default false for profile album
+        $this->isProfileAlbum = false;
     }
 
     /**
@@ -227,77 +236,77 @@ class Album {
         if (!is_dir($albumPath))
             mkdir($albumPath, 0777);
     }
-    
+
     /**
      * get the likes count
-     * 
+     *
      *  @return int
      */
     public function getLikeCount(){
         return $this->getProfile('likes');
     }
-    
+
     /**
      *  get the dislikes count
-     * 
+     *
      * @return int
      */
     public function getDislikeCount(){
         return $this->getProfile('dislikes');
     }
-    
+
     /**
      *  get the privacy
-     * 
+     *
      *  @return smallint
      */
     public function getPrivacy(){
         return $this->getProfile('privacy');
     }
-    
+
     /**
      *  get the description
-     * 
+     *
      *  @return string
      */
     public function getDescription(){
         return $this->getProfile('description');
     }
-    
+
     /**
      *  get the photo count
-     * 
+     *
      *  @return int
      */
     public function getPhotoCount(){
         return count($this->photos);
     }
-    
+
     /**
      *  get the comments count
-     * 
+     *
      *  @return int
      */
     public function getCommentCount(){
         return count($this->comments);
     }
-    
+
     /**
      *  set the privacy
-     * 
+     *
      *  @param smallint privacy
      */
     public function setPrivacy($privacy){
         $this->setProfileWithKeyAndValue('privacy', $privacy);
     }
-    
+
     /**
      *  set the description
-     * 
+     *
      *  @param string description
      */
     public function setDesciption($description){
         $this->setProfileWithKeyAndValue('description', $description);
     }
-    
+
 }

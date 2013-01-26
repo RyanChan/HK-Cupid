@@ -77,6 +77,12 @@ class Champs_Form_ProductComment_Create extends Champs_FormProcessor {
             $product = $this->em->find('Champs\Entity\Product', $this->product_id);
             $this->productComment->product = $product;
         }
+        
+        // edited
+        $this->productComment->setProfileWithKeyAndValue('edited', false);
+        
+        // hidden
+        $this->productComment->setProfileWithKeyAndValue('hidden', false);
 
         if (!$this->hasError()) {
             try {

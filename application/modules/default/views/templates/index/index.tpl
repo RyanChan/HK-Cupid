@@ -57,7 +57,7 @@
                     <div class="caption">
                         <h3>{translate name="Deals"}</h3>
                         <p>{translate name="Find out your favorite products on our markets"}</p>
-                        <p><a href="{geturl controller="deals"}" class="btn btn-primary">{translate name="Enter"}</a></p>
+                        <p><a href="#" class="btn btn-primary">{translate name="Enter"}</a></p>
                     </div>
                 </div>
             </li>
@@ -93,7 +93,7 @@
             {/foreach}
         </ul>
     </div>
-
+    {*
     <div class="row-fluid">
         <h2>{translate name="Featured Products"}</h2>
         <hr />
@@ -103,4 +103,5 @@
             {/foreach}
         </ul>
     </div>
+    *}
 </div>

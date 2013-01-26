@@ -78,8 +78,28 @@ class Champs_Form_Photo_Create extends Champs_FormProcessor {
             $this->photo->album = $album;
         }
         
-        //Profile
-            //code here
+        //=====Profile key=====
+        // privacy
+        $this->photo_privacy = $this->sanitize($request->getPost('photo_privacy'));
+
+        if ($this->photo_privacy <= 0) {
+            $this->addError('photo_privacy', 'Please select the privacy of photo');
+        } else {
+            $this->photo->setProfileWithKeyAndValue('privacy', $this->photo_privacy);
+        }
+        
+        // visitors
+        $this->photo->setProfileWithKeyAndValue('visitors', 0);
+        
+        // allow_comment
+        $this->photo_allow_comment = $this->sanitize($request->getPost('photo_allow_comment'));
+        $this->photo->setProfileWithKeyAndValue('allow_comment', $this->photo_allow_comment);
+        
+        // likes
+        $this->photo->setProfileWithKeyAndValue('likes', 0);
+        
+        // dislikes
+        $this->photo->setProfileWithKeyAndValue('dislikes', 0);
 
         if (!$this->hasError()) {
             try {

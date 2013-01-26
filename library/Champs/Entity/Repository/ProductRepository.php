@@ -349,5 +349,124 @@ class ProductRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
+    
+    /**
+     *
+     * @param Champs\Entity\Product $photo
+     * @return boolean
+     */
+    public function addPhoto(Product $photo, $product_id){
+        // get product entity 
+        $product = $this->find($product_id);
+        
+        if (!$product)
+            return false;
 
+        // add photo to product
+        $product->photo->add($photo);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the product entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\Product $photo
+     * @return boolean
+     */
+    public function removePhoto($product_id, $photo_id){
+        try {
+            // current user id, for validate that is the owner
+            $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT p
+                                       FROM Champs\Entity\User u, Champs\Entity\Product pp, Champs\Entity\ProductPhoto p
+                                       WHERE pp.user = u and p.product = pp and u.id = ?1 and pp.id = ?2 and p.id = ?3");
+
+            $query->setParameter(1, $current_user_id)->setParameter(2, $product_id)->setParameter(3, $photo_id);
+
+            // get result
+            $photo = $query->getSingleResult();
+
+            if (!$photo)
+                return false;
+
+            $em->remove($photo);
+            $em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\Product $comment
+     * @return boolean
+     */
+    public function addComment(Product $comment, $product_id){
+        // get product entity 
+        $product = $this->find($product_id);
+        
+        if (!$product)
+            return false;
+
+        // add photo to product
+        $product->comment->add($comment);
+
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // update the product entity
+            $em->flush();
+        }catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    
+    /**
+     *
+     * @param Champs\Entity\Product $comment
+     * @return boolean
+     */
+    public function removeComment($comment_id, $product_id){
+        try {
+            // current user id, for validate that is the owner
+            $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT p
+                                       FROM Champs\Entity\User u, Champs\Entity\Product p, Champs\Entity\ProductComment c
+                                       WHERE p.user = u and c.product = p and u.id = ?1 and p.id = ?2 and c.id = ?3");
+
+            $query->setParameter(1, $current_user_id)->setParameter(2, $product_id)->setParameter(3, $comment_id);
+
+            // get result
+            $comment = $query->getSingleResult();
+
+            if (!$comment)
+                return false;
+
+            $em->remove($comment);
+            $em->flush();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

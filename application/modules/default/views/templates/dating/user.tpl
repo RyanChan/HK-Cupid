@@ -6,7 +6,7 @@
     <div class="row-fluid">
         <div class="span3">
             <div class="thumbnail">
-                <img data-src="holder.js/270x310" />
+                <img data-src="holder.js/270x310" src="{imagefile id=$user->getProfileAlbum()->photos->last()->id height=270}" height="270" />
             </div>
         </div>
 
@@ -14,27 +14,27 @@
             <h3>{$user->getProfile('nickname')|capitalize:false} {if $user->getAge() != null}({$user->getAge()}){/if}</h3>
             <hr />
             <dl>
-                {if $user->getProfile('first_name') !== null && $user->getProfile('last_name') !== null}
+                {if $user->getProfile('first_name') && $user->getProfile('last_name')}
                     <dt>{translate name="Real Name"}</dt>
                     <dd>{$user->getProfile('first_name')|escape}, {$user->getProfile('last_name')|escape}</dd>
                 {/if}
-                {if $user->getProfile('birthday') != null}
+                {if $user->getProfile('birthday')}
                     <dt>{translate name="Birthday"}</dt>
                     <dd>{$user->getProfile('birthday')|date_format:"%B %e, %Y"}</dd>
                 {/if}
-                {if $user->getProfile('email') !== null}
+                {if $user->getProfile('email')}
                     <dt>{translate name="Email Address"}</dt>
                     <dd><a href="mailto:{$user->getProfile('email')|escape}">{$user->getProfile('email')|escape}&nbsp;<i class="icon-envelope"></i></a></dd>
                 {/if}
-                {if $user->getProfile('gender') !== null}
+                {if $user->getProfile('gender')}
                     <dt>{translate name="Gender"}</dt>
                     <dd>{$user->getGender()|escape}</dd>
                 {/if}
             </dl>
 
-            <a href="#" class="btn"><i class="iconic-heart"></i>&nbsp;{translate name="Like"}</a>
-            <a href="#" class="btn btn-info"><i class="iconic-star"></i>&nbsp;{translate name="Follow"}</a>
-            <a href="#" class="btn btn-primary"><i class="iconic-mail"></i>&nbsp;{translate name="Send Message"}</a>
+            <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn"><i class="iconic-heart"></i>&nbsp;{translate name="Like"}</a>
+            <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn btn-info"><i class="iconic-star"></i>&nbsp;{translate name="Follow"}</a>
+            <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn btn-primary"><i class="iconic-mail"></i>&nbsp;{translate name="Send Message"}</a>
         </div>
     </div>
     <hr />

@@ -17,6 +17,10 @@
         max-height: 600px;
         overflow: scroll;
     }
+
+    .product-related {
+        margin-top: 5px;
+    }
 </style>
 
 <div class="container">
@@ -107,16 +111,34 @@
                 <button class="btn btn-primary" style="width: 100%;">{translate name="Purchase Product"}</button>
             </form>
 
-            <!--<div class="span12">-->
-            <a href="#" class="btn pull-right" style="width: auto;">{translate name="Enquiry Seller"}</a>
-            <a href="#" class="btn pull-left" style="width: auto;">{translate name="Follow Product"}</a>
-            <!--</div>-->
+            <a href="#" rel="tooltip" data-placement="right" title="{translate name="Not ready yet!"}" class="btn pull-right" style="width: auto;">{translate name="Enquiry Seller"}</a>
+            <a href="#" rel="tooltip" data-placement="left" title="{translate name="Not ready yet!"}" class="btn pull-left" style="width: auto;">{translate name="Follow Product"}</a>
 
             <div class="clearfix"></div>
 
-            <div class="" style="margin-top:20px;">
+            <div class="thumbnails" style="margin-top:20px;">
                 <h4>{translate name="User Products"}</h4>
                 <hr />
+                <div class="product-related">
+                    <a href="#" class="thumbnail">
+                        <img data-src="holder.js/300x300" />
+                    </a>
+                </div>
+                <div class="product-related">
+                    <a href="#" class="thumbnail">
+                        <img data-src="holder.js/300x300" />
+                    </a>
+                </div>
+                <div class="product-related">
+                    <a href="#" class="thumbnail">
+                        <img data-src="holder.js/300x300" />
+                    </a>
+                </div>
+                <div class="product-related">
+                    <a href="#" class="thumbnail">
+                        <img data-src="holder.js/300x300" />
+                    </a>
+                </div>
             </div>
 
             <div class="" style="margin-top:20px;">

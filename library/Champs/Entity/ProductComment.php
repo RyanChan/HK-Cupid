@@ -103,4 +103,33 @@ class ProductComment{
     public function getLastUpdated(){
         return ($this->ts_last_updated == null) ? null : $this->ts_last_updated->format('Y-m-d H:i:s');
     }
+    /**
+     *
+     * @param string $profile_key
+     * @param string $profile_value
+     */
+    public function setProfile(ProductProfile $profile) {
+        foreach ($this->profiles as $p) {
+            if ($p->profile_key == $profile->profile_key) {
+                $p->profile_value = $profile->profile_value;
+                return;
+            }
+        }
+
+        $this->profiles->add($profile);
+    }
+    /**
+     * set up the profile object for user
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function setProfileWithKeyAndValue($key, $value) {
+        $profile = new \Champs\Entity\ProductProfile();
+        $profile->product = $this;
+        $profile->profile_key = $key;
+        $profile->profile_value = $value;
+
+        $this->setProfile($profile);
+    }
 }

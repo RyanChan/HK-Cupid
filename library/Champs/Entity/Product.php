@@ -250,4 +250,40 @@ class Product {
         $count++;
         $this->setProfileWithKeyAndValue('browse_count', $count);
     }
+    
+    /**
+     *  get likes count
+     * 
+     *  @return int
+     */
+    public function getLikeCount(){
+        return $this->getProfile('likes');
+    }
+    
+    /**
+     *  get dislikes count
+     * 
+     *  @return int
+     */
+    public function getDislikeCount(){
+        return $this->getProfile('dislikes');
+    }
+    
+    /**
+     *  get comments count
+     * 
+     *  @return int
+     */
+    public function getCommentCount(){
+        return count($this->comments);
+    }
+    
+    /**
+     *  get comments count
+     * 
+     *  @return int
+     */
+    public function getDescription(){
+        return $this->getProfile('description');
+    }
 }

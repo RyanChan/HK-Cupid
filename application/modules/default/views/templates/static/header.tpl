@@ -35,6 +35,7 @@
 
                         </ul>
                     </li>
+                    {*
                     <li class="dropdown {if $controller == "deals"}active{/if}">
                         <a href="{geturl controller="deals"}" class="dropdown-toggle" data-toggle="dropdown">
                             {translate name="Deals"}
@@ -46,6 +47,7 @@
                             <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
                         </ul>
                     </li>
+                    *}
                 </ul>
                 <form class="navbar-search pull-left" action="">
                     <input type="text" class="search-query span3" placeholder="Search" />
@@ -71,7 +73,7 @@
                                     <li class="nav-header">{translate name="Profile"}</li>
                                     <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
                                     <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
-                                    <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
+                                    <!--<li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>-->
                                     <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
                                 {else}
                                     <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>

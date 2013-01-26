@@ -79,7 +79,10 @@ class Champs_Form_Photo_Create extends Champs_FormProcessor {
         }
         
         //Profile
-            //code here
+        // Edited
+        $this->photoComment->setProfileWithKeyAndValue('edited', false);
+        //Hidden
+        $this->photoComment->setProfileWithKeyAndValue('hidden', false);
 
         if (!$this->hasError()) {
             try {

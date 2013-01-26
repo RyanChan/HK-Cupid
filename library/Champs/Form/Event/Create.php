@@ -64,6 +64,33 @@ class Champs_Form_Event_Create extends Champs_FormProcessor {
         if($this->category_id <= 0){
             $this->addError('category_id', $this->translator->_('Category id must greater than 0'));
         }
+        
+        // description
+        $this->event_description = $request->getPost('event_description');
+        
+        if(strlen($this->event_description) == 0){
+            $this->addError('event_description', $this->translator->_('Please enter the description of the event'));
+        }else{
+            $this->event->setProfileWithKeyAndValue('description', $this->event_description);
+        }
+        
+        //privacy
+        $this->event_privacy = $request->getPost('event_privacy');
+        
+        if($this->event_privacy <= 0){
+            $this->addError('event_privacy', $this->translator->_('Please select the privacy of the event'));
+        }else{
+            $this->event->setProfileWithKeyAndValue('privacy', $this->event_privacy);
+        }
+        
+        //status
+        $this->event_status = $request->getPost('event_status');
+        
+        if($this->event_status <= 0){
+            $this->addError('event_status', $this->translator->_('Please select the status of the event'));
+        }else{
+            $this->event->setProfileWithKeyAndValue('status', $this->event_status);
+        }
 
         if (!$this->hasError()) {
             try {
