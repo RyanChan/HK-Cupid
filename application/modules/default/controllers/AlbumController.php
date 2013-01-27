@@ -59,7 +59,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
 
             if ($this->checkHash($hash)) {
                 if ($form->process($request)) {
-                    $this->redirectToAlbum($this->identity->nickname, $form->album->id);
+                    $this->redirectToAlbum($this->identity->username, $form->album->id);
                 }
             }
         }
@@ -82,7 +82,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $album_id = $request->getParam('id');
         $album = $this->em->find('Champs\Entity\Album', $album_id);
         // get the nickname
-        $nickname = $request->getParam('nickname');
+        $username = $request->getParam('username');
 
         // form object
         $form = new Champs_Form_Album_Edit($album);
@@ -93,7 +93,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
 
             if ($this->checkHash($hash)) {
                 if ($form->process($request)) {
-                    $this->redirectToAlbum($nickname, $album_id);
+                    $this->redirectToAlbum($username, $album_id);
                 }
             }
         }
@@ -106,7 +106,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         // assign form to view
         $this->view->form = $form;
         // assign nickname to vew
-        $this->view->nickname = $nickname;
+        $this->view->username = $username;
     }
 
     /**
@@ -210,16 +210,16 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         // get the request object
         $request = $this->getRequest();
         // get the nickname
-        $nickname = $request->getParam('nickname');
+        $username = $request->getParam('username');
 
         $albums = $this->albumRepository->getAlbumsForCurrentUser();
 
-        $isOwner = $nickname == @$this->identity->nickname;
+        $isOwner = $username == @$this->identity->nickname;
 
         // assign isOwner to view
         $this->view->isOwner = $isOwner;
         // assign nickname to view
-        $this->view->nickname = $nickname;
+        $this->view->nickname = $username;
         // assign albums to view
         $this->view->albums = $albums;
         // get hash
@@ -245,21 +245,21 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
                 $album = $this->albumRepository->findOneBy(array('id' => $album_id)); //find('Champs\Entity\Album', $album_id);
 
                 if (!$album) {
-                    $this->redirectToAlbum($this->identity->nickname, $album_id);
+                    $this->redirectToAlbum($this->identity->username, $album_id);
                 }
 
                 $form = new Champs_Form_Album_Upload($album);
 
                 if ($form->process($request)) {
-                    $this->redirectToAlbum($this->identity->nickname, $album_id);
+                    $this->redirectToAlbum($this->identity->username, $album_id);
                 } else {
-                    $this->redirectToAlbum($this->identity->nickname, $album_id);
+                    $this->redirectToAlbum($this->identity->username, $album_id);
                 }
             } else {
-                $this->redirectToAlbum($this->identity->nickname, $album_id);
+                $this->redirectToAlbum($this->identity->username, $album_id);
             }
         } else {
-            $this->redirectToAlbum($this->identity->nickname, $album_id);
+            $this->redirectToAlbum($this->identity->username, $album_id);
         }
     }
 
@@ -270,7 +270,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         // get the request object
         $request = $this->getRequest();
         // get the nickname
-        $nickname = $request->getParam('nickname');
+        $username = $request->getParam('username');
         // get the album id
         $album_id = $request->getParam('album_id');
         // get the photo id
@@ -278,7 +278,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
 
         // remove photo
         $this->albumRepository->removePhoto($album_id, $photo_id);
-        $this->redirectToAlbum($nickname, $album_id);
+        $this->redirectToAlbum($username, $album_id);
     }
 
 }

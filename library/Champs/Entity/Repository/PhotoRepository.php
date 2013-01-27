@@ -49,4 +49,21 @@ class PhotoRepository extends EntityRepository {
         }
     }
 
+    public function getPhotos($offset = 0, $limit = 60) {
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+            // create query
+            $query = $em->createQuery("SELECT p
+                                       FROM Champs\Entity\Photo p, Champs\Entity\Album a, Champs\Entity\AlbumProfile ap
+                                       WHERE p.album = a and ap.album = a and ap.profile_key = 'privacy' and ap.profile_value = ?1");
+            $query->setFirstResult($offset)->setMaxResults($limit)->setParameter(1, AlbumRepository::PRIVACY_PUBLIC);
+
+            // return result
+            return $query->getResult();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
 }

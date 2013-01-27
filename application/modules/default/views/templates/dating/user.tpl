@@ -1,13 +1,13 @@
-<style>
-
-</style>
-
 <div class="container">
     <div class="row-fluid">
         <div class="span3">
-            <div class="thumbnail">
-                <img data-src="holder.js/270x310" src="{imagefile id=$user->getProfileAlbum()->photos->last()->id height=270}" height="270" />
+            <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+                <a href="{imagefile id=$user->getProfileAlbum()->photos->last()->id}" class="thumbnail" data-gallery="gallery">
+                    <img data-src="holder.js/270x310" src="{imagefile id=$user->getProfileAlbum()->photos->last()->id height=270}" height="270" />
+                </a>
             </div>
+
+            {gallery}
         </div>
 
         <div class="span9">

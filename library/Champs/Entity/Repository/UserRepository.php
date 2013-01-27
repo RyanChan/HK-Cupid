@@ -317,7 +317,10 @@ class UserRepository extends EntityRepository {
     public function getNewestUsers($offset = 0, $limit = 30) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'activated' and up.profile_value = '1' ORDER BY u.ts_created DESC");
+        $query = $em->createQuery("SELECT u
+                                   FROM Champs\Entity\User u, Champs\Entity\UserProfile up, Champs\Entity\Album a
+                                   WHERE up.user = u and up.profile_key = 'activated' and up.profile_value = '1' and a.user = u and SIZE(a.photos) > 0 and a.isProfileAlbum = true
+                                   ORDER BY u.ts_created DESC");
 
         try {
             $query->setFirstResult($offset)
@@ -408,7 +411,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $follower
@@ -435,7 +438,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $role
@@ -462,7 +465,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $role
@@ -489,7 +492,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $product
@@ -516,7 +519,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $product_id
@@ -551,7 +554,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $notification
@@ -578,7 +581,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $notification_id
@@ -613,7 +616,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $newsfeed
@@ -640,7 +643,7 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
-    
+
     /**
      *
      * @param Champs\Entity\User $newsfeed

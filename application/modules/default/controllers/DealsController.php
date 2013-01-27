@@ -78,21 +78,21 @@ class DealsController extends Champs_Controller_MasterController implements Cham
     public function productsAction() {
         // get the request object
         $request = $this->getRequest();
-        // get the nickname
-        $nickname = $request->getParam('nickname');
+        // get the username
+        $username = $request->getParam('username');
         // get user entity
-        $user = $this->userRepository->getUserByNickname($nickname);
+        $user = $this->userRepository->getUserByUsername($username);
         // get current user products
         $products = $this->productRepository->getProductsByUser($user);
 
-        $isOwner = $nickname == @$this->identity->nickname;
+        $isOwner = $username == @$this->identity->nickname;
 
         // assign isOwner to view
         $this->view->isOwner = $isOwner;
         // assign products to view
         $this->view->products = $products;
         // assign nickname to view
-        $this->view->nickname = $nickname;
+        $this->view->nickname = $username;
         // get hash
         $this->initHash();
     }

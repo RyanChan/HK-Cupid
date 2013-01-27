@@ -259,7 +259,7 @@ class User {
         $profileAlbum->setProfileWithKeyAndValue('privacy', 0);
         $profileAlbum->setProfileWithKeyAndValue('description', 'Profile album');
         $profileAlbum->user = $this;
-        $profileAlbum->isProfileAlbum = true;
+        $profileAlbum->isProfileAlbum = 1;
 
         // get the entity manager
         $em = \Zend_Registry::get('doctrine')->getEntityManager();

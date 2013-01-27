@@ -26,11 +26,13 @@
                     }
                 </style>
                 {if $photos|count > 0}
-                    <ul class="thumbnails">
-                        {foreach from=$photos item=photo}
-                            {include file="album/photo.tpl" photo=$photo}
-                        {/foreach}
-                    </ul>
+                    <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+                        <ul class="thumbnails">
+                            {foreach from=$photos item=photo}
+                                {include file="album/photo.tpl" photo=$photo}
+                            {/foreach}
+                        </ul>
+                    </div>
                 {else}
                     <div class="hero-unit">
                         <p>{translate name="No more photos here!"}</p>
@@ -100,7 +102,7 @@
                 </style>
 
                 <div class="container">
-                    <form class="form-create-album" action="/{$album->user->getProfile('nickname')|escape}/albums/edit/{$album->id|escape}" method="POST">
+                    <form class="form-create-album" action="/{$album->user->username|escape}/albums/edit/{$album->id|escape}" method="POST">
                         {formhash hash=$hash}
                         <fieldset>
                             <legend>{translate name="Edit Album"}</legend>

@@ -12,11 +12,14 @@
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="http://twitter.github.com/bootstrap/assets/js/holder/holder.js"></script>
+        <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+        <script src="/js/bootstrap-image-gallery.min.js"></script>
         <script src="/js/cupid.js"></script>
 
         <!-- Css -->
         <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/css/bootstrap-image-gallery.min.css" rel="stylesheet">
 
         <style type="text/css">
             body {

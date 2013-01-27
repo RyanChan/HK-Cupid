@@ -75,7 +75,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // dating user
         $router->addRoute('dating_user', new Zend_Controller_Router_Route(
-                        'dating/user/:nickname',
+                        'dating/user/:username',
                         array(
                             'controller' => 'dating',
                             'action' => 'user'
@@ -87,7 +87,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // album of user
         $router->addRoute('album_album', new Zend_Controller_Router_Route(
-                        ':nickname/albums/:id/photos',
+                        ':username/albums/:id/photos',
                         array(
                             'controller' => 'album',
                             'action' => 'photos'
@@ -97,7 +97,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // albums of user
         $router->addRoute('album_albums', new Zend_Controller_Router_Route(
-                        ':nickname/albums',
+                        ':username/albums',
                         array(
                             'controller' => 'album',
                             'action' => 'albums'
@@ -107,7 +107,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // create album
         $router->addRoute('album_create', new Zend_Controller_Router_Route(
-                        ':nickname/albums/create',
+                        ':username/albums/create',
                         array(
                             'controller' => 'album',
                             'action' => 'create'
@@ -117,7 +117,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // edit album
         $router->addRoute('album_edit', new Zend_Controller_Router_Route(
-                        ':nickname/albums/edit/:id',
+                        ':username/albums/edit/:id',
                         array(
                             'controller' => 'album',
                             'action' => 'edit'
@@ -127,7 +127,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // delete album
         $router->addRoute('album_delete', new Zend_Controller_Router_Route(
-                        ':nickname/albums/delete/:id',
+                        ':username/albums/delete/:id',
                         array(
                             'controller' => 'album',
                             'action' => 'delete'
@@ -137,7 +137,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // delete photo
         $router->addRoute('album_photo_delete', new Zend_Controller_Router_Route(
-                        ':nickname/albums/:album_id/photos/delete/:id',
+                        ':username/albums/:album_id/photos/delete/:id',
                         array(
                             'controller' => 'album',
                             'action' => 'deletephoto'
@@ -151,7 +151,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user products
         $router->addRoute('deals_user_products', new Zend_Controller_Router_Route(
-                        ':nickname/products',
+                        ':username/products',
                         array(
                             'controller' => 'deals',
                             'action' => 'products'
@@ -161,7 +161,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user product
         $router->addRoute('deals_user_product', new Zend_Controller_Router_Route(
-                        ':nickname/products/:id',
+                        ':username/products/:id',
                         array(
                             'controller' => 'deals',
                             'action' => 'product'
@@ -171,7 +171,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user create product
         $router->addRoute('deals_user_product_create', new Zend_Controller_Router_Route(
-                        ':nickname/products/create',
+                        ':username/products/create',
                         array(
                             'controller' => 'deals',
                             'action' => 'create'
@@ -181,7 +181,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user edit product
         $router->addRoute('deals_user_product_edit', new Zend_Controller_Router_Route(
-                        ':nickname/products/edit/:id',
+                        ':username/products/edit/:id',
                         array(
                             'controller' => 'deals',
                             'action' => 'edit'
@@ -191,7 +191,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user delete product
         $router->addRoute('deals_user_product_delete', new Zend_Controller_Router_Route(
-                        ':nickname/products/delete/:id',
+                        ':username/products/delete/:id',
                         array(
                             'controller' => 'deals',
                             'action' => 'delete'
@@ -201,7 +201,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user payments
         $router->addRoute('deals_user_payments', new Zend_Controller_Router_Route(
-                        ':nickname/payments',
+                        ':username/payments',
                         array(
                             'controller' => 'deals',
                             'action' => 'payments'
@@ -211,7 +211,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // user payment
         $router->addRoute('deals_user_payment', new Zend_Controller_Router_Route(
-                        ':nickname/payment/:id',
+                        ':username/payment/:id',
                         array(
                             'controller' => 'deals',
                             'action' => 'payment'

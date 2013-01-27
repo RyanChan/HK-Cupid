@@ -92,12 +92,12 @@ class DatingController extends Champs_Controller_MasterController {
      * User action
      */
     public function userAction() {
-        $nickname = $this->request->getParam('nickname');
-        if (strlen($nickname) == 0)
+        $username = $this->request->getParam('username');
+        if (strlen($username) == 0)
             $this->_redirect($this->getUrl('index'));
 
         try {
-            $user = $this->userRepository->getUserByNickname($nickname);
+            $user = $this->userRepository->getUserByUsername($username);
             $notFound = false;
         } catch (Exception $e) {
             $notFound = true;

@@ -93,7 +93,7 @@ class AlbumRepository extends EntityRepository {
             // create query
             $query = $em->createQuery("SELECT a
                                        FROM Champs\Entity\Album a, Champs\Entity\AlbumProfile ap
-                                       WHERE ap.album = a and ap.profile_key = 'privacy' and ap.profile_value = ?1 and a.isProfileAlbum = ?2
+                                       WHERE ap.album = a and ap.profile_key = 'privacy' and ap.profile_value = ?1 and a.isProfileAlbum = ?2 and size(a.photos) > 0
                                        ORDER BY a.ts_created DESC");
 
             $query->setFirstResult($offset)->setMaxResults($limit)->setParameter(1, self::PRIVACY_PUBLIC)->setParameter(2, false);

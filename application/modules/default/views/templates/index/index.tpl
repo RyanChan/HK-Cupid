@@ -75,33 +75,34 @@
     </div>
 
     <div class="row-fluid">
-        <h2>{translate name="Featured Members"}</h2>
-        <hr />
-        <ul class="thumbnails">
-            {foreach from=$users item=user}
-                {include file="index/member.tpl" user=$user}
-            {/foreach}
-        </ul>
-    </div>
-
-    <div class="row-fluid">
-        <h2>{translate name="Featured Albums"}</h2>
-        <hr />
-        <ul class="thumbnails">
-            {foreach from=$albums item=album}
-                {include file="index/album.tpl" album=$album}
-            {/foreach}
-        </ul>
+        <div class="span6">
+            <h2>{translate name="Featured Members"}</h2>
+            <hr />
+            <ul class="thumbnails">
+                {foreach from=$users item=user}
+                    {include file="index/member.tpl" user=$user}
+                {/foreach}
+            </ul>
+        </div>
+        <div class="span6">
+            <h2>{translate name="Featured Albums"}</h2>
+            <hr />
+            <ul class="thumbnails">
+                {foreach from=$albums item=album}
+                    {include file="index/album.tpl" album=$album}
+                {/foreach}
+            </ul>
+        </div>
     </div>
     {*
     <div class="row-fluid">
-        <h2>{translate name="Featured Products"}</h2>
-        <hr />
-        <ul class="thumbnails">
-            {foreach from=$products item=product}
-                {include file="index/product.tpl" product=$product}
-            {/foreach}
-        </ul>
+    <h2>{translate name="Featured Products"}</h2>
+    <hr />
+    <ul class="thumbnails">
+    {foreach from=$products item=product}
+    {include file="index/product.tpl" product=$product}
+    {/foreach}
+    </ul>
     </div>
     *}
 </div>
