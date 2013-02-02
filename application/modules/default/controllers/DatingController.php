@@ -109,4 +109,35 @@ class DatingController extends Champs_Controller_MasterController {
         $this->initHash();
     }
 
+    /**
+     * Add follower
+     */
+    public function addfollowerAction () {
+        // disable renderer
+//        $this->setDisableLayout();
+        $this->setNoRender();
+
+        // get the request object
+        $request = $this->getRequest();
+
+        // target username
+        $username = $request->getParam('username');
+
+        if (strlen($username) <= 0) {
+//            echo $user_id;
+            throw new Exception('Non-Authorized Access');
+        }
+
+        // add follower
+//        $user = $this->em->find('Champs\Entity\User', $user_id);
+        $user = $this->userRepository->getUserByUsername($username);
+        $result = $this->userRepository->addFollower($user);
+
+        if ($result) {
+            $url = sprintf('dating/user/%s', $username);
+            $this->_redirect($url);
+        } else {
+            throw new Exception('Fail to add follower');
+        }
+    }
 }
