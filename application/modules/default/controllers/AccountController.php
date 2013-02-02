@@ -3,10 +3,18 @@
 class AccountController extends Champs_Controller_MasterController {
 
     /**
+     *
+     * @var Champs\Entity\Repository\UserRepository $userRepository
+     */
+    protected $userRepository = null;
+
+    /**
      * Initialize method
      */
     public function init() {
         parent::init();
+
+        $this->userRepository = $this->em->getRepository('Champs\Entity\User');
     }
 
     /**
@@ -234,8 +242,25 @@ class AccountController extends Champs_Controller_MasterController {
     }
 
     public function settingsAction() {
+        // get user id
+        $user_id = $this->identity->user_id;
+        // get user entity
+        $user = $this->userRepository->find($user_id);
+
+        // assign user to view
+        $this->view->user = $user;
+
         // get hash
         $this->initHash();
     }
 
+    public function generalAction () {
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            throw new Exception('Page Not Found');
+        }
+
+        
+    }
 }
