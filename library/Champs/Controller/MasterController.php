@@ -105,10 +105,17 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     }
 
     /**
-     * Short out helper of setNoRender
+     * Short cut helper of setNoRender
      */
     public function setNoRender() {
         $this->_helper->viewRenderer->setNoRender();
+    }
+
+    /**
+     * Short cut helper of disable layout
+     */
+    public function setDisableLayout() {
+        $this->_helper->layout()->disableLayout();
     }
 
     /**
