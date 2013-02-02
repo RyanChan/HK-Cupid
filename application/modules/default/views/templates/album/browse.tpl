@@ -25,7 +25,7 @@
             </li>
             {if $authenticated}
                 <li class="pull-right">
-                    <a href="/{$identity->nickname|escape}/albums/create">{translate name="Create Album"}</a>
+                    <a href="/{$identity->username|escape}/albums/create">{translate name="Create Album"}</a>
                 </li>
             {/if}
         </ul>

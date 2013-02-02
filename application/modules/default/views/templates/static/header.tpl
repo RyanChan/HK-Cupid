@@ -62,7 +62,6 @@
                             <ul class="dropdown-menu">
                                 {if $authenticated}
                                     <li class="nav-header">{translate name="Dating"}</li>
-
                                     <li class="divider"></li>
                                     <li class="nav-header">{translate name="Album"}</li>
                                     <li><a href="/{$identity->nickname|escape}/albums">{translate name="Albums"}</a></li>
@@ -72,7 +71,7 @@
                                     <li class="divider"></li>
                                     <li class="nav-header">{translate name="Profile"}</li>
                                     <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
-                                    <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
+                                    <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
                                     <!--<li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>-->
                                     <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
                                 {else}

@@ -1,3 +1,22 @@
+<div id="notice" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="noticeLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="noticeLabel">{translate name="注意"}</h3>
+    </div>
+    <div class="modal-body">
+        <p>正在測試階段，網站可能間中暫停。</p>
+        <p>
+            正局部開放網站功能
+        </p>
+        <p><a href="{geturl controller="dating"}" class="btn btn-primary">交友&nbsp;<i class="iconic-o-check"></i></a></p>
+        <p><a href="{geturl controller="album"}" class="btn btn-primary">相簿&nbsp;<i class="iconic-o-check"></i></a></p>
+        <p><a href="#" class="btn btn-danger">買賣&nbsp;<i class="iconic-o-x"></i></a></p>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
 <div class="container">
     <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
@@ -94,15 +113,18 @@
             </ul>
         </div>
     </div>
-    {*
+
     <div class="row-fluid">
-    <h2>{translate name="Featured Products"}</h2>
-    <hr />
-    <ul class="thumbnails">
-    {foreach from=$products item=product}
-    {include file="index/product.tpl" product=$product}
-    {/foreach}
-    </ul>
+        <h2>{translate name="Recent Uploads"}</h2>
+        <hr />
+        <ul class="thumbnails">
+            {foreach from=$photos item=photo}
+                <li class="span2">
+                    <a href="/{$photo->user->username|escape}/albums/{$photo->album->id|escape}/photos" class="thumbnail" rel="tooltip" title="{$photo->album->title|escape}">
+                        <img src="{imagefile id=$photo->id w=200}" alt="" />
+                    </a>
+                </li>
+            {/foreach}
+        </ul>
     </div>
-    *}
 </div>

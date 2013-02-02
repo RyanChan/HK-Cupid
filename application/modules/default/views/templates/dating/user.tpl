@@ -2,8 +2,8 @@
     <div class="row-fluid">
         <div class="span3">
             <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
-                <a href="{imagefile id=$user->getProfileAlbum()->photos->last()->id}" class="thumbnail" data-gallery="gallery">
-                    <img data-src="holder.js/270x310" src="{imagefile id=$user->getProfileAlbum()->photos->last()->id height=270}" height="270" />
+                <a href="{imagefile id=$user->getProfileAlbum()->photos->last()->id}" data-gallery="gallery">
+                    <img data-src="holder.js/270x310" src="{imagefile id=$user->getProfileAlbum()->photos->last()->id height=270}" height="270" class="img-polaroid" />
                 </a>
             </div>
 
@@ -33,7 +33,14 @@
             </dl>
 
             <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn"><i class="iconic-heart"></i>&nbsp;{translate name="Like"}</a>
-            <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn btn-info"><i class="iconic-star"></i>&nbsp;{translate name="Follow"}</a>
+            <a {if !$user->isFollowed()} href="{geturl controller="dating" action="addfollower"}/{$user->username|escape}" {/if} rel="tooltip" title="{if $user->isFollowed()} {translate name="Followed"} {else} {translate name="Follow this member"} {/if}" class="btn btn-info {if $user->isFollowed()}disabled{/if}">
+                <i class="iconic-star"></i>&nbsp;
+                {if $user->isFollowed($identity->user_id)}
+                    {translate name="Followed"}
+                {else}
+                    {translate name="Follow"}
+                {/if}
+            </a>
             <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn btn-primary"><i class="iconic-mail"></i>&nbsp;{translate name="Send Message"}</a>
         </div>
     </div>

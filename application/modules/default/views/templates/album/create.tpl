@@ -25,7 +25,7 @@
         padding: 7px 9px;
     }
 </style>
-{$form->getErrors()|print_r}
+
 <div class="container">
     <form class="form-create-album" action="{geturl action="create"}" method="POST">
         {formhash hash=$hash}
