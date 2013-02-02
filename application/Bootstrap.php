@@ -82,6 +82,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                         )
                 )
         );
+
+        // dating add follower
+        $router->addRoute('dating_add_follower', new Zend_Controller_Router_Route(
+                        'dating/addfollower/:username',
+                        array(
+                            'controller' => 'dating',
+                            'action' => 'addfollower'
+                        )
+                )
+        );
         /******************* End  Dating *********************/
         /******************* Start Album *********************/
 
