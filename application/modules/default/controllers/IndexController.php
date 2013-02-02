@@ -40,10 +40,10 @@ class IndexController extends Champs_Controller_MasterController {
     }
 
     public function indexAction() {
-        $users = $this->userRepository->getNewestUsers(0, 4);
+        $users = $this->userRepository->getFeaturedUsers(0, 4);
         $albums = $this->albumRepository->getNewestAlbums(0, 4);
         $products = $this->productRepository->getNewestProduct(0, 4);
-        $photos = $this->photoRepository->getPhotos();
+        $photos = $this->photoRepository->getPhotos(0, 6);
 
         // assign users to view
         $this->view->users = $users;
