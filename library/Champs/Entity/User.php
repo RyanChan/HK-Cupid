@@ -200,6 +200,8 @@ class User {
         $this->setProfileWithKeyAndValue('activated', 0);
         // generate activation key
         $this->generateActivationKey();
+        // set role
+        $this->role = \Zend_Registry::get('doctrine')->getEntityManager()->getRepository('Champs\Entity\Role')->getMemebrRole();
     }
 
     /**
@@ -259,7 +261,7 @@ class User {
         $profileAlbum->setProfileWithKeyAndValue('privacy', 0);
         $profileAlbum->setProfileWithKeyAndValue('description', 'Profile album');
         $profileAlbum->user = $this;
-        $profileAlbum->isProfileAlbum = 1;
+        $profileAlbum->isProfileAlbum = TRUE;
 
         // get the entity manager
         $em = \Zend_Registry::get('doctrine')->getEntityManager();
@@ -592,5 +594,22 @@ class User {
         }
 
         return null;
+    }
+
+    /**
+     * check the target user whether followed.
+     *
+     */
+    public function isFollowed() {
+        // get the user_id
+        $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
+
+        foreach ($this->followers as $follower) {
+            if ($follower->id == $user_id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
