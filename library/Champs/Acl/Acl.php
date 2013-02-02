@@ -9,7 +9,7 @@ class Champs_Acl_Acl {
      *
      * @var string $_defaultRole
      */
-    private $_defaultRole = 'guest';
+    private $_defaultRole = 'Guest';
 
     /**
      *
@@ -37,7 +37,7 @@ class Champs_Acl_Acl {
 
         // add the different user roles
         $roles = $this->_em->getRepository('Champs\Entity\Role')->findAll();
-        $this->acl->addRole(new Zend_Acl_Role($this->_defaultRole));
+//        $this->acl->addRole(new Zend_Acl_Role($this->_defaultRole));
         if (null !== $roles) {
             foreach ($roles as $role) {
                 $this->acl->addRole(new Zend_Acl_Role($role->rolename));
@@ -46,7 +46,7 @@ class Champs_Acl_Acl {
 
         // add the resources we want to have control over
         $resources = $this->_em->getRepository('Champs\Entity\Resource')->findAll();
-        $this->acl->addResource(new Zend_Acl_Resource('index'));
+//        $this->acl->addResource(new Zend_Acl_Resource('index'));
         if (null !== $resources) {
             foreach ($resources as $resource) {
                 $this->acl->addResource(new Zend_Acl_Resource($resource->resourcename));
@@ -54,7 +54,17 @@ class Champs_Acl_Acl {
         }
 
         // allow access to everything far all users by default
-        $this->acl->allow();
+        $this->acl->deny();
+
+        $authorizations = $this->_em->getRepository('Champs\Entity\Authorization')->findAll();
+
+        foreach ($authorizations as $authorization) {
+            $this->acl->allow(
+                    $authorization->role->rolename,
+                    $authorization->resource->resourcename,
+                    $authorization->action->actionname
+            );
+        }
     }
 
     /**
