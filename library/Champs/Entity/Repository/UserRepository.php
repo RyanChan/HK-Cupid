@@ -52,6 +52,7 @@ class UserRepository extends EntityRepository {
                 $identity = new \stdClass;
                 $identity->user_id = $user->id;
                 $identity->username = $user->username;
+                $identity->rolename = $user->role->rolename;
 
                 // assign all the profile key/value pairs to identity object
                 foreach ($user->getProfile() as $profile) {
@@ -272,7 +273,9 @@ class UserRepository extends EntityRepository {
     public function getHottestUsers($offset = 0, $limit = 30) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'vote' ORDER BY up.profile_value ASC");
+        $query = $em->createQuery("SELECT u
+                                   FROM Champs\Entity\User u, Champs\Entity\UserProfile up
+                                   WHERE up.user = u and up.profile_key = 'vote' ORDER BY up.profile_value ASC");
 
         try {
             $query->setFirstResult($offset)->setMaxResults($limit);
@@ -339,6 +342,28 @@ class UserRepository extends EntityRepository {
         return $result;
     }
 
+    public function getFeaturedUsers($offset = 0, $limit = 40) {
+        try {
+            // get the entity manager
+            $em = $this->getEntityManager();
+
+            // create query
+            $query = $em->createQuery("SELECT u
+                                       FROM Champs\Entity\User u, Champs\Entity\UserProfile up
+                                       WHERE up.user = u and up.profile_key = 'activated' and up.profile_value = '1' and SIZE(u.followers) > 0
+                                       ORDER BY u.id DESC");
+
+            $query->setFirstResult($offset)->setMaxResults($limit);
+
+            // get result
+            $result = $query->getResult();
+
+            return $result;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     /**
      * Check whether the user is activated.
      *
@@ -366,12 +391,15 @@ class UserRepository extends EntityRepository {
     public function getUsersByGender($male, $offset = 0, $limit = 30) {
         $em = $this->getEntityManager();
 
-        $query = $em->createQuery("SELECT u FROM Champs\Entity\User u, Champs\Entity\UserProfile up WHERE up.user = u and up.profile_key = 'gender' and up.profile_value = ?1 ORDER BY u.ts_last_updated DESC");
+        $query = $em->createQuery("SELECT u
+                                   FROM Champs\Entity\User u, Champs\Entity\UserProfile up
+                                   WHERE up.user = u and up.profile_key = 'gender' and up.profile_value = ?1
+                                   ORDER BY u.ts_last_updated DESC");
 
         try {
             $query->setParameter(1, $male)
-                  ->setFirstResult($offset)
-                  ->setMaxResults($limit);
+                    ->setFirstResult($offset)
+                    ->setMaxResults($limit);
 
             $result = $query->getResult();
         } catch (NonUniqueResultException $e) {
@@ -390,7 +418,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $follower
      * @return boolean
      */
-    public function addFollower(User $follower){
+    public function addFollower($follower) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -400,14 +428,16 @@ class UserRepository extends EntityRepository {
             return false;
 
         // add follower to user
-        $user->follower->add($follower);
+        $user->followers->add($follower);
 
         try {
             // get the entity manager
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+
+            return true;
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -417,7 +447,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $follower
      * @return boolean
      */
-    public function removeFollower(User $follower){
+    public function removeFollower(User $follower) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -434,7 +464,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -444,7 +474,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $role
      * @return boolean
      */
-    public function addRole(User $role){
+    public function addRole(User $role) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -461,7 +491,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -471,7 +501,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $role
      * @return boolean
      */
-    public function removeRole(User $role){
+    public function removeRole(User $role) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -488,7 +518,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -498,7 +528,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $product
      * @return boolean
      */
-    public function addProduct(User $product){
+    public function addProduct(User $product) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -515,7 +545,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -525,7 +555,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $product_id
      * @return boolean
      */
-    public function removeProduct($product_id){
+    public function removeProduct($product_id) {
         try {
             // current user id, for validate that is the owner
             $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
@@ -560,7 +590,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $notification
      * @return boolean
      */
-    public function addNotification(User $notification){
+    public function addNotification(User $notification) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -577,7 +607,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -587,7 +617,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $notification_id
      * @return boolean
      */
-    public function removeNotification($notification_id){
+    public function removeNotification($notification_id) {
         try {
             // current user id, for validate that is the owner
             $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
@@ -622,7 +652,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $newsfeed
      * @return boolean
      */
-    public function addNewsfeed(User $newsfeed){
+    public function addNewsfeed(User $newsfeed) {
         // get current user id
         $user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
         // get current user entity
@@ -639,7 +669,7 @@ class UserRepository extends EntityRepository {
             $em = $this->getEntityManager();
             // update the user entity
             $em->flush();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
@@ -649,7 +679,7 @@ class UserRepository extends EntityRepository {
      * @param Champs\Entity\User $newsfeed
      * @return boolean
      */
-    public function removeNewsfeed($newsfeed_id){
+    public function removeNewsfeed($newsfeed_id) {
         try {
             // current user id, for validate that is the owner
             $current_user_id = \Zend_Auth::getInstance()->getIdentity()->user_id;
@@ -678,4 +708,5 @@ class UserRepository extends EntityRepository {
             throw new \Exception($e->getMessage());
         }
     }
+
 }
