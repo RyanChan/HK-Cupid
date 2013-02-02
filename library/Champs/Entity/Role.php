@@ -3,7 +3,7 @@ namespace Champs\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\RoleRepository")
  * @Table(name="roles")
  * @HasLifecycleCallbacks
  */
@@ -37,7 +37,7 @@ class Role{
      * Initialize Method
      */
     public function __construct(){
-        $this->users = new ArrayCollection();
+//        $this->users = new ArrayCollection();
     }
     /**
      *

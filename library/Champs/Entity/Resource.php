@@ -24,7 +24,7 @@ class Resource{
     /**
      *
      * @var ArrayCollection $actions
-     * @ManyToOne(targetEntity="Action", inversedBy="resource")
+     * @OneToMany(targetEntity="Action", mappedBy="resource")
      */
     private $actions;
     /**
