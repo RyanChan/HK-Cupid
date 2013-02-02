@@ -24,7 +24,7 @@ class Action{
     /**
      *
      * @var Champs\Entity\Resource $resource
-     * @OneToMany(targetEntity="Resource", mappedBy="actions")
+     * @ManyToOne(targetEntity="Resource", inversedBy="actions")
      */
     private $resource;
     /**
