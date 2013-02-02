@@ -180,17 +180,6 @@ class AccountController extends Champs_Controller_MasterController {
     }
 
     /**
-     * profileAction function.
-     *
-     * @access public
-     * @return void
-     */
-    public function profileAction() {
-        // setup hash
-        $this->initHash();
-    }
-
-    /**
      * Confirm and activate user account
      */
     public function confirmAction() {
@@ -236,7 +225,6 @@ class AccountController extends Champs_Controller_MasterController {
         $user = $this->em->find('Champs\Entity\User', $identity->user_id);
         $this->view->user = $user;
         //$this->view->form = $form;
-
         // get hash
         $this->initHash();
     }
@@ -254,11 +242,11 @@ class AccountController extends Champs_Controller_MasterController {
         $this->initHash();
     }
 
-    public function generalAction () {
+    public function generalAction() {
         $request = $this->getRequest();
 
         if (!$request->isPost() || !$this->checkHash($request->getPost('hash'))) {
-            throw new Exception('Page Not Found');
+            $this->throwPageNotFound();
         }
 
         $form = new Champs_Form_Account_General($this->identity->user_id);
@@ -269,4 +257,27 @@ class AccountController extends Champs_Controller_MasterController {
 
         $this->view->form = $form;
     }
+
+    /**
+     * profileAction function.
+     *
+     * @access public
+     * @return void
+     */
+    public function profileAction() {
+        $request = $this->getRequest();
+
+        if (!$request->isPost() || !$this->checkHash($request->getPost('hash'))) {
+            $this->throwPageNotFound();
+        }
+
+        $form = new Champs_Form_Account_Profile($this->identity->user_id);
+
+        if ($form->process($request)) {
+            $this->_redirect('/account/settings');
+        }
+
+        $this->view->form = $form;
+    }
+
 }

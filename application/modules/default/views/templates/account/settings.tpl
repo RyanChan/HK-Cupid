@@ -64,7 +64,7 @@
                {formhash hash=$hash}
                 <fieldset>
                     <legend>{translate name="About You"}</legend>
-                    <textarea class="ckeditor editor-html" name="intro" id="intro" placeholder="Intro">{$user->getProfile('intro')|escape}</textarea>
+                    <textarea class="ckeditor editor-html" name="intro" id="intro" placeholder="Intro">{$user->getProfile('intro')}</textarea>
                 </fieldset>
 
                 <div class="form-actions">

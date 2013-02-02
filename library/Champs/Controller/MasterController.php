@@ -153,4 +153,12 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         // assign hash to view
         $this->view->hash = $session_hash->hash;
     }
+
+    public function throwPageNotFound() {
+        $this->_throwError('Page Not Found');
+    }
+
+    private function _throwError($message = null) {
+        throw new Exception($message);
+    }
 }
