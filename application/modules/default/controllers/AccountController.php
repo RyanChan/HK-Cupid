@@ -257,10 +257,16 @@ class AccountController extends Champs_Controller_MasterController {
     public function generalAction () {
         $request = $this->getRequest();
 
-        if (!$request->isPost()) {
+        if (!$request->isPost() || !$this->checkHash($request->getPost('hash'))) {
             throw new Exception('Page Not Found');
         }
 
-        
+        $form = new Champs_Form_Account_General($this->identity->user_id);
+
+        if ($form->process($request)) {
+            $this->_redirect('/account/settings');
+        }
+
+        $this->view->form = $form;
     }
 }
