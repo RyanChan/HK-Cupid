@@ -612,4 +612,10 @@ class User {
 
         return false;
     }
+
+    public function isCurrentPassword($password) {
+        $current_password = md5($password . $this->password_salt);
+
+        return $current_password === $this->password;
+    }
 }
