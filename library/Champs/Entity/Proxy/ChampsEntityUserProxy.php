@@ -231,6 +231,12 @@ class ChampsEntityUserProxy extends \Champs\Entity\User implements \Doctrine\ORM
         return parent::getProfileAlbum();
     }
 
+    public function isFollowed()
+    {
+        $this->_load();
+        return parent::isFollowed();
+    }
+
 
     public function __sleep()
     {
