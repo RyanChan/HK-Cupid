@@ -15,6 +15,15 @@ class AccountController extends Champs_Controller_MasterController {
         parent::init();
 
         $this->userRepository = $this->em->getRepository('Champs\Entity\User');
+
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('general', 'json')
+                ->addActionContext('profile', 'json')
+                ->addActionContext('notification', 'json')
+                ->addActionContext('basicinfo', 'json')
+                ->addActionContext('privacy', 'json')
+                ->addActionContext('security', 'json')
+                ->initContext();
     }
 
     /**
@@ -25,7 +34,7 @@ class AccountController extends Champs_Controller_MasterController {
      * forward to profile page instead
      */
     public function indexAction() {
-        $this->_forward('profile');
+
     }
 
     /**
@@ -84,6 +93,12 @@ class AccountController extends Champs_Controller_MasterController {
                     $result = $auth->authenticate($adapter);
 
                     if ($result->isValid()) {
+                        $user = $this->userRepository->getUserByUsername($username);
+
+                        if ($user->getProfileAlbum()->photos->count() <= 0) {
+                            $this->_redirect($this->getUrl('details'));
+                        }
+
                         $this->_redirect($this->getUrl());
                     }
 
@@ -204,8 +219,9 @@ class AccountController extends Champs_Controller_MasterController {
                 break;
         }
 
-        $this->view->errors = $errors;
         $this->view->action = $action;
+        $this->view->errors = $errors;
+
         // get hash
         $this->initHash();
     }
@@ -235,6 +251,21 @@ class AccountController extends Champs_Controller_MasterController {
         // get user entity
         $user = $this->userRepository->find($user_id);
 
+        $form_general_errors = new Zend_Session_Namespace('Form_General_Error');
+        $form_profile_errors = new Zend_Session_Namespace('Form_Profile_Error');
+        $form_notification_errors = new Zend_Session_Namespace('Form_Notification_Error');
+        $form_basicinfo_errors = new Zend_Session_Namespace('Form_BasicInfo_Error');
+        $form_privacy_errors = new Zend_Session_Namespace('Form_Privacy_Error');
+        $form_security_errors = new Zend_Session_Namespace('Form_Security_Error');
+
+        // assign errors to view
+        $this->view->form_general_errors = $form_general_errors->errors;
+        $this->view->form_profile_errors = $form_profile_errors->errors;
+        $this->view->form_notification_errors = $form_notification_errors->errors;
+        $this->view->form_basicinfo_errors = $form_basicinfo_errors->errors;
+        $this->view->form_privacy_errors = $form_privacy_errors->errors;
+        $this->view->form_security_errors = $form_security_errors->errors;
+
         // assign user to view
         $this->view->user = $user;
 
@@ -249,13 +280,30 @@ class AccountController extends Champs_Controller_MasterController {
             $this->throwPageNotFound();
         }
 
+        $isXHR = $request->isXmlHttpRequest();
+
         $form = new Champs_Form_Account_General($this->identity->user_id);
 
-        if ($form->process($request)) {
-            $this->_redirect('/account/settings');
-        }
 
-        $this->view->form = $form;
+        if ($isXHR) {
+            if ($form->process($request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namespace('Form_General_Error');
+
+            if ($form->process($request)) {
+                unset($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+
+                $this->view->error = 'success';
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
+        }
     }
 
     /**
@@ -271,10 +319,26 @@ class AccountController extends Champs_Controller_MasterController {
             $this->throwPageNotFound();
         }
 
+        $isXHR = $request->isXmlHttpRequest();
+
         $form = new Champs_Form_Account_Profile($this->identity->user_id);
 
-        if ($form->process($request)) {
-            $this->_redirect('/account/settings');
+        if ($isXHR) {
+            if ($form->process($request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namespace('Form_Profile_Error');
+
+            if ($form->process($request)) {
+                unset($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
         }
 
         $this->view->form = $form;

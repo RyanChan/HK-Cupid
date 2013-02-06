@@ -6,14 +6,14 @@
  */
 function smarty_function_status ($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Public'),
-        $translator->_('Private'),
+        $translator->_('Public', $locale),
+        $translator->_('Private', $locale),
     );
-    
+
 
     $options = array(
         'name' => 'album_status',

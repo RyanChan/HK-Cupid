@@ -8,16 +8,16 @@
  */
 function smarty_function_educationlist($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $list = array(
-        $translator->_('Primary School'),
-        $translator->_('Secondary School'),
-        $translator->_('High School'),
-        $translator->_('Bachelor'),
-        $translator->_('Master'),
-        $translator->_('Doctor')
+        $translator->_('Primary School', $locale),
+        $translator->_('Secondary School', $locale),
+        $translator->_('High School', $locale),
+        $translator->_('Bachelor', $locale),
+        $translator->_('Master', $locale),
+        $translator->_('Doctor', $locale)
     );
 
     $options = array(

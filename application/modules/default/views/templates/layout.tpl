@@ -39,7 +39,15 @@
     </head>
     <body>
         {include file="header.tpl"}
-
+        <div class="container">
+            <noscript>
+            <div class="row-fluid">
+                <div class="alert alert-error">
+                    <i class="iconic-o-x" style="color:#BD362F;"></i>{nbsp nbsp=2}{translate name="Please enable JavaScript"}
+                </div>
+            </div>
+            </noscript>
+        </div>
         {$this->layout()->content}
 
         {include file="footer.tpl"}

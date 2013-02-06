@@ -26,10 +26,19 @@
     }
 </style>
 <div class="container">
-
     <div class="row-fluid">
         <div class="span6">
-            <form class="form" action="{geturl action="general"}" method="POST">
+            <form class="form" action="{geturl action="general"}" method="POST" id="form-general">
+                {if $form_general_errors|count > 0}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4>{translate name="Error"}</h4>
+                        {foreach from=$form_general_errors item=error}
+                            {$error|escape}
+                        {/foreach}
+                    </div>
+                {/if}
+
                 {formhash hash=$hash}
                 <fieldset>
                     <legend>{translate name="General"}</legend>
@@ -38,7 +47,7 @@
                     <label for="last_name">{translate name="Last Name"}</label>
                     <input type="text" name="last_name" value="{$user->getProfile("last_name")|escape}" />
                     <label for="email">{translate name="Email Address"}</label>
-                    <input type="text" name="email" value="{$user->getProfile('email')|escape}" />
+                    <input type="text" name="email" value="{$user->getProfile('email')|escape}" disabled/>
                 </fieldset>
                 <hr />
                 <fieldset>
@@ -60,8 +69,18 @@
             </form>
         </div>
         <div class="span6">
-            <form class="form" action="{geturl action="profile"}" method="POST">
-               {formhash hash=$hash}
+            <form class="form" action="{geturl action="profile"}" method="POST" id="form-profile">
+                {if $form_profile_errors|count > 0}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4>{translate name="Error"}</h4>
+                        {foreach from=$form_profile_errors item=error}
+                            {$error|escape}
+                        {/foreach}
+                    </div>
+                {/if}
+
+                {formhash hash=$hash}
                 <fieldset>
                     <legend>{translate name="About You"}</legend>
                     <textarea class="ckeditor editor-html" name="intro" id="intro" placeholder="Intro">{$user->getProfile('intro')}</textarea>
@@ -134,11 +153,11 @@
                     <legend>{translate name="Privacy"}</legend>
                     <label for="public_search">{translate name="Public Search"}</label>
                     <label class="checkbox">
-                        <input type="checkbox" name="public_search" {if $user->getProfile('public_search')}checkbox{/if} /> {translate name="Allow search from public"}
+                        <input type="checkbox" name="public_search" {if $user->getProfile('public_search')}checked name="0"{else}name="1"{/if} /> {translate name="Allow search from public"}
                     </label>
                     <label for="send_message_permission">{translate name="Send you message"}</label>
                     <label class="checkbox">
-                        <input type="checkbox" name="send_message_permission" {if $user->getProfile('send_message_permission')}checked{/if} /> {translate name="Who can send you private message"}
+                        <input type="checkbox" name="send_message_permission" {if $user->getProfile('send_message_permission')}checked name="0"{else}name="1"{/if} /> {translate name="Who can send you private message"}
                     </label>
                 </fieldset>
                 <div class="form-actions">
@@ -154,17 +173,17 @@
                     <legend>{translate name="Security"}</legend>
                     <label for="secure_browsing">{translate name="Secure Browsing"}</label>
                     <label class="checkbox">
-                        <input type="checkbox" name="secure_browsing" id="secure_browsing" {if $user->getProfile('secure_browsing')}checked{/if} />&nbsp;{translate name="Enable?"}
+                        <input type="checkbox" name="secure_browsing" id="secure_browsing" {if $user->getProfile('secure_browsing')}checked name="0"{else}name="1"{/if} />&nbsp;{translate name="Enable?"}
                     </label>
                 </fieldset>
                 <hr />
                 <fieldset>
                     <label for="login_notification">{translate name="Login Notification"}</label>
                     <label class="checkbox">
-                        <input type="checkbox" name="login_notification_email" {if $user->getProfile('login_notification_email')}checked{/if} />&nbsp;{translate name="Email"}
+                        <input type="checkbox" name="login_notification_email" {if $user->getProfile('login_notification_email')}checked name="0"{else}name="1"{/if} />&nbsp;{translate name="Email"}
                     </label>
                     <label for="checkbox">
-                        <input type="checkbox" name="login_notification_sms" {if $user->getProfile('login_notification_sms')}checked{/if} />&nbsp;{translate name="SMS"}
+                        <input type="checkbox" name="login_notification_sms" {if $user->getProfile('login_notification_sms')}checked name="0"{else}name="1"{/if} />&nbsp;{translate name="SMS"}
                     </label>
                 </fieldset>
                 <div class="form-actions">
@@ -174,3 +193,4 @@
         </div>
     </div>
 </div>
+<script src="/js/cupid-form-settings.js" type="text/javascript"></script>

@@ -6,12 +6,12 @@
  */
 function smarty_function_product_searchable($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Yes'),
-        $translator->_('No'),
+        $translator->_('Yes', $locale),
+        $translator->_('No', $locale),
     );
 
     $options = array(

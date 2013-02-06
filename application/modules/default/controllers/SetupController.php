@@ -87,12 +87,12 @@ class SetupController extends Champs_Controller_MasterController {
     public function authorizationAction() {
 //        // for administrator
 //        $query1 = $this->em->createQuery("SELECT r FROM Champs\Entity\Role r WHERE r.rolename = ?1");
-//        $query1->setParameter(1, 'Administrator');
+//        $query1->setParameter(1, 'Member');
 //
 //        $admin = $query1->getSingleResult();
 //
-//        $query = $this->em->createQuery("SELECT r FROM Champs\Entity\Resource r");
-//
+//        $query = $this->em->createQuery("SELECT r FROM Champs\Entity\Resource r WHERE r.resourcename != ?1");
+//        $query->setParameter(1, 'administration');
 //        $resources = $query->getResult();
 //
 //        foreach ($resources as $resource) {
@@ -110,46 +110,46 @@ class SetupController extends Champs_Controller_MasterController {
 //        $this->view->resources = $resources;
         // for member
         // for guest
-//        $query = $this->em->createQuery("SELECT r FROM Champs\Entity\Role r WHERE r.rolename = ?1");
-//        $query->setParameter(1, 'Guest');
-//
-//        $guest = $query->getSingleResult();
-//
-//        $query1 = $this->em->createQuery("SELECT r FROM Champs\Entity\Resource r");
-////        $query1->setParameter(1, 'index')->setParameter(2, 'account');
-//
-//        $resources = $query1->getResult();
-//
-//        $this->view->resources = $resources;
-//
-//        foreach ($resources as $resource) {
-//            if ($resource->resourcename == 'index') {
-//                foreach ($resource->actions as $action) {
-//                    $authorize = new Champs\Entity\Authorization();
-//                    $authorize->resource = $resource;
-//                    $authorize->action = $action;
-//                    $authorize->role = $guest;
-//
-//                    $this->em->persist($authorize);
-//                }
-//            } else if ($resource->resourcename == 'account') {
-//                foreach ($resource->actions as $action) {
-//                    if ($action->actionname == 'register' ||
-//                            $action->actionname == 'login' ||
-//                            $action->actionname == 'confirm' ||
-//                            $action->actionname == 'complete') {
-//                        $authorize = new Champs\Entity\Authorization();
-//                        $authorize->resource = $resource;
-//                        $authorize->action = $action;
-//                        $authorize->role = $guest;
-//
-//                        $this->em->persist($authorize);
-//                    }
-//                }
-//            }
-//        }
-//
-//        $this->em->flush();
+        $query = $this->em->createQuery("SELECT r FROM Champs\Entity\Role r WHERE r.rolename = ?1");
+        $query->setParameter(1, 'Guest');
+
+        $guest = $query->getSingleResult();
+
+        $query1 = $this->em->createQuery("SELECT r FROM Champs\Entity\Resource r");
+//        $query1->setParameter(1, 'index')->setParameter(2, 'account');
+
+        $resources = $query1->getResult();
+
+        $this->view->resources = $resources;
+
+        foreach ($resources as $resource) {
+            if ($resource->resourcename == 'index') {
+                foreach ($resource->actions as $action) {
+                    $authorize = new Champs\Entity\Authorization();
+                    $authorize->resource = $resource;
+                    $authorize->action = $action;
+                    $authorize->role = $guest;
+
+                    $this->em->persist($authorize);
+                }
+            } else if ($resource->resourcename == 'account') {
+                foreach ($resource->actions as $action) {
+                    if ($action->actionname == 'register' ||
+                            $action->actionname == 'login' ||
+                            $action->actionname == 'confirm' ||
+                            $action->actionname == 'complete') {
+                        $authorize = new Champs\Entity\Authorization();
+                        $authorize->resource = $resource;
+                        $authorize->action = $action;
+                        $authorize->role = $guest;
+
+                        $this->em->persist($authorize);
+                    }
+                }
+            }
+        }
+
+        $this->em->flush();
     }
 
 }

@@ -1,10 +1,3 @@
-{include file="header.tpl" title="Account"}
-
-<div class="container clearfix">
-
-
-    
+<div class="container">
 
 </div>
-
-{include file="footer.tpl"}

@@ -5,7 +5,7 @@
  *
  * @author RyanChan <ryanchan.tc@gmail.com>
  */
-class Champs_Form_Message_Create extends Champs_FormProcessor {
+class Champs_Form_Message_Compose extends Champs_FormProcessor {
 
     /**
      * Enttiy Repository of Message
@@ -58,11 +58,11 @@ class Champs_Form_Message_Create extends Champs_FormProcessor {
             $receiver = $this->em->find('Champs\Entity\User', $this->message_receiver);
             $this->message->receiver = $receiver;
         }
-        
+
         // message sender
         $sender = $this->em->find('Champs\Entity\User', $this->_user_id);
         $this->message->sender= $sender;
-        
+
         // message title
         $this->message_title = $this->sanitize($request->getPost('message_title'));
         if(strlen($this->message_title) == 0){
@@ -70,7 +70,7 @@ class Champs_Form_Message_Create extends Champs_FormProcessor {
         } else {
             $this->message->title = $this->message_title;
         }
-        
+
         // message content
         $this->message_content = $this->cleanHtml($request->getPost('message_content'));
         if(strlen($this->message_content) == 0){
@@ -78,7 +78,7 @@ class Champs_Form_Message_Create extends Champs_FormProcessor {
         } else {
             $this->message->content = $this->message_content;
         }
-        
+
 
         if (!$this->hasError()) {
             try {

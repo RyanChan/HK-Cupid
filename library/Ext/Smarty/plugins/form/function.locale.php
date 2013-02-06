@@ -2,13 +2,13 @@
 
 function smarty_function_locale ($params, Smarty_Internal_Template $template) {
     $default = (int) isset($params['default']) ? $params['default'] : 0;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('English'),
-        $translator->_('Traditional Chinese'),
-        $translator->_('Simplified Chinese')
+        $translator->_('English', $locale),
+        $translator->_('Traditional Chinese', $locale),
+        $translator->_('Simplified Chinese', $locale)
     );
 
     $options = array(

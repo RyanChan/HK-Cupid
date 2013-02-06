@@ -6,14 +6,14 @@
  */
 function smarty_function_product_delivery($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Post'),
-        $translator->_('DHL'),
-        $translator->_('Speed Post'),
-        $translator->_('FedEx'),
+        $translator->_('Post', $locale),
+        $translator->_('DHL', $locale),
+        $translator->_('Speed Post', $locale),
+        $translator->_('FedEx', $locale),
     );
 
     $options = array(

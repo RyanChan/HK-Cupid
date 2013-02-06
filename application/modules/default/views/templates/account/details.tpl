@@ -87,7 +87,7 @@
             {romance default=$user->getProfile('romance')}
 
             <label for="location">{translate name="Location"}</label>
-            <input type="text" id="location" name="location" placeholder="Location" value="{$user->getProfile('location')|escape}" />
+            <input type="text" id="location" name="location" placeholder="{translate name="Location"}" value="{$user->getProfile('location')|escape}" />
 
             <label for="house_tag">{translate name="House Tag"}</label>
             {housetag default=$user->getProfile('house_tag')}

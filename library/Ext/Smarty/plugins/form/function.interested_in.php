@@ -2,12 +2,12 @@
 
 function smarty_function_interested_in ($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : 0;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
         $translator->_('Women'),
-        $translator->_('Male'),
+        $translator->_('Men'),
         $translator->_('Both')
     );
 

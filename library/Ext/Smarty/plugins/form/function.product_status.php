@@ -6,13 +6,13 @@
  */
 function smarty_function_product_status ($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('On Sale'),
-        $translator->_('Out Of Stock'),
-        $translator->_('Remove From Sale'),
+        $translator->_('On Sale', $locale),
+        $translator->_('Out Of Stock', $locale),
+        $translator->_('Remove From Sale', $locale),
     );
 
 

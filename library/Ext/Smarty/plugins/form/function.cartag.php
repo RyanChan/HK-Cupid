@@ -2,14 +2,14 @@
 
 function smarty_function_cartag($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('I don\'t have a car'),
-        $translator->_('I have a car'),
-        $translator->_('I have a car and giving by company'),
-        $translator->_('I have more than one cars')
+        $translator->_('I don\'t have a car', $locale),
+        $translator->_('I have a car', $locale),
+        $translator->_('I have a car and giving by company', $locale),
+        $translator->_('I have more than one cars', $locale)
     );
 
     $options = array(

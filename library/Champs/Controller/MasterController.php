@@ -161,4 +161,11 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     private function _throwError($message = null) {
         throw new Exception($message);
     }
+
+    public function sendJson($data) {
+        $this->setNoRender();
+
+        $this->getResponse()->setHeader('content-type', 'application/json');
+        echo Zend_Json::encode($data);
+    }
 }

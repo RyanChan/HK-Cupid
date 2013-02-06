@@ -31,11 +31,11 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
         $validator = new Zend_Validate_EmailAddress();
 
         if (strlen($this->email) == 0)
-            $this->addError('email', 'Please enter your e-mail address');
+            $this->addError('email', $this->translator->_('Please enter your e-mail address', $this->locale));
         else if (!$validator->isValid($this->email))
-            $this->addError('email', 'Please enter a valid e-mail address');
+            $this->addError('email', $this->translator->_('Please enter a valid e-mail address', $this->locale));
         else if ($this->_userRepository->hasSameEmail($this->email))
-            $this->addError ('email', 'Your email have been registered');
+            $this->addError ('email', $this->translator->_('Your email have been registered', $this->locale));
         else {
             $this->user->setUsername($this->email);
             $this->user->setProfileWithKeyAndValue('email', $this->email);
@@ -45,7 +45,7 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
         $this->first_name = $this->sanitize($request->getPost('first_name'));
 
         if (strlen($this->first_name) == 0)
-            $this->addError('first_name', 'Please enter your first name');
+            $this->addError('first_name', $this->translator->_('Please enter your first name', $this->locale));
         else
             $this->user->setProfileWithKeyAndValue('first_name', $this->first_name);
 
@@ -53,14 +53,14 @@ class Champs_Form_Account_Register extends Champs_FormProcessor {
         $this->last_name = $this->sanitize($request->getPost('last_name'));
 
         if (strlen($this->last_name) == 0)
-            $this->addError('last_name', 'Please enter your last name');
+            $this->addError('last_name', $this->translator->_('Please enter your last name', $this->locale));
         else
             $this->user->setProfileWithKeyAndValue('last_name', $this->last_name);
 
         $this->password = $this->sanitize($request->getPost('password'));
 
         if (strlen($this->password) < 8)
-            $this->addError('password', 'Please enter a password that is longer than 8 characters');
+            $this->addError('password', $this->translator->_('Please enter a password that is longer than 8 characters', $this->locale));
         else
             $this->user->setPassword($this->password);
 

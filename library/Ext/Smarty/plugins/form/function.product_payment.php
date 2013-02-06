@@ -6,13 +6,13 @@
  */
 function smarty_function_product_payment ($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('VISA'),
-        $translator->_('Master Card'),
-        $translator->_('Paypal')
+        $translator->_('VISA', $locale),
+        $translator->_('Master Card', $locale),
+        $translator->_('Paypal', $locale)
     );
 
     $options = array(

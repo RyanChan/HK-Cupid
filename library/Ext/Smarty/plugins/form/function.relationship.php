@@ -2,14 +2,14 @@
 
 function smarty_function_relationship($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Single'),
-        $translator->_('In Relationship'),
-        $translator->_('Married'),
-        $translator->_('Complicated')
+        $translator->_('Single', $locale),
+        $translator->_('In Relationship', $locale),
+        $translator->_('Married', $locale),
+        $translator->_('Complicated', $locale)
     );
 
     $options = array(

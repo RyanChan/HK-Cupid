@@ -28,8 +28,8 @@
     <form class="form-signin" action="{geturl action="login"}" method="POST">
         <h2 class="form-signin-heading">{translate name="Login to Champs"}</h2>
         {formhash hash=$hash}
-        <input type="text" class="input-block-level" name="username" placeholder="Username">
-        <input type="password" class="input-block-level" name="password" placeholder="Password">
+        <input type="text" class="input-block-level" name="username" placeholder="{translate name="Username"}">
+        <input type="password" class="input-block-level" name="password" placeholder="{translate name="Password"}">
         {*<label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>*}

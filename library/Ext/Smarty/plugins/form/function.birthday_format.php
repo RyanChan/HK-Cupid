@@ -1,13 +1,13 @@
 <?php
 
-function smarty_function_birthday_format ($params, Smarty_Internal_Template $template) {
+function smarty_function_birthday_format($params, Smarty_Internal_Template $template) {
     $default = (int) isset($params['default']) ? $params['default'] : 0;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Show only month & day'),
-        $translator->_('Show full birthday')
+        $translator->_('Show only month & day', $locale),
+        $translator->_('Show full birthday', $locale)
     );
 
     $options = array(

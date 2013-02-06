@@ -7,15 +7,15 @@
  */
 function smarty_function_personalincome ($params, Smarty_Internal_Template $template){
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('$5000 - $10000'),
-        $translator->_('$10000 - $20000'),
-        $translator->_('$20000 - $30000'),
-        $translator->_('$30000 - $40000'),
-        $translator->_('$40000 - $50000'),
+        $translator->_('$5000 - $10000', $locale),
+        $translator->_('$10000 - $20000', $locale),
+        $translator->_('$20000 - $30000', $locale),
+        $translator->_('$30000 - $40000', $locale),
+        $translator->_('$40000 - $50000', $locale),
 
     );
 

@@ -35,13 +35,14 @@
             <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn"><i class="iconic-heart"></i>&nbsp;{translate name="Like"}</a>
             <a {if !$user->isFollowed()} href="{geturl controller="dating" action="addfollower"}/{$user->username|escape}" {/if} rel="tooltip" title="{if $user->isFollowed()} {translate name="Followed"} {else} {translate name="Follow this member"} {/if}" class="btn btn-info {if $user->isFollowed()}disabled{/if}">
                 <i class="iconic-star"></i>&nbsp;
-                {if $user->isFollowed($identity->user_id)}
+                {if $user->isFollowed()}
                     {translate name="Followed"}
                 {else}
                     {translate name="Follow"}
                 {/if}
             </a>
-            <a href="#" rel="tooltip" title="{translate name="Not Available"}" class="btn btn-primary"><i class="iconic-mail"></i>&nbsp;{translate name="Send Message"}</a>
+            <a id="message-compose-send" rel="tooltip" title="{translate name="Send message to this user."}" class="btn btn-primary"><i class="iconic-mail"></i>&nbsp;{translate name="Send Message"}</a>
+            {include file="message_compose.tpl" receiver=$user controller=$controller action=$action username=$user->username}
         </div>
     </div>
     <hr />

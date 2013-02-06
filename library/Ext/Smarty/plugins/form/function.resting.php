@@ -2,15 +2,14 @@
 
 function smarty_function_resting($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Early to bed and early to rise is the loaw'),
-        $translator->_('Often night owls'),
-        $translator->_('Always earlybird'),
-        $translator->_('Occasionally lazy'),
-        $translator->_('No law')
+        $translator->_('Early to bed and early to rise', $locale),
+        $translator->_('Often night owls', $locale),
+        $translator->_('Always earlybird', $locale),
+        $translator->_('Occasionally lazy', $locale),
     );
 
     $options = array(

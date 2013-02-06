@@ -44,6 +44,8 @@ class Champs_Form_Account_Profile extends Champs_FormProcessor {
 
         if (strlen($this->intro) > 0) {
             $this->user->setProfileWithKeyAndValue('intro', $this->intro);
+        } else {
+            $this->addError('intro', $this->translator->_('Please type in your introduction'));
         }
 
         if (!$this->hasError()) {

@@ -2,14 +2,14 @@
 
 function smarty_function_housetag ($params, Smarty_Internal_Template $template){
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Live alone'),
-        $translator->_('Shared with roommates'),
-        $translator->_('Shared with family'),
-        $translator->_('Cosmopolitan')
+        $translator->_('Live alone', $locale),
+        $translator->_('Shared with roommates', $locale),
+        $translator->_('Shared with family', $locale),
+        $translator->_('Cosmopolitan', $locale)
     );
 
     $options = array(

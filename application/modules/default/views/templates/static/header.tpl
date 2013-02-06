@@ -30,27 +30,14 @@
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
                             <li class="divider"></li>
-                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male"}</a></li>
-                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female"}</a></li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male Member"}</a></li>
+                            <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
 
                         </ul>
                     </li>
-                    {*
-                    <li class="dropdown {if $controller == "deals"}active{/if}">
-                        <a href="{geturl controller="deals"}" class="dropdown-toggle" data-toggle="dropdown">
-                            {translate name="Deals"}
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Product"}</a></li>
-                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Product"}</a></li>
-                            <li><a href="{geturl controller="deals" action="browse" parameters=['view' => 'featured']}">{translate name="Featured Product"}</a></li>
-                        </ul>
-                    </li>
-                    *}
                 </ul>
                 <form class="navbar-search pull-left" action="">
-                    <input type="text" class="search-query span3" placeholder="Search" />
+                    <input type="text" class="search-query span3" placeholder="{translate name="Search"}" />
                 </form>
                 {if $authenticated}
                     <ul class="nav pull-right">
@@ -61,18 +48,18 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {if $authenticated}
-                                    <li class="nav-header">{translate name="Dating"}</li>
-                                    <li class="divider"></li>
                                     <li class="nav-header">{translate name="Album"}</li>
                                     <li><a href="/{$identity->nickname|escape}/albums">{translate name="Albums"}</a></li>
                                     <li class="divider"></li>
                                     <li class="nav-header">{translate name="Deals"}</li>
                                     <li><a href="/{$identity->nickname|escape}/products">{translate name="Products"}</a></li>
                                     <li class="divider"></li>
+                                    <li class="nav-header">{translate name="Message"}</li>
+                                    <li><a href="{geturl controller="message" action="messages"}">{translate name="Messages"}</a></li>
+                                    <li class="divider"></li>
                                     <li class="nav-header">{translate name="Profile"}</li>
-                                    <li><a href="{geturl controller="account" action="profile"}">{translate name="Profile"}</a></li>
-                                    <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
                                     <!--<li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>-->
+                                    <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
                                     <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
                                 {else}
                                     <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
@@ -84,8 +71,8 @@
                 {else}
                     <form class="navbar-form pull-right" method="POST" action="{geturl controller="account" action="login"}">
                         {formhash hash=$hash}
-                        <input class="span2" name="username" type="text" placeholder="Username">
-                        <input class="span2" name="password" type="password" placeholder="Password">
+                        <input class="span2" name="username" type="text" placeholder="{translate name="Username"}">
+                        <input class="span2" name="password" type="password" placeholder="{translate name="Password"}">
                         <div class="btn-group">
                             <button class="btn">{translate name="Sign In"}</button>
                             <button class="btn dropdown-toggle" data-toggle="dropdown">

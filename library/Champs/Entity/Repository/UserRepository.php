@@ -264,6 +264,7 @@ class UserRepository extends EntityRepository {
         $user->unsetProfile('activate_account_key');
         $user->unsetProfile('activate_account_ts');
         $user->setProfileWithKeyAndValue('activated', 1);
+//        $user->getProfileAlbum()->isProfileAlbum = 1;
 
         $this->getEntityManager()->flush();
 

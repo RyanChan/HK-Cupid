@@ -2,7 +2,7 @@
 namespace Champs\Entity;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Champs\Entity\Repository\MessageRepository")
  * @Table(name="messages")
  * @HasLifecycleCallbacks
  */

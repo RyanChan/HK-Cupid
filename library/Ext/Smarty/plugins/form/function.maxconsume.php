@@ -2,18 +2,18 @@
 
 function smarty_function_maxconsume($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Food'),
-        $translator->_('Clothing'),
-        $translator->_('Entertainment'),
-        $translator->_('Traveling'),
-        $translator->_('Dating'),
-        $translator->_('Culture'),
-        $translator->_('Education'),
-        $translator->_('Others')
+        $translator->_('Food', $locale),
+        $translator->_('Clothing', $locale),
+        $translator->_('Entertainment', $locale),
+        $translator->_('Traveling', $locale),
+        $translator->_('Dating', $locale),
+        $translator->_('Culture', $locale),
+        $translator->_('Education', $locale),
+        $translator->_('Others', $locale)
     );
 
     $options = array(

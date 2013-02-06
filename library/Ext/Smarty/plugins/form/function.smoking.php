@@ -2,16 +2,16 @@
 
 function smarty_function_smoking($params, Smarty_Internal_Template $template) {
     $default = isset($params['default']) ? $params['default'] : null;
-
+    $locale = key(Zend_Locale::getDefault());
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Do not smoke, very disgusted smoking'),
-        $translator->_('Do not smoke, but not objectionable smoking'),
-        $translator->_('Social occasionally smoke'),
-        $translator->_('Smoke a few times a week'),
-        $translator->_('Daily smoke'),
-        $translator->_('Addicted')
+        $translator->_('Do not smoke, very disgusted smoking', $locale),
+        $translator->_('Do not smoke, but not objectionable smoking', $locale),
+        $translator->_('Social occasionally smoke', $locale),
+        $translator->_('Smoke a few times a week', $locale),
+        $translator->_('Daily smoke', $locale),
+        $translator->_('Addicted', $locale)
     );
 
     $options = array(

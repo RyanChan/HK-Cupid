@@ -50,9 +50,12 @@ abstract class Champs_FormProcessor {
      */
     protected $translator = null;
 
+    protected $locale = null;
+
     public function __construct() {
         $this->em = Zend_Registry::get('doctrine')->getEntityManager();
         $this->translator = Zend_Registry::get('translate');
+        $this->locale = key(Zend_Locale::getDefault());
     }
 
     abstract function process(Zend_Controller_Request_Abstract $request);

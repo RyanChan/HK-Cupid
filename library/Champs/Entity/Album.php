@@ -78,7 +78,7 @@ class Album {
     /**
      *
      * @var Boolean $isProfileAlbum
-     * @Column(type="boolean")
+     * @Column(type="smallint", length = 1)
      */
     private $isProfileAlbum;
 
@@ -115,7 +115,7 @@ class Album {
     public function doPrePersist() {
         $this->ts_created = new \DateTime();
         // default false for profile album
-        $this->isProfileAlbum = false;
+//        $this->isProfileAlbum = false;
     }
 
     /**
