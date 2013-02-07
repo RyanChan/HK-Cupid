@@ -22,7 +22,7 @@ class Champs_Auth_Doctrine implements Zend_Auth_Adapter_Interface {
      * @var string $username
      */
     protected $username = '';
-
+    
     /**
      * Initialize with username and password
      *
