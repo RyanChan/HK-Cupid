@@ -274,19 +274,15 @@ class AccountController extends Champs_Controller_MasterController {
     }
 
     public function generalAction() {
-        $request = $this->getRequest();
-
-        if (!$request->isPost() || !$this->checkHash($request->getPost('hash'))) {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
             $this->throwPageNotFound();
         }
-
-        $isXHR = $request->isXmlHttpRequest();
 
         $form = new Champs_Form_Account_General($this->identity->user_id);
 
 
-        if ($isXHR) {
-            if ($form->process($request)) {
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
                 $this->view->error = true;
             } else {
                 $this->view->error = $form->getErrors();
@@ -294,7 +290,7 @@ class AccountController extends Champs_Controller_MasterController {
         } else {
             $session = new Zend_Session_Namespace('Form_General_Error');
 
-            if ($form->process($request)) {
+            if ($form->process($this->request)) {
                 unset($session->errors);
                 $this->_redirect('/account/settings/?update=true');
 
@@ -313,18 +309,14 @@ class AccountController extends Champs_Controller_MasterController {
      * @return void
      */
     public function profileAction() {
-        $request = $this->getRequest();
-
-        if (!$request->isPost() || !$this->checkHash($request->getPost('hash'))) {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
             $this->throwPageNotFound();
         }
 
-        $isXHR = $request->isXmlHttpRequest();
-
         $form = new Champs_Form_Account_Profile($this->identity->user_id);
 
-        if ($isXHR) {
-            if ($form->process($request)) {
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
                 $this->view->error = true;
             } else {
                 $this->view->error = $form->getErrors();
@@ -332,7 +324,7 @@ class AccountController extends Champs_Controller_MasterController {
         } else {
             $session = new Zend_Session_Namespace('Form_Profile_Error');
 
-            if ($form->process($request)) {
+            if ($form->process($this->request)) {
                 unset($session->errors);
                 $this->_redirect('/account/settings/?update=true');
             } else {
@@ -343,5 +335,108 @@ class AccountController extends Champs_Controller_MasterController {
 
         $this->view->form = $form;
     }
+    
+    public function notificationAction() {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
+            $this->throwPageNotFound();
+        }
+        
+        $form = new Champs_Form_Account_Notification($this->identity->user_id);
+        
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namespace('Form_Notification_Error');
+            
+            if ($form->process($this->request)) {
+                unset ($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
+        }
+    }
 
+    public function basicinfoAction() {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
+            $this->throwPageNotFound();
+        }
+        
+        $form = new Champs_Form_Account_BasicInfo($this->identity->user_id);
+        
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namespace('Form_BasicInfo_Error');
+            
+            if ($form->process($this->request)) {
+                unset ($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
+        }
+    }
+    
+    public function privacyAction() {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
+            $this->throwPageNotFound();
+        }
+        
+        $form = new Champs_Form_Account_Privacy($this->identity->user_id);
+        
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namaspace('Form_Privacy_Error');
+            
+            if ($form->process($this->request)) {
+                unset ($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
+        }
+    }
+    
+    public function securityAction() {
+        if (!$this->request->isPost() || !$this->checkHash($this->request->getPost('hash'))) {
+            $this->throwPageNotFound();
+        }
+        
+        $form = new Champs_Form_Account_Security($this->identity->user_id);
+        
+        if ($this->isXHR) {
+            if ($form->process($this->request)) {
+                $this->view->error = true;
+            } else {
+                $this->view->error = $form->getErrors();
+            }
+        } else {
+            $session = new Zend_Session_Namespace('Form_Security_Error');
+            
+            if ($form->process($this->request)) {
+                unset ($session->errors);
+                $this->_redirect('/account/settings/?update=true');
+            } else {
+                $session->errors = $form->getErrors();
+                $this->_redirect('/account/settings/?update=false');
+            }
+        }
+    }
 }

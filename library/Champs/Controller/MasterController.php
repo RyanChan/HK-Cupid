@@ -39,6 +39,13 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
      * @var Bootstrap $bootstrap
      */
     protected $bootstrap;
+    
+    /**
+     * Check if the request is Ajax
+     * 
+     * @var boolean @isXHR
+     */
+    protected $isXHR;
 
     /**
      * initialize method
@@ -47,6 +54,7 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         $this->em = Zend_Registry::get('doctrine')->getEntityManager();
         $this->request = $this->getRequest();
         $this->bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $this->isXHR = $this->request->isXmlHttpRequest();
 
         $this->_initAuth();
         $this->_initACL();
