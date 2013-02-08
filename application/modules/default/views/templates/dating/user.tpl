@@ -64,39 +64,194 @@
                 <div class="span6">
                     <h4>{translate name="Other Info"}</h4>
                     <hr />
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>{translate name="Body Type"}</td>
+                                <td>
+                                    {if $user->getProfile('bodytype') != null}
+                                        {user_details type="bodytype" key=$user->getProfile('bodytype')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Smoke"}</td>
+                                <td>
+                                    {if $user->getProfile('smoking') != null}
+                                        {user_details type="smoking" key=$user->getProfile('smoking')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Drinking"}</td>
+                                <td>
+                                    {if $user->getProfile('drinking') != null}
+                                        {user_details type="drinking" key=$user->getProfile('drinking')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Resting"}</td>
+                                <td>
+                                    {if $user->getProfile('resting') != null}
+                                        {user_details type="resting" key=$user->getProfile('resting')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Education"}</td>
+                                <td>
+                                    {if $user->getProfile('education') != null}
+                                        {user_details type="educationlist" key=$user->getProfile('education')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Profession"}</td>
+                                <td>
+                                    {if $user->getProfile('profession') != null}
+                                        {user_details type="profession" key=$user->getProfile('profession')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Occupation"}</td>
+                                <td>
+                                    {if $user->getProfile('occupation') != null}
+                                        {user_details type="occupation" key=$user->getProfile('occupation')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="span6">
                     <h4>{translate name="Target Require"}</h4>
                     <hr />
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>{translate name="Body Type"}</td>
+                                <td>
+                                    {if $user->getProfile('bodytype') != null}
+                                        {user_details type="bodytype" key=$user->getProfile('bodytype')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Smoke"}</td>
+                                <td>
+                                    {if $user->getProfile('smoking') != null}
+                                        {user_details type="smoking" key=$user->getProfile('smoking')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Drinking"}</td>
+                                <td>
+                                    {if $user->getProfile('drinking') != null}
+                                        {user_details type="drinking" key=$user->getProfile('drinking')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Resting"}</td>
+                                <td>
+                                    {if $user->getProfile('resting') != null}
+                                        {user_details type="resting" key=$user->getProfile('resting')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Education"}</td>
+                                <td>
+                                    {if $user->getProfile('education') != null}
+                                        {user_details type="educationlist" key=$user->getProfile('education')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Profession"}</td>
+                                <td>
+                                    {if $user->getProfile('profession') != null}
+                                        {user_details type="profession" key=$user->getProfile('profession')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{translate name="Occupation"}</td>
+                                <td>
+                                    {if $user->getProfile('occupation') != null}
+                                        {user_details type="occupation" key=$user->getProfile('occupation')}
+                                    {else}
+                                        {translate name="Not specified"}
+                                    {/if}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            {*
             <div class="row-fluid">
                 <div class="span12">
                     <h4>{translate name="Recent Status"}</h4>
                     <hr />
                 </div>
             </div>
+            *}
             <div class="row-fluid">
                 <div class="span12">
                     <h4>{translate name="Recent Photos"}</h4>
                     <hr />
+                    {user_photos user_id=$user->id}
                 </div>
             </div>
             <div class="row-fluid">
                 <div class="span12">
                     <h4>{translate name="Recent Albums"}</h4>
                     <hr />
+                    {user_albums user_id=$user->id}
                 </div>
             </div>
             <div class="row-fluid">
                 <div class="span12">
                     <h4>{translate name="Followers"}</h4>
                     <hr />
+                    {user_followers user_id=$user->id}
                 </div>
             </div>
         </div>
+
         <div class="span3">
             
         </div>
+
     </div>
 </div>

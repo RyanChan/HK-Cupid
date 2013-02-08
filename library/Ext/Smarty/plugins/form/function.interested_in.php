@@ -6,9 +6,9 @@ function smarty_function_interested_in ($params, Smarty_Internal_Template $templ
     $translator = Zend_Registry::get('translate');
 
     $data = array(
-        $translator->_('Women'),
-        $translator->_('Men'),
-        $translator->_('Both')
+        $translator->_('Women', $locale),
+        $translator->_('Men', $locale),
+        $translator->_('Both', $locale)
     );
 
     $options = array(
