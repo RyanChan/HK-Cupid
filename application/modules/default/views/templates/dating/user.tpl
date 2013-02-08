@@ -50,45 +50,53 @@
             </div>
             <hr />
             <div class="row-fluid">
-                
+                <div class="span12">
+                    <h4>{translate name="Intro"}</h4>
+                    <hr />
+                    <div>
+                        <blockquote>
+                            {$user->getProfile('intro')}
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <h4>{translate name="Other Info"}</h4>
+                    <hr />
+                </div>
+                <div class="span6">
+                    <h4>{translate name="Target Require"}</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4>{translate name="Recent Status"}</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4>{translate name="Recent Photos"}</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4>{translate name="Recent Albums"}</h4>
+                    <hr />
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4>{translate name="Followers"}</h4>
+                    <hr />
+                </div>
             </div>
         </div>
         <div class="span3">
-            <h3>{translate name="Intro"}</h3>
-            <hr />
-            <div style="padding:-5px 5px;">
-                <blockquote>
-                    {$user->getProfile('intro')}
-                </blockquote>
-            </div>
+            
         </div>
     </div>
-    {*
-    <div class="row-fluid">
-    <ul id="descriptionTabs" class="nav nav-tabs">
-    <li class="active"><a href="#intro" data-toggle="tab">{translate name="Intro"}</a></li>
-    <li><a href="#activity" data-toggle="tab">{translate name="Activity"}</a></li>
-    <li><a href="#recent-albums" data-toggle="tab">{translate name="Recent Albums"}</a></li>
-    </ul>
-    <div id="descriptionTabsContent" class="tab-content">
-    <div class="tab-pane fade in active" id="intro">
-    {$user->getProfile('intro')}
-    </div>
-    <div class="tab-pane fade" id="activity">
-    <div class="well">
-    {translate name="No Activity"}
-    </div>
-    </div>
-    <div class="tab-pane fade" id="recent-albums">
-    {foreach from=$user->albums item=album}
-    {include file="album/album.tpl" album=$album}
-    {foreachelse}
-    <div class="well">
-    {translate name="No Albums"}
-    </div>
-    {/foreach}
-    </div>
-    </div>
-    </div>
-    *}
 </div>
