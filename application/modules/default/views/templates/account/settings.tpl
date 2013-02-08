@@ -70,16 +70,6 @@
         </div>
         <div class="span6">
             <form class="form" action="{geturl action="profile"}" method="POST" id="form-profile">
-                {if $form_profile_errors|count > 0}
-                    <div class="alert alert-error">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <h4>{translate name="Error"}</h4>
-                        {foreach from=$form_profile_errors item=error}
-                            {$error|escape}
-                        {/foreach}
-                    </div>
-                {/if}
-
                 {formhash hash=$hash}
                 <fieldset>
                     <legend>{translate name="About You"}</legend>
@@ -120,6 +110,7 @@
     <div class="row-fluid">
         <div class="span6">
             <form class="form" action="{geturl action="basicinfo"}" method="POST">
+                {formhash hash=$hash}
                 <fieldset>
                     <legend>{translate name="Basic Info"}</legend>
                     <label for="birthday">{translate name="Birthday"}</label>
@@ -157,7 +148,7 @@
                     </label>
                     <label for="send_message_permission">{translate name="Send you message"}</label>
                     <label class="checkbox">
-                        <input type="checkbox" name="send_message_permission" {if $user->getProfile('send_message_permission')}checked name="0"{else}name="1"{/if} /> {translate name="Who can send you private message"}
+                        <input type="checkbox" name="send_message_permission" {if $user->getProfile('send_message_permission')}checked name="0"{else}name="1"{/if} /> {translate name="Everyone can send you private message"}
                     </label>
                 </fieldset>
                 <div class="form-actions">

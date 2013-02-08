@@ -53,8 +53,6 @@
     </div>
     *}
     <div class="row-fluid">
-        <h2>{translate name="Components"}</h2>
-        <hr />
         <ul class="thumbnails">
             <li class="span3">
                 <div class="thumbnail">

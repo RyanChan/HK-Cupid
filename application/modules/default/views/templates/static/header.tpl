@@ -13,7 +13,7 @@
                     <li class="{if $controller == "index"}active{/if}">
                         <a href="/">{translate name="Home"}</a>
                     </li>
-                    <li class="dropdown {if $controller == "dating" || $controller == "album"}active{/if}">
+                    <li class="dropdown {if $controller == "dating"}active{/if}">
                         <a href="{geturl controller="dating"}" class="dropdown-toggle" data-toggle="dropdown">
                             {translate name="Dating"}
                             <b class="caret"></b>
@@ -25,14 +25,20 @@
                             <li class="divider"></li>
                             <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'male']}">{translate name="Male Member"}</a></li>
                             <li><a href="{geturl controller="dating" action="online" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
-                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown {if $controller == "album"}active{/if}">
+                        <a href="{geturl controller="album"}" class="dropdown-toggle" data-toggle="dropdown">
+                            {translate name="Album Shares"}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
                             <li class="nav-header">{translate name="Album Shares"}</li>
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'newest']}">{translate name="Newest Albums"}</a></li>
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'hottest']}">{translate name="Hottest Albums"}</a></li>
                             <li class="divider"></li>
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'male']}">{translate name="Male Member"}</a></li>
                             <li><a href="{geturl controller="album" action="browse" parameters=['view' => 'female']}">{translate name="Female Member"}</a></li>
-
                         </ul>
                     </li>
                 </ul>
@@ -59,7 +65,7 @@
                                     <li class="divider"></li>
                                     <li class="nav-header">{translate name="Profile"}</li>
                                     <!--<li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>-->
-                                    <li><a href="{geturl controller="account" action="details"}">{translate name="Details"}</a></li>
+                                    <li><a href="{geturl controller="account" action="settings"}">{translate name="Settings"}</a></li>
                                     <li><a href="{geturl controller="account" action="logout"}">{translate name="Logout"}</a></li>
                                 {else}
                                     <li><a href="{geturl controller="account" action="login"}">{translate name="Login"}</a></li>
