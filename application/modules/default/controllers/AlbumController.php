@@ -233,34 +233,127 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
      */
     public function uploadAction() {
         // get the request object
-        $request = $this->getRequest();
+//        $request = $this->getRequest();
 
-        if ($request->isPost()) {
+        $album_id = $this->_request->getParam('id');
 
-            // get the album id
-            $album_id = $request->getParam('id');
-
-            if ($album_id > 0) {
-                // get the album entity
-                $album = $this->albumRepository->findOneBy(array('id' => $album_id)); //find('Champs\Entity\Album', $album_id);
-
-                if (!$album) {
-                    $this->redirectToAlbum($this->identity->username, $album_id);
-                }
-
-                $form = new Champs_Form_Album_Upload($album);
-
-                if ($form->process($request)) {
-                    $this->redirectToAlbum($this->identity->username, $album_id);
-                } else {
-                    $this->redirectToAlbum($this->identity->username, $album_id);
-                }
-            } else {
-                $this->redirectToAlbum($this->identity->username, $album_id);
-            }
-        } else {
-            $this->redirectToAlbum($this->identity->username, $album_id);
+        if ($this->_request->isOptions()) {
+            $this->upload($this->identity->user_id, $album_id, $this->identity->email);
         }
+
+        if ($this->_request->isPost()) {
+            $this->upload($this->identity->user_id, $album_id, $this->identity->email);
+        }
+
+        if ($this->_request->isGet()) {
+            $this->upload($this->identity->user_id, $album_id, $this->identity->email);
+        }
+
+        if ($this->_request->isDelete() || $_SERVER['REQUEST_METHOD'] == 'DELETE') {
+            $this->delete($this->identity->user_id, $album_id, $this->identity->email);
+        }
+
+        exit;
+
+        /*
+          if ($request->isPost()) {
+
+          // get the album id
+          $album_id = $request->getParam('id');
+
+          if ($album_id > 0) {
+          // get the album entity
+          $album = $this->albumRepository->findOneBy(array('id' => $album_id)); //find('Champs\Entity\Album', $album_id);
+
+          if (!$album) {
+          $this->redirectToAlbum($this->identity->username, $album_id);
+          }
+
+          $form = new Champs_Form_Album_Upload($album);
+
+          if ($form->process($request)) {
+          $this->redirectToAlbum($this->identity->username, $album_id);
+          } else {
+          $this->redirectToAlbum($this->identity->username, $album_id);
+          }
+          } else {
+          $this->redirectToAlbum($this->identity->username, $album_id);
+          }
+          } else {
+          $this->redirectToAlbum($this->identity->username, $album_id);
+          }
+         */
+    }
+
+    public function upload($user_id, $album_id, $email) {
+        if ($user_id && $email && $album_id) {
+            $adapter = new Zend_File_Transfer_Adapter_Http();
+
+            $album = $this->albumRepository->find($album_id);
+            if (!$album) {
+                return;
+            }
+
+            if ($album->user->id != $user_id && $this->identity->email != $email) {
+                return;
+            }
+
+//            $photo = new Champs\Entity\Photo();
+
+            $datas = array();
+
+            $adapter->setDestination($album->getAlbumFolder());
+            $adapter->addValidator('Extension', false, 'jpg,png,gif');
+
+            $files = $adapter->getFileInfo();
+            foreach ($files as $file => $info) {
+
+                if (!$adapter->isUploaded($file))
+                    continue;
+                if (!$adapter->isValid($file))
+                    continue;
+
+                $name = $adapter->getFileName();
+
+//                // create a photo entity
+                $photo = new Champs\Entity\Photo();
+                $photo->filepath = basename($name);
+                $photo->description = basename($name);
+                $photo->album = $album;
+                $photo->user = $album->user;
+//
+                $this->em->persist($photo);
+                $this->em->flush();
+//
+                $adapter->addFilter('rename', $photo->getFullPath());
+
+                $adapter->receive($file);
+
+                $fileClass = new stdClass();
+                $fileClass->name = str_replace($album->getAlbumFolder(), 'New Image Upload Complete:   ', $name);
+                $fileClass->size = $adapter->getFileSize($file);
+                $fileClass->type = $adapter->getMimeType($file);
+                $fileClass->delete_url = '/album/upload/id/'.$album_id;
+                $fileClass->delete_type = 'DELETE';
+                $fileClass->url = $this->imagefile($photo->id, 200, 0);
+                $fileClass->thumbnail_url = $this->imagefile($photo->id, 200, 0);
+//                $fileClass->error = true;
+
+                $datas['files'][] = $fileClass;
+            }
+
+            header('Pragma: no-cache');
+            header('Cache-Control: private, no-cache');
+            header('Content-Disposition: inline; filename="files.json"');
+            header('X-Content-Type-Options: nosniff');
+            header('Vary: Accept');
+            echo Zend_Json::encode($datas);
+//            echo $datas['files'][0]->url;
+        }
+    }
+
+    public function delete($user_id, $email) {
+
     }
 
     /**

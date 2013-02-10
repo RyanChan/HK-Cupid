@@ -10,16 +10,29 @@
         <!-- JavaScript -->
         <script src="/ckeditor/ckeditor.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/vendor/jquery.ui.widget.js"></script>
+        <script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
         <script src="http://twitter.github.com/bootstrap/assets/js/holder/holder.js"></script>
+        <script src="/js/tmpl.min.js"></script>
         <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+        <script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
         <script src="/js/bootstrap-image-gallery.min.js"></script>
+        <script src="/js/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="/js/jquery.fileupload.js"></script>
+        <!-- The File Upload file processing plugin -->
+        <script src="/js/jquery.fileupload-fp.js"></script>
+        <!-- The File Upload user interface plugin -->
+        <script src="/js/jquery.fileupload-ui.js"></script>
         <script src="/js/cupid.js"></script>
+
 
         <!-- Css -->
         <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/css/bootstrap-image-gallery.min.css" rel="stylesheet">
+        <link href="/css/jquery.fileupload-ui.css" rel="stylesheet">
+        <noscript><link rel="stylesheet" href="/css/jquery.fileupload-ui-noscript.css"></noscript>
 
         <style type="text/css">
             body {

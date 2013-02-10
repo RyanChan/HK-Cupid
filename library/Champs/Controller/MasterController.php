@@ -39,10 +39,10 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
      * @var Bootstrap $bootstrap
      */
     protected $bootstrap;
-    
+
     /**
      * Check if the request is Ajax
-     * 
+     *
      * @var boolean @isXHR
      */
     protected $isXHR;
@@ -175,5 +175,22 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
 
         $this->getResponse()->setHeader('content-type', 'application/json');
         echo Zend_Json::encode($data);
+    }
+
+    public function imagefile($id, $w, $h) {
+        $id = isset($id) ? $id : 0;
+        $w = isset($w) ? $w : 0;
+        $h = isset($h) ? $h : 0;
+
+        $hash = Champs\Entity\Photo::GetImageHash($id, $w, $h);
+
+        return sprintf('%s?id=%d&w=%d&h=%d&hash=%s',
+//                    $this->getUrl('image', 'utility'),
+                    '/utility/image',
+                    $id,
+                    $w,
+                    $h,
+                    $hash
+               );
     }
 }

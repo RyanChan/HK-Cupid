@@ -15,7 +15,7 @@ class Champs_Acl_Acl {
      *
      * @var array $_authController
      */
-    private $_authController = array('controller' => 'account', 'action' => 'login', 'module' => 'account');
+    private $_authController = array('controller' => 'account', 'action' => 'login', 'module' => 'default');
 
     /**
      *

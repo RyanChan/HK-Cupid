@@ -89,6 +89,7 @@ class Album {
         $this->photos = new ArrayCollection();
         $this->profiles = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->isProfileAlbum = 0;
     }
 
     /**
@@ -221,7 +222,7 @@ class Album {
     /**
      * get the album folder path
      */
-    public function getAlbumFolder(User $user = null) {
+    public function getAlbumFolder($user = null) {
         $userPath = ($user == null) ? $this->user->getUserFolder() : $user->getUserFolder();
 
         return $userPath . DIRECTORY_SEPARATOR . 'album' . DIRECTORY_SEPARATOR . $this->id;
