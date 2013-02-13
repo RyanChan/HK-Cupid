@@ -14,6 +14,8 @@ class AccountController extends Champs_Controller_MasterController {
     public function init() {
         parent::init();
 
+        $this->breadcrumb->addStep('Account', $this->getUrl(null, 'account'));
+
         $this->userRepository = $this->em->getRepository('Champs\Entity\User');
 
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
@@ -34,7 +36,7 @@ class AccountController extends Champs_Controller_MasterController {
      * forward to profile page instead
      */
     public function indexAction() {
-
+        $this->breadcrumb->addStep('Profile');
     }
 
     /**
@@ -44,6 +46,7 @@ class AccountController extends Champs_Controller_MasterController {
      * @return void
      */
     public function logoutAction() {
+
         $auth = Zend_Auth::getInstance();
 
         if ($auth->hasIdentity()) {
@@ -52,6 +55,8 @@ class AccountController extends Champs_Controller_MasterController {
         } else {
             $this->_redirect($this->getUrl());
         }
+
+        $this->breadcrumb->addStep('Logout');
     }
 
     /**
@@ -110,6 +115,7 @@ class AccountController extends Champs_Controller_MasterController {
         // setup hash
         $this->initHash();
 
+        $this->breadcrumb->addStep('Login');
         $this->view->errors = $errors;
         $this->view->redirect = $redirect;
     }
@@ -139,6 +145,7 @@ class AccountController extends Champs_Controller_MasterController {
 
         // setup hash
         $this->initHash();
+        $this->breadcrumb->addStep('Register');
         // assign form to view
         $this->view->fp = $fp;
     }
@@ -151,6 +158,7 @@ class AccountController extends Champs_Controller_MasterController {
     public function completeAction() {
         // setup hash
         $this->initHash();
+        $this->breadcrumb->addStep('Complete');
     }
 
     /**
@@ -161,6 +169,7 @@ class AccountController extends Champs_Controller_MasterController {
     public function resetpasswordAction() {
         // setup hash
         $this->initHash();
+        $this->breadcrumb->addStep('Reset Password');
     }
 
     /**
@@ -219,6 +228,7 @@ class AccountController extends Champs_Controller_MasterController {
                 break;
         }
 
+        $this->breadcrumb->addStep('Confirm');
         $this->view->action = $action;
         $this->view->errors = $errors;
 
@@ -240,12 +250,14 @@ class AccountController extends Champs_Controller_MasterController {
 
         $user = $this->em->find('Champs\Entity\User', $identity->user_id);
         $this->view->user = $user;
+        $this->breadcrumb->addStep('Auth');
         //$this->view->form = $form;
         // get hash
         $this->initHash();
     }
 
     public function settingsAction() {
+        $this->breadcrumb->addStep('Settings');
         // get user id
         $user_id = $this->identity->user_id;
         // get user entity

@@ -28,6 +28,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
 
     public function init() {
         parent::init();
+        $this->breadcrumb->addStep('Album', $this->getUrl(null, 'album'));
 
         $this->albumRepository = $this->em->getRepository('Champs\Entity\Album');
         $this->photoRepository = $this->em->getRepository('Champs\Entity\Photo');
@@ -41,6 +42,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
      */
     public function indexAction() {
         $this->_forward('browse');
+
+        $this->breadcrumb->addStep('Browse');
     }
 
     /**
@@ -68,6 +71,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->initHash();
 
         $this->view->form = $form;
+        $this->breadcrumb->addStep('Create');
     }
 
     /**
@@ -107,6 +111,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->form = $form;
         // assign nickname to vew
         $this->view->username = $username;
+
+        $this->breadcrumb->addStep('Edit');
     }
 
     /**
@@ -134,6 +140,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
 
         $this->view->deleted = $deleted;
         $this->view->nickname = $this->identity->nickname;
+        $this->breadcrumb->addStep('Delete');
     }
 
     /**
@@ -173,6 +180,7 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->view = $view;
         // get hash
         $this->initHash();
+        $this->breadcrumb->addStep('Browse');
     }
 
     /**
@@ -199,6 +207,9 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->album = $album;
         // get hash
         $this->initHash();
+
+        $this->breadcrumb->addStep($album->user->username, sprintf('/dating/user/%s', $album->user->username))
+                         ->addStep('Photos');
     }
 
     /**
@@ -224,6 +235,9 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->view->albums = $albums;
         // get hash
         $this->initHash();
+        $this->breadcrumb->addStep($username, sprintf('/dating/user/%s', $username))
+                         ->addStep('Albums');
+//        $this->breadcrumb->addStep('Albums');
     }
 
     /**
@@ -250,7 +264,9 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         }
 
         if ($this->_request->isDelete() || $_SERVER['REQUEST_METHOD'] == 'DELETE') {
-            $this->delete($this->identity->user_id, $album_id, $this->identity->email);
+            $photo_id = $this->_request->getParam('photoid');
+
+            $this->delete($this->identity->user_id, $album_id, $photo_id, $this->identity->email);
         }
 
         exit;
@@ -333,7 +349,8 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
                 $fileClass->name = str_replace($album->getAlbumFolder(), 'New Image Upload Complete:   ', $name);
                 $fileClass->size = $adapter->getFileSize($file);
                 $fileClass->type = $adapter->getMimeType($file);
-                $fileClass->delete_url = '/album/upload/id/'.$album_id;
+                $delete_url = sprintf('/album/upload/id/%d/photoid/%d', $album_id, $photo->id);
+                $fileClass->delete_url = $delete_url;
                 $fileClass->delete_type = 'DELETE';
                 $fileClass->url = $this->imagefile($photo->id, 200, 0);
                 $fileClass->thumbnail_url = $this->imagefile($photo->id, 200, 0);
@@ -352,8 +369,21 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         }
     }
 
-    public function delete($user_id, $email) {
+    public function delete($user_id, $album_id, $photo_id, $email) {
+        if ($user_id && $email && $album_id && $photo_id) {
+            // check whether photo exists
+            $query = $this->em->createQuery("SELECT p
+                                             FROM Champs\Entity\Photo p, Champs\Entity\Album a, Champs\Entity\User u, Champs\Entity\UserProfile up
+                                             WHERE p.album = a and a.user = u and p.user = u and up.user = u and u.id = ?1 and up.profile_key = 'email' and up.profile_value = ?2 and p.id = ?3 and a.id = ?4");
+            $query->setParameter(1, $user_id)->setParameter(2, $email)->setParameter(3, $photo_id)->setParameter(4, $album_id);
 
+            $photo = $query->getSingleResult();
+
+            if (!$photo) return;
+
+            $this->em->remove($photo);
+            $this->em->flush();
+        }
     }
 
     /**

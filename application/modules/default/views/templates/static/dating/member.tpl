@@ -1,6 +1,6 @@
 <li class="span3">
-    <div class="thumbnail">
-        <img src="{imagefile id=$user->getProfileAlbum()->photos->last()->id h=200}" alt="" />
+    <div class="thumbnail thumbnail-fixed">
+        <img src="{imagefile id=$user->getProfileAlbum()->photos->last()->id h=200}" alt="" class="thumbnail-fixed-image" />
         <div class="caption">
             <h4>
                 {if $user->getProfile('nickname')}

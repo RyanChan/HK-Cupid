@@ -1,9 +1,4 @@
 <div class="container">
-    <div class="row-fluid">
-        <h2 class="page-title">
-            {$nickname|escape} / Albums
-        </h2>
-    </div>
 
     <ul class="nav nav-tabs" id="tabs">
         <li class="active"><a href="#all" data-toggle="tab">{translate name="All"}</a></li>

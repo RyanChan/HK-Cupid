@@ -30,6 +30,17 @@
 
     <div class="row-fluid">
         <div class="span9">
+            <style>
+                .thumbnail-fixed {
+                    width:200px;
+                    height:308px;
+                }
+
+                .thumbnail-fixed-image {
+                    width:133px;
+                    height:200px;
+                }
+            </style>
             <section>
                 {if $users|count > 0}
                     <ul class="thumbnails">
@@ -43,6 +54,11 @@
                     </div>
                 {/if}
             </section>
+        </div>
+        <div class="span3">
+            <div class="row-fluid">
+                <div class="fb-like-box" data-href="http://www.facebook.com/pages/HK-Cupid/115325478649360" data-width="270" data-show-faces="true" data-stream="true" data-header="true"></div>
+            </div>
         </div>
     </div>
 </div>

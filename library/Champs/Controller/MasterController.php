@@ -43,9 +43,27 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
     /**
      * Check if the request is Ajax
      *
-     * @var boolean @isXHR
+     * @var boolean $isXHR
      */
     protected $isXHR;
+
+    /**
+     *
+     * @var Zend_Translate $translator
+     */
+    protected $translator;
+
+    /**
+     *
+     * @var string $defaultLocale
+     */
+    protected $defaultLocale;
+
+    /**
+     *
+     * @var Champs_Breadcrumb $breadcrumb
+     */
+    protected $breadcrumb;
 
     /**
      * initialize method
@@ -55,14 +73,21 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         $this->request = $this->getRequest();
         $this->bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         $this->isXHR = $this->request->isXmlHttpRequest();
+        $this->translator = Zend_Registry::get('translate');
+        $this->defaultLocale = key(Zend_Locale::getDefault());
+
+        $this->breadcrumb = new Champs_Breadcrumb();
+        $this->breadcrumb->addStep($this->translator->_('Home', $this->defaultLocale), $this->getUrl(null, 'index'));
+
+        $this->defaultLocale = Zend_Locale::getDefault();
 
         $this->_initAuth();
         $this->_initACL();
     }
 
-    protected function getUrl($action = null, $controller = null, array $params = null, $module = null) {
-        $url = rtrim($this->getRequest()->getBaseUrl(), '/') . '/';
-        $url .= $this->_helper->url->simple($action, $controller, $module, $params);
+    protected function getUrl($action = null, $controller = null) {
+        $url = $this->getRequest()->getBaseUrl();
+        $url .= $this->_helper->url->simple($action, $controller);
 
         return $url;
     }
@@ -110,6 +135,9 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
         // get the controller & action name for the active navigation menu
         $this->view->controller = $this->getRequest()->getControllerName();
         $this->view->action = $this->getRequest()->getActionName();
+
+        $this->view->breadcrumb = $this->breadcrumb;
+        $this->view->title=  $this->breadcrumb->getTitle();
     }
 
     /**
@@ -186,11 +214,8 @@ class Champs_Controller_MasterController extends Zend_Controller_Action {
 
         return sprintf('%s?id=%d&w=%d&h=%d&hash=%s',
 //                    $this->getUrl('image', 'utility'),
-                    '/utility/image',
-                    $id,
-                    $w,
-                    $h,
-                    $hash
-               );
+                        '/utility/image', $id, $w, $h, $hash
+        );
     }
+
 }

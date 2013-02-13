@@ -20,6 +20,9 @@ class DatingController extends Champs_Controller_MasterController {
         parent::init();
 
         $this->userRepository = $this->em->getRepository('Champs\Entity\User');
+        $this->breadcrumb->addStep(
+                $this->translator->_('Dating', $this->defaultLocale), $this->getUrl(null, 'dating')
+        );
     }
 
     /**
@@ -28,7 +31,8 @@ class DatingController extends Champs_Controller_MasterController {
      * forward to browse action
      */
     public function indexAction() {
-        $this->_forward('browse');
+//        $this->_redirect($this->getUrl('browse'));
+
     }
 
     /**
@@ -49,6 +53,7 @@ class DatingController extends Champs_Controller_MasterController {
                 $users = $this->userRepository->getActiveUsers();
                 break;
             default:
+                $view = 'member';
                 $users = $this->userRepository->getNewestUsers();
         }
 
@@ -57,6 +62,14 @@ class DatingController extends Champs_Controller_MasterController {
         $this->view->page = $page;
         $this->view->view = $view;
         $this->view->users = $users;
+
+        $this->breadcrumb->addStep(
+                $this->translator->_('Browse', $this->defaultLocale),
+                $this->getUrl('browse', 'dating')
+        )->addStep(
+                $this->translator->_(sprintf('All %s', ucfirst($view)), $this->defaultLocale)
+        );
+
         // get hash
         $this->initHash();
     }
@@ -76,6 +89,7 @@ class DatingController extends Champs_Controller_MasterController {
                 $users = $this->userRepository->getUsersByGender(Champs\Entity\Repository\UserRepository::FEMALE);
                 break;
             default:
+                $view = $this->identity->gender == Champs\Entity\Repository\UserRepository::MALE ? 'female' : 'male';
                 $gender = $this->identity->gender == Champs\Entity\Repository\UserRepository::MALE ? Champs\Entity\Repository\UserRepository::FEMALE : Champs\Entity\Repository\UserRepository::MALE;
                 $users = $this->userRepository->getUsersByGender($gender);
                 break;
@@ -84,6 +98,14 @@ class DatingController extends Champs_Controller_MasterController {
         $this->view->users = $users;
         $this->view->page = $page;
         $this->view->view = $view;
+
+        $this->breadcrumb->addStep(
+                $this->translator->_('Browse', $this->defaultLocale),
+                $this->getUrl('browse', 'dating')
+        )->addStep(
+                $this->translator->_(sprintf('All Online %s', ucfirst($view)), $this->defaultLocale)
+        );
+
         // get hash
         $this->initHash();
     }
@@ -105,6 +127,14 @@ class DatingController extends Champs_Controller_MasterController {
 
         $this->view->user = $user;
         $this->view->notFound = $notFound;
+
+        $this->breadcrumb->addStep(
+                $this->translator->_('Users', $this->defaultLocale),
+                $this->getUrl(null, 'dating')
+        )->addStep(
+                $this->translator->_($username, $this->defaultLocale)
+        );
+
         // get hash
         $this->initHash();
     }
@@ -112,7 +142,7 @@ class DatingController extends Champs_Controller_MasterController {
     /**
      * Add follower
      */
-    public function addfollowerAction () {
+    public function addfollowerAction() {
         // disable renderer
 //        $this->setDisableLayout();
         $this->setNoRender();
@@ -140,4 +170,5 @@ class DatingController extends Champs_Controller_MasterController {
             throw new Exception('Fail to add follower');
         }
     }
+
 }

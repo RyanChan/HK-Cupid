@@ -99,7 +99,7 @@
 
     <div class="row-fluid">
         <div class="span6">
-            <h2>{translate name="Featured Members"}</h2>
+            <h3>{translate name="Featured Members"}</h3>
             <hr />
             <ul class="thumbnails">
                 {foreach from=$users item=user}
@@ -108,7 +108,7 @@
             </ul>
         </div>
         <div class="span6">
-            <h2>{translate name="Featured Albums"}</h2>
+            <h3>{translate name="Featured Albums"}</h3>
             <hr />
             <ul class="thumbnails">
                 {foreach from=$albums item=album}
@@ -119,16 +119,18 @@
     </div>
 
     <div class="row-fluid">
-        <h2>{translate name="Recent Uploads"}</h2>
-        <hr />
-        <ul class="thumbnails">
-            {foreach from=$photos item=photo}
-                <li class="span2">
-                    <a href="/{$photo->user->username|escape}/albums/{$photo->album->id|escape}/photos" class="thumbnail" rel="tooltip" title="{$photo->album->title|escape}">
-                        <img src="{imagefile id=$photo->id w=200}" alt="" />
-                    </a>
-                </li>
-            {/foreach}
-        </ul>
+        <div class="span6">
+            <h3>{translate name="Recent Uploads"}</h3>
+            <hr />
+            <ul class="thumbnails">
+                {foreach from=$photos item=photo}
+                    <li class="span2">
+                        <a href="/{$photo->user->username|escape}/albums/{$photo->album->id|escape}/photos" class="thumbnail" rel="tooltip" title="{$photo->album->title|escape}">
+                            <img src="{imagefile id=$photo->id w=200}" alt="" />
+                        </a>
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
     </div>
 </div>

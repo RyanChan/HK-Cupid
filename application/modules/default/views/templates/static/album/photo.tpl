@@ -1,7 +1,3 @@
-<li class="span3">
-    <a href="{imagefile id=$photo->id}" class="thumbnail" data-gallery="gallery">
-        <img src="{imagefile id=$photo->id h=200}" alt="" />
-    </a>
-
-    {gallery}
-</li>
+<a href="{imagefile id=$photo->id}" data-gallery="gallery" class="photo thumbnail pull-left">
+    <img src="{imagefile id=$photo->id h=81 w=81}" />
+</a>
