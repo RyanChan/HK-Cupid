@@ -33,6 +33,17 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->albumRepository = $this->em->getRepository('Champs\Entity\Album');
         $this->photoRepository = $this->em->getRepository('Champs\Entity\Photo');
         $this->userRepository = $this->em->getRepository('Champs\Entity\User');
+        
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('addalbumcomment', 'json')
+                    ->addActionContext('deletealbumcomment', 'json')
+                    ->addActionContext('addphotocomment', 'json')
+                    ->addActionContext('deletephotocomment', 'json')
+                    ->addActionContext('albumlike', 'json')
+                    ->addActionContext('albumunlike', 'json')
+                    ->addActionContext('photolike', 'json')
+                    ->addActionContext('photounlike', 'json')
+                    ->initContext();
     }
 
     /**
@@ -404,4 +415,39 @@ class AlbumController extends Champs_Controller_MasterController implements Cham
         $this->redirectToAlbum($username, $album_id);
     }
 
+    public function addalbumcommentAction(){
+        
+    }
+    
+    public function deletealbumcommentAction(){
+        
+    }
+    
+    public function addphotocommentAction(){
+        
+    }
+    
+    public function deletephotocommentAction(){
+        
+    }
+    
+    public function albumlikeAction(){
+        
+    }
+    
+    public function albumunlikeAction(){
+        
+    }
+    
+    public function photolikeAction(){
+        
+    }
+    
+    public function photounlikeAction(){
+        
+    }
+    
+    public function getphotosAction(){
+        
+    }
 }
